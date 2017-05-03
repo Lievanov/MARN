@@ -1,0 +1,29 @@
+﻿@model LaboratorioMarn.EMPLEADO
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Eliminar</h2>
+
+<h3>¿Está seguro que desea eliminar el empleado <i>@Model.nombre_empleado</i>?</h3>
+</br>
+@if (TempData["msjError"] != null)
+{
+    <center><h3>@TempData["msjError"]</h3></center>
+}
+<div>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+       <div class="form-actions no-color">
+        <br/>
+        <button type="submit" class="btn btn-primary">Eliminar</button>
+        @Html.ActionLink("Volver a la lista", "Index")
+    </div>
+    }
+</div>
+
+
+
+    

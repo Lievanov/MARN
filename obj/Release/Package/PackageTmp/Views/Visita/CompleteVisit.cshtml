@@ -1,0 +1,105 @@
+﻿@model  LaboratorioMarn.VISITA
+
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.id_visita )
+
+        <div class="form-group">
+            <label for="hora_visita" class="control-label col-md-3">Hora de visita</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="hora_visita" id="horaVisita" value="@Model.fecha_visita.Value.TimeOfDay">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="lat" class="control-label col-md-3">Latitud</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="lat" id="lat" value="@Model.lat">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="lng" class="control-label col-md-3">Longitud</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="lng" id="lng" value="@Model.lng">
+            </div>
+        </div>
+            
+        <div class="form-group">
+            <label for="identificacion" class="control-label col-md-3">Identificación de la muestra</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="identificacion" id="identificacion" value="@Model.identificador">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="frascos" class="control-label col-md-3">Frascos entregados</label>
+            <div class="col-md-6">
+                <input type="text" class="form-control" name="frascos" id="frascos" value="@Model.no_frascos">
+            </div>
+        </div>
+
+            @foreach (DETALLE_VISITA detalle in Model.DETALLE_VISITA.ToList())
+            {
+                    <script type="text/javascript">
+
+                        $(function () {
+                            muestras.push({ id: muestras.length + 1, muestra: "@detalle.MUESTRA.id_muestra", value: "@detalle.value", nombre: "@detalle.MUESTRA.nombre_muestra" + "(@detalle.MUESTRA.expresado)" });
+                            console.log(muestras.length);
+                        });
+                    </script>
+            }
+            <table class="table" id="detalleMuestraTable">
+                <thead>
+                    <tr>
+                        <th>Parametro</th>
+                        <th>Muestra</th>
+                        <th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @{ var i = 1; }
+                    @foreach (DETALLE_VISITA detalle in Model.DETALLE_VISITA.ToList())
+                {
+                        <tr>
+                            <td class="nombreMuestra">@detalle.MUESTRA.nombre_muestra (@detalle.MUESTRA.expresado)</td>
+                            <td class="valueMuestra">@detalle.value</td>
+                            <td><a href="#" class="editarDetalle" data-value="@i">editar</a></td>
+                            <td><a href="#" class="eliminarDetalle" data-value="@i">quitar</a></td>
+                        </tr>
+
+                    i++;
+                }
+                </tbody>
+
+                <tfoot>
+                    <tr>
+                        <td>
+                            @Html.DropDownList("muestra", (IEnumerable<SelectListItem>)ViewBag.MuestraSelection, htmlAttributes: new { @class = "form-control", @id = "seleccionMuestra" })
+                        </td>
+                        <td>
+                            <input type="text" name="valorMuestra" value="" id="valorMuestra" class="form-control" />
+                        </td>
+                        <td></td>
+                        <td> <a href="#" id="guardarMuestra" class="btn btn-success">Guardar</a> </td>
+                    </tr>
+
+                </tfoot>
+            </table>
+
+            <div class="form-group">
+                <div class="col-md-11">
+                    <div class="col-md-8">
+                        <div class="hide" id="alert">
+                            <div class="alert alert-success" role="alert" id="alertMsg"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <input type="submit" value="Guardar" class="btn btn-success btn-block" id="guardarDetalle" />
+                    </div>
+                </div>
+            </div>
+        </div>
+}

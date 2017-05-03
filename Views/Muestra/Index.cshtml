@@ -1,0 +1,73 @@
+﻿@model IEnumerable<LaboratorioMarn.MUESTRA>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Parametros de muestra</h2>
+
+<p>
+    @Html.ActionLink("Crear Nueva Muestra", "Create")
+</p>
+<div class="row">
+    <div class="col-sm-offset-2 col-sm-7">
+        <table class="table table-striped" id="detalleMuestra">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.nombre_muestra)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.expresado)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nombre_muestra)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.expresado)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Editar", "Edit", new { id = item.id_muestra }) |
+                            @Html.ActionLink("Detalles", "Details", new { id = item.id_muestra }) |
+                            @Html.ActionLink("Eliminar", "Delete", new { id = item.id_muestra })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="//cdn.datatables.net/u/dt/dt-1.10.12/datatables.min.js"></script>
+    <script type="text/javascript">
+    $(function () {
+        $('#detalleMuestra').DataTable({
+            language: {
+                url: 'Scripts/spanish.json'
+            }
+        });
+    });
+    </script>
+}
+@section Styles {
+    <link href="https://cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css" rel="stylesheet" />
+    <style type="text/css">
+        table.dataTable thead {
+            font-size: 0.85em;
+        }
+
+        table.dataTable tbody {
+            font-size: 0.85em;
+        }
+    </style>
+
+}

@@ -1,0 +1,138 @@
+﻿@model LaboratorioMarn.SOLICITUD
+           
+@{
+    ViewBag.Title = "CreaInformeResultados";
+}
+
+
+
+
+<div class="row">
+    <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 col-xs-4 col-sm-offset-4">
+                <div class="col-md-10 col-md-offset-1 col-xs-10 col-sm-offset-1">
+                    <img src="~/Images/logo marn.jpg" alt="Alternate Text" class="img-responsive" />
+                </div>
+            </div>
+        </div>
+
+        <center class="row">
+            <h4>DIRECCION GENERAL DEL OBSERVATORIO AMBIENTAL</h4>
+            <h4>LABORATORIO DE CALIDAD DE AGUA</h4>
+            <h4>AREA DE ANALISIS </h4>
+            <h4>INFORME DE RESULTADOS EN MUESTRAS DE AGUA</h4>
+        </center>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1 col-xs-5 col-xs-offset-1"><b>Numero de Referencia:</b></div>
+            <div class="col-md-6 col-xs-5"><strong>@Model.no_referencia</strong></div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1 col-xs-5 col-xs-offset-1"><b>Nombre Solicitante:</b></div>
+            <div class="col-md-6 col-xs-5">@Model.SOLICITANTE.nombre_solicitante</div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1 col-xs-5 col-xs-offset-1"><b>Dirección de Solicitante:</b></div>
+            <div class="col-md-6 col-xs-5">@Model.SOLICITANTE.direccion_solicitante</div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1 col-xs-5 col-xs-offset-1"><b>Fecha de toma de muestras:</b></div>
+            <div class="col-md-6 col-xs-5">@Model.VISITAs.First().fecha_visita.Value.ToShortDateString()</div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1 col-xs-5 col-xs-offset-1"><b>Fecha de inicio de recepción en Laboratorio:</b></div>
+            <div class="col-md-6 col-xs-5">@Model.VISITAs.First().fecha_entrega.Value.ToShortDateString()</div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1 col-xs-5 col-xs-offset-1"><b>Fecha de Inicio de Análisis:</b></div>
+            <div class="col-md-6 col-xs-5">@Model.fecha_inicio.Value.ToShortDateString()</div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1 col-xs-5 col-xs-offset-1"><b>Fecha de Finalización de Análisis:</b></div>
+            <div class="col-md-6 col-xs-5">@Model.fecha_finalizacion.Value.ToShortDateString()</div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1 col-xs-5 col-xs-offset-1"><b>Fecha de Generación de Reporte:</b></div>
+            <div class="col-md-6 col-xs-5">@DateTime.Now.ToShortDateString()</div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1 col-xs-5 col-xs-offset-1"><b>Responsable de Toma de Muestras:</b></div>
+            <div class="col-md-6 col-xs-5">@Model.VISITAs.First().EMPLEADO.nombre_empleado</div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1 col-xs-5 col-xs-offset-1"><b>Tipo de muestra:</b></div>
+            <div class="col-md-6 col-xs-5">@Model.VISITAs.First().TIPO_MUESTRA.nombre_tipo_muestra</div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1 col-xs-5 col-xs-offset-1"><b>Procedencia:</b></div>
+            <div class="col-md-6 col-xs-5">@Model.VISITAs.First().PROCEDENCIA.nombre_procedencia</div>
+        </div>
+        <br />
+
+        <center class="col-md-10 col-md-offset-1">
+            <h4>Parametros de campo reportados</h4>
+            <table class="table table-bordered table-condensed">
+                <tr>
+                    <td> </td>
+                    <td> </td>
+                    <td><b>Expresado como: </b></td>
+                </tr>
+                <tr>
+                    <td>Fecha: </td>
+                    <td>@Model.VISITAs.First().fecha_visita.Value.ToShortDateString()</td>
+                    <td> </td>
+
+                </tr>
+                <tr>
+                    <td>Hora: </td>
+                    <td>@Model.VISITAs.First().fecha_visita.Value.ToShortTimeString()</td>
+                    <td> </td>
+                </tr>
+                @{
+                    LaboratorioMarn.VISITA visita = Model.VISITAs.First();
+                    IEnumerable<LaboratorioMarn.DETALLE_VISITA> detalleVisita = visita.DETALLE_VISITA.ToList();
+                }
+                @foreach (DETALLE_VISITA detalle in detalleVisita)
+                {
+                    <tr>
+                        <td>@detalle.MUESTRA.nombre_muestra</td>
+                        <td>@detalle.value</td>
+                        <td>@detalle.MUESTRA.expresado</td>
+                    </tr>
+                }
+            </table>
+        </center>        
+
+        <center>
+            <h4>Resultados de Análisis de Laboratorio</h4>
+            <table class="table table-bordered table-condensed">
+                <tr>
+                    <th>PARAMETRO</th>
+                    <th>RESULTADO</th>
+                    <th>INCERTEZA</th>
+                    <th>UNIDADES</th>
+                    <th>LIMITE DE DETECCION</th>
+                    <th>METODO</th>
+                </tr>
+
+                @{
+                    IEnumerable<LaboratorioMarn.DETALLE_SOLICITUD> detalleSolicitud = Model.DETALLE_SOLICITUD.ToList();
+                }
+                @foreach (DETALLE_SOLICITUD detalles in detalleSolicitud)
+                {
+                    REPORTE reporte = detalles.ANALISIS_EMPLEADO.First().REPORTEs.First();
+                    <tr>
+                        <td>@detalles.ANALISI.nombre</td>
+                        <td>@reporte.resultado</td>
+                        <td>+/- @reporte.incerteza</td>
+                        <td>@reporte.unidades</td>
+                        <td>@reporte.limite_deteccion</td>
+                        <td>@reporte.metodo</td>
+                    </tr>
+                }
+            </table>
+        </center>
+     </div>
+</div>
+
+

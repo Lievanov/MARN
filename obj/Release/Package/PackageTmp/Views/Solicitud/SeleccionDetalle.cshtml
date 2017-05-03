@@ -1,0 +1,80 @@
+﻿@{
+
+    SOLICITUD solicitud = ViewBag.Solicitud;
+    List<AREA> areas = ViewBag.Areas;
+    List<int> seleccion = ViewBag.SelectedItems;
+    
+}
+
+@using (Html.BeginForm("", "Solicitud", FormMethod.Post, htmlAttributes: new { @id = "formularioSeleccionAnalisis" }))
+{
+    <h4 class="page-header">Datos del muestra </h4><br />
+    <input type="hidden" name="idSolicitud" value="@solicitud.id_solicitud" />
+    <div class="row">
+        <div class="col-sm-4">
+            <table class="table table-hover ">
+                <tr>
+                    <th>
+                        Muestra
+                    </th>
+                    <th>
+                        @solicitud.no_referencia
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        Visita
+                    </th>
+                    <th>
+                        @solicitud.VISITAs.First().id
+                    </th>
+                </tr>
+
+
+            </table>
+        </div>
+    </div>
+
+    <h4 class="text-center page-header">Análisis a realizar</h4>
+
+    foreach (AREA area in areas)
+    {
+        if (area.ANALISIS.Count() > 0)
+        {
+            <h4>
+                <a href="#" class="toggleShowAnalisis" data-value="@area.id_area">@area.nombre_area <span class="caret"></span></a>
+                &nbsp;&nbsp;&nbsp;<small><input type="checkbox" class="checkall" value="@area.id_area" /> Seleccionar todo</small>
+            </h4>
+            <div class="row" style="display: none" id="analisis-@area.id_area">
+                @foreach (ANALISI item in area.ANALISIS.ToList())
+                {
+                    <div class="col-md-4">
+
+                        @if (seleccion.Contains(item.id_analisis))
+                        {
+                            <input type="checkbox" name="checkAnalisis[]" value="@item.id_analisis" class="analisis area-@area.id_area" checked />
+                        }
+                        else
+                        {
+                            <input type="checkbox" name="checkAnalisis[]" value="@item.id_analisis" class="analisis area-@area.id_area" />
+                        }
+
+                        @Html.DisplayFor(modelItem => item.nombre)
+                    </div>
+                }
+            </div>
+        }
+    }
+
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-md-offset-8 col-md-2">
+            <button class="btn btn-default btn-block" id="cancelar">Cancelar</button>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-success btn-block" id="siguiente">Siguiente</button>
+        </div>
+    </div>
+
+}

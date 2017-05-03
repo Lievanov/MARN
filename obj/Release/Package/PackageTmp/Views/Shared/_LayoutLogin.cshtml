@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Calidad de Agua</title>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=calibri">
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("Styles", required: false)
+    <link href="@Url.Content("~/Content/font-awesome.min.css")" rel="stylesheet" type="text/css" />
+
+    <style>
+        body {
+            font-family: 'calibri', serif;
+        }
+    </style>
+
+</head>
+<body>
+    
+    <div class="container-fluid body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Laboratorio Calidad de Agua MARN</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

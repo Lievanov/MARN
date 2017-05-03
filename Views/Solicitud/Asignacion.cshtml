@@ -1,0 +1,50 @@
+﻿
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <label class="col-md-3 control-label">Empleado</label>
+        <select id="empleadoArea" class="col-md-6">
+            <option value="">Seleccionar empleado</option>
+
+            @foreach (EMPLEADO empleado in ViewBag.Empleados)
+            {
+                <option value="@empleado.id_empleado">@empleado.nombre_empleado</option>
+            }
+
+        </select>
+        <div class="col-md-3"><a href="#" id="selectAllVisible">Seleccionar todo</a></div>
+
+    </div>
+
+    @foreach (EMPLEADO empleado in ViewBag.Empleados)
+    {
+        <script type="text/javascript">
+    $(function () {
+        var flag = true;
+        $.each(empleadosSeleccion, function(index, object) {
+            if (object.empleado.id == @empleado.id_empleado) flag = false;
+        });
+
+        if (flag)
+        {
+            empleadosSeleccion.push({empleado: {id:  @empleado.id_empleado, nombre:  "@empleado.nombre_empleado"} , analisis: new Array()});
+                }
+            });
+        </script>
+    }
+    
+
+</div>
+
+<div class="row">
+    @foreach (ANALISI analisis in ViewBag.Analisis)
+    {
+        
+            @*<div class="col-md-4">*@
+            <div classs="col-sm-12">
+                <div class="checkbox col-md-offset-1">
+                    <input type="checkbox" class="analisisSeleccionEmpleado" value="@analisis.id_analisis" />
+                    @analisis.nombre
+                </div>
+            </div>
+    }
+</div>

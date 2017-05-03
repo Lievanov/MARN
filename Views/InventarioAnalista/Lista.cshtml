@@ -1,0 +1,47 @@
+﻿@model IEnumerable<ANALISIS_REACTIVO>
+
+@{
+    ANALISIS_EMPLEADO analisisEmpleado = @ViewBag.AnalisisEmpleado;
+    PROCESO_ANALISTA procesoAnalista = @ViewBag.ProcesoAnalista;
+}
+
+<a href="#" id="cerrarReactivos" class="pull-right"><span class="glyphicon glyphicon-remove"></span></a>
+
+<h4>Reactivos utilizados </h4>
+<p>Analsis <b>@analisisEmpleado.DETALLE_SOLICITUD.ANALISI.nombre</b></p>
+
+@if (procesoAnalista.id_estado_proceso_analista == 2 || procesoAnalista.id_estado_proceso_analista == 5)
+{ 
+    <a href="#" class="btn btn-sm btn-primary pull-right" id="agregarReactivo" data-value="@analisisEmpleado.id_analisis_empleado">Agregar</a>
+}
+
+<br /><br />
+
+<table class="table table-condensed table-striped">
+    <tr>
+        <th>Reactivo</th>
+        <th>Cantidad</th>
+        <th>Unidades</th>
+        <th></th>
+    </tr>
+
+    @foreach (ANALISIS_REACTIVO analisisReactivo in Model)
+    {
+        <tr>
+            <td>@analisisReactivo.REACTIVO.nombre</td>
+            <td>@analisisReactivo.cantidad</td>
+            <td>@analisisReactivo.UNIDAD.nombre</td>
+            @if (procesoAnalista.id_estado_proceso_analista == 3 || procesoAnalista.id_estado_proceso_analista == 6) { 
+                <td>
+                    <a href="#" class="editarReactivo" data-value="@analisisReactivo.id_analisis_reactivo"><span class="glyphicon glyphicon-edit"></span></a>
+                    |
+                    <a href="#" class="eliminarReactivo" data-value="@analisisReactivo.id_analisis_reactivo"><span class="glyphicon glyphicon-remove"></span></a>
+                </td>
+            }
+            else {
+                <td></td>
+            }
+        </tr>
+    }
+</table>
+

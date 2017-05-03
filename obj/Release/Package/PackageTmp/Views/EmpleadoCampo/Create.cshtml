@@ -1,0 +1,43 @@
+﻿@model LaboratorioMarn.EMPLEADO
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Crear</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>EMPLEADO</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.Label("Nombre Empleado: ", htmlAttributes: new { @class = "control-label col-xs-2" })
+            <div class="col-xs-3">
+                @Html.EditorFor(model => model.nombre_empleado, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.nombre_empleado, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Telefono Empleado: ", htmlAttributes: new { @class = "control-label col-xs-2" })
+            <div class="col-xs-3">
+                @Html.EditorFor(model => model.telefono_empleado, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.telefono_empleado, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button type="submit" class="btn btn-primary">Crear</button>
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Volver a Lista", "Index")
+</div>

@@ -1,0 +1,173 @@
+﻿@{
+
+    SOLICITUD solicitud = ViewBag.Solicitud;
+    List<AREA> areas = ViewBag.Areas;
+    List<ANALISI> analisisList = ViewBag.Analisis;
+}
+
+<br />
+
+<h4 class="page-header">Datos del muestra </h4><br />
+
+<input type="hidden" name="idSolicitud" id="idSolicitud" value="@solicitud.id_solicitud" />
+<div class="row">
+    <div class="col-sm-4">
+        <table class="table table-hover ">
+            <tr>
+                <th>
+                    Muestra
+                </th>
+                <th>
+                    @solicitud.no_referencia
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    Visita
+                </th>
+                <th>
+                    @solicitud.VISITAs.First().id
+                </th>
+            </tr>
+
+
+        </table>
+    </div>
+</div>
+
+<h4>Asignación de Analisis</h4>
+
+<div class="row">
+
+    
+
+    @foreach (var area in areas)
+    {
+        if (analisisList.Where(a => a.id_area == area.id_area).Count() > 0)
+        { 
+            <script type="text/javascript">
+
+                $(function () {
+                    analisis[@area.id_area] = new Array(); 
+                })
+            </script>
+        
+            <div class="col-md-3">
+                <div style="max-height:300px; overflow-y: auto">
+                    <table class="table">
+                        <tr>
+                            <th colspan="2" class="text-center"><a href="#" class="areas" data-value="@area.id_area"> @area.nombre_area </a></th>
+                        </tr>
+                        <tr>
+                            <th>Análsis</th>
+                            <th>Empleado</th>
+                        </tr>
+                        @foreach (var analisis in analisisList)
+                        {
+                            if (analisis.id_area == area.id_area)
+                            {
+                                <tr>
+                                    <td class="analisis" value="@analisis.id_analisis">@analisis.nombre</td>
+
+                                    <td class="empleado" id="@analisis.id_analisis"></td>
+                                </tr>
+                            }
+                        }
+                    </table>
+                </div>
+
+                @foreach (var analisis in analisisList)
+                {
+                    if (analisis.id_area == area.id_area)
+                    {
+                        <script type="text/javascript">
+
+                            $(function () {
+                                analisis[@area.id_area].push(@analisis.id_analisis);
+                            });
+
+                        </script>
+                    }
+                }
+            </div>
+        }
+    }
+
+    @foreach (var analisis in analisisList)
+    {
+        DETALLE_SOLICITUD detalle = solicitud.DETALLE_SOLICITUD.Where(ds => ds.id_analisis == analisis.id_analisis).First();
+        
+        
+        if (detalle.ANALISIS_EMPLEADO.Count() > 0)
+        {
+            <script type="text/javascript">
+
+                $(function () {
+
+                    var empleadoObj = empleadosSeleccion.filter(function(elem){
+                        return elem.empleado.id == @detalle.ANALISIS_EMPLEADO.First().id_empleado;
+                    });
+
+                    empleadoObj = empleadoObj[0];
+
+                    if (empleadoObj == undefined)
+                    {
+                        empleadoObj = {
+                            empleado: {
+                                id: @detalle.ANALISIS_EMPLEADO.First().id_empleado ,
+                                nombre: "@detalle.ANALISIS_EMPLEADO.First().EMPLEADO.nombre_empleado"
+                            },
+                            analisis: [@detalle.id_analisis]
+                        };
+
+                        empleadosSeleccion.push(empleadoObj);
+                    }
+                    else
+                    {
+                        empleadoObj.analisis.push(@detalle.id_analisis);
+                    }
+
+                    analisisSeleccion.push(@detalle.id_analisis);
+                    $(".empleado#@detalle.id_analisis").html(empleadoObj.empleado.nombre);                    
+                });
+
+            </script>
+        }
+    }
+</div>
+<br /><br />
+<div class="row">
+    <div class="col-md-offset-8 col-md-2">
+        <button class="btn btn-default btn-block" id="atras2">Atrás</button>
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-success btn-block" id="guardarAsignacion">Guardar</button>
+    </div>
+</div>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="asignarModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Asignar Análisis</h4>
+            </div>
+            <div class="modal-body" id="asignarContent">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="asignarAnalisisModal">Asignar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+
+    .modal-lg {
+        width: 900px;
+    }
+</style>
+

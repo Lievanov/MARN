@@ -1,0 +1,189 @@
+﻿@model IEnumerable<LaboratorioMarn.PRODUCTO>
+
+<h3 class="page-header">Productos seleccionados</h3>
+
+<table class="table" id="tablaSalida">
+    <thead>
+        <tr>
+            <th>Seleccionar</th>
+            <th>id</th>
+            <th>
+                Estante|Nivel
+            </th>
+            <th>
+                Reactivo
+            </th>
+            <th>
+                Catálogo
+            </th>
+            <th>
+                Lote
+            </th>
+            <th>
+                Marca
+            </th>
+            <th>
+                Fecha de ingreso
+            </th>
+            <th>
+                Fecha de vencimiento
+            </th>
+            <th>
+                Estado
+            </th>
+            <th>
+                Presentación
+            </th>
+            <th>
+                Unidades
+            </th>
+
+            <th>
+                Existencia total
+            </th>
+            <th>
+                Existencia en frasco abierto
+            </th>
+            <th>
+                Frascos
+            </th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+
+<div class="row margin-top20">
+    <div class="col-md-2 col-md-offset-10">
+        <a href="#" class="btn btn-success btn-block" id="nextStep1">Siguiente</a>
+    </div>
+</div>
+
+<h3 class="page-header">Seleccionar productos para registrar salida de inventario</h3>
+<div class="row">
+    <div class="col-sm-12">
+        <table class="table" id="tablaProducto">
+            <thead>
+                <tr>
+                    <th>Seleccionar</th>
+                    <th>id</th>
+                    <th>
+                        Estante|Nivel
+                    </th>
+                    <th>
+                        Reactivo
+                    </th>
+                    <th>
+                        Catálogo
+                    </th>
+                    <th>
+                        Lote
+                    </th>
+                    <th>
+                        Marca
+                    </th>
+                    <th>
+                        Fecha de ingreso
+                    </th>
+                    <th>
+                        Fecha de vencimiento
+                    </th>
+                    <th>
+                        Estado
+                    </th>
+                    <th>
+                        Presentación
+                    </th>
+                    <th>
+                        Unidades
+                    </th>
+
+                    <th>
+                        Existencia total
+                    </th>
+                    <th>
+                        Existencia en frasco abierto
+                    </th>
+                    <th>
+                        Frascos
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td></td>
+                        <td>@item.id_producto</td>
+                        <td>
+                            @item.ALMACEN.estante | @item.ALMACEN.nivel
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.REACTIVO.nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CATALOGO.nombre_catalogo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LOTE.nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.MARCA.nombre)
+                        </td>
+                        <td>
+                            @item.fecha_ingreso.ToShortDateString()
+                        </td>
+                        <td>
+                            sin fecha
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.estado)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.presentacion_cantidad)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UNIDAD.nombre)
+                        </td>
+
+                        @{
+                    var frascos = 0;
+                    var frascoAbierto = new Decimal();
+                    var total = new Decimal();
+                        }
+                        @foreach (var existencia in item.EXISTENCIA_PRODUCTO)
+                        {
+                            if (!existencia.estado.Equals("terminado"))
+                            {
+                                frascos++;
+                                total += existencia.cantidad;
+
+                                if (existencia.estado.Equals("abierto"))
+                                {
+                                    frascoAbierto = existencia.cantidad;
+                                }
+                            }
+                        }
+
+                        <td>
+                            @Html.DisplayFor(modelItem => total)
+                        </td>
+
+
+                        @if (frascoAbierto != 0)
+                        {
+                            <td>@Html.DisplayFor(modelItem => frascoAbierto)</td>
+                        }
+                        else
+                        {
+                            <td>cerrado</td>
+                        }
+
+                        <td>
+                            @Html.DisplayFor(modelItem => frascos)
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

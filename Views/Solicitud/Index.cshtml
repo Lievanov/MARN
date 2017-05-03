@@ -1,0 +1,159 @@
+﻿@model   IEnumerable<LaboratorioMarn.SOLICITUD>
+
+@{
+    ViewBag.Title = "Muestras";
+}
+<h1 class="page-header">Muestras</h1>
+<table id="tablaSolicitante" class="table">
+    <thead>
+        <tr>            
+            <th># referencia</th>
+            <th>Visita</th>
+            <th>
+               Solicitante
+            </th>
+            <th>
+               Estado
+            </th>
+            <th>
+               Fecha de solicitud
+            </th>
+            <th>
+              Fecha de muestreo
+            </th>
+            <th>
+               Fecha de Inicio
+            </th>
+            <th>
+               Fecha de finalización
+            </th>
+            
+            <th>
+                Analisis 
+            </th>
+            <th>
+                Areas
+            </th>
+            <th>
+                Estado del Proceso
+            </th>
+            <th></th>
+</tr>
+    </thead>
+    <tbody>
+        @foreach (SOLICITUD solicitud in Model)
+        {
+            <tr>
+                <td>@solicitud.no_referencia </td> 
+                <td>@solicitud.VISITAs.First().id </td> 
+                          
+                <td>
+                        @solicitud.SOLICITANTE.nombre_solicitante
+                    </td>
+                    <td>
+                        @solicitud.ESTADO.nombre_estado
+                    </td>
+                    <td>
+                        @solicitud.fecha_creacion
+
+                    @if (solicitud.VISITAs.FirstOrDefault() != null)
+                    {
+                        <td>
+                            @solicitud.VISITAs.First().fecha_visita.Value.ToShortDateString()
+                        </td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    } 
+
+                    @if (solicitud.fecha_inicio != null)
+                    {
+                        <td>
+                            @solicitud.fecha_inicio.Value.ToShortDateString()
+                        </td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    } 
+
+                    @if (solicitud.fecha_finalizacion != null)
+                    {
+                        <td>
+                            @solicitud.fecha_finalizacion.Value.ToShortDateString()
+                        </td>
+                    }
+                    else
+                    {
+                        <td></td>
+                    }
+                    <td>
+                        @solicitud.DETALLE_SOLICITUD.Count()
+                    </td>
+                    <td>
+                        @solicitud.DETALLE_SOLICITUD.GroupBy(ds => ds.ANALISI.AREA.id_area).Count()
+                    </td>
+
+
+                       @if (solicitud.ESTADO_PROCESO.nombre_estado_proceso == "informe generado")
+                       {
+                            <td> <a target="_blank" href="~/ReportesSolicitud/Informes?idSolicitud=@solicitud.id_solicitud">Informes</a></td>
+                       }
+                       else
+                       {
+                            <td>@solicitud.ESTADO_PROCESO.nombre_estado_proceso</td>
+                       }
+                    
+                    <td>
+                        <a href="@Url.Action("Detalle", "Solicitud")/@solicitud.id_solicitud">Administrar</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    @*<input type="button" value="Create" onclick="location.href='@Url.Action("Create","Index")'" />*@
+
+@section Scripts {
+    <script type="text/javascript" src="https://cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js"></script>
+    <script type="text/javascript">
+        var tablaSolicitante;
+        $(function () {
+            tablaSolicitante = $("#tablaSolicitante").DataTable({
+                columnDefs: [
+                    {
+                        orderable: false,
+                        
+                    },
+                    {
+                        targets: [0],
+                        visible: true,
+                        searchable: true
+                    }
+                ],
+                select: {
+                    style: 'os',
+                    selector: 'td:first-child'
+                },
+                language: {
+                    url: 'Scripts/spanish.json'
+                }
+            });
+        })
+
+    </script>
+}
+
+@section Styles {
+    <link href="https://cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css" rel="stylesheet" />
+
+    <style type="text/css">
+        table.dataTable thead {
+            font-size: 0.85em;
+        }
+
+        table.dataTable tbody {
+            font-size: 0.85em;
+        }
+    </style>
+}

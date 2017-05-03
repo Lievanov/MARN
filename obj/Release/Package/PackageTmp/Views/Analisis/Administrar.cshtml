@@ -1,0 +1,521 @@
+﻿@model LaboratorioMarn.SOLICITUD
+@using LaboratorioMarn.Models;
+
+@{
+    ViewBag.Title = "Analista";
+    Layout = "~/Views/Shared/_LayoutAnalista.cshtml";
+
+    List<ANALISIS_EMPLEADO> analisis = ViewBag.Analisis;
+
+    PROCESO_ANALISTA procesoAnalista = ViewBag.ProcesoAnalista;
+
+    int idEstProceso = Model.id_estado_proceso;
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <h4 class="page-header">
+            Datos de la Solicitud
+        </h4>
+
+        <table class="table table-hover table-condensed">
+            <tr>
+                <td>No.referencia:</td>
+                <th>@Model.no_referencia</th>
+            </tr>
+            <tr>
+                <td>Fecha inicio soicitud:</td>
+                <td>@Html.DisplayFor(model => model.fecha_inicio)</td>
+            </tr>
+            <tr>
+                <td>Fecha finalizacion solicitud:</td>
+                <td>@Html.DisplayFor(model => model.fecha_finalizacion)</td>
+            </tr>
+            <tr>
+                <td>Fecha asignacion:</td>
+                <td>@Html.DisplayFor(model => procesoAnalista.fecha_asignacion)</td>
+            </tr>
+            <tr>
+                <td>Fecha inicio:</td>
+                @if (procesoAnalista.fecha_inicio == null)
+                {
+                    <td><a href="@Url.Action("IniciarProceso", "Analista", new { idSolicitud = Model.id_solicitud }) ">Iniciar</a></td>
+                }
+                else
+                {
+                    <td>@Html.DisplayFor(model => procesoAnalista.fecha_inicio)</td>
+                }
+            </tr>
+            <tr>
+                <td>Fecha finalizacion:</td>
+                @if (procesoAnalista.fecha_fin == null)
+                {
+                    <td>No finalizado</td>
+                }
+                else
+                {
+                    <td>@Html.DisplayFor(model => procesoAnalista.fecha_fin)</td>
+                }
+            </tr>
+
+        </table>
+    </div>
+    <div class="col-md-4">
+        @{ LaboratorioMarn.VISITA visita = Model.VISITAs.First(); }
+
+        <h4 class="page-header">
+            Datos de la visita
+        </h4>
+
+        <table class="table table-hover table-condensed">
+            <tr>
+                <td>Tipo:</td>
+                <td>@visita.TIPO_MUESTRA.nombre_tipo_muestra</td>
+            </tr>
+            <tr>
+                <td>Procedencia:</td>
+                <td>@visita.PROCEDENCIA.nombre_procedencia</td>
+            </tr>
+            <tr>
+                <td>Fecha de visita:</td>
+                <td>@Html.DisplayFor(model => visita.fecha_visita) @visita.fecha_visita.Value.ToShortTimeString()</td>
+            </tr>
+            <tr>
+                <td>Fecha recepción muestra:</td>
+                <td>@Html.DisplayFor(model => visita.fecha_entrega)</td>
+            </tr>
+        </table>
+    </div>
+    <div class="col-md-4">
+        <h4 class="page-header">
+            Parámetros de campo
+        </h4>
+        
+        <div style="overflow-y: auto; max-height: 150px">
+            <table class="table table-condensed table-bordered">
+                <tr>
+                    <th>Parámetro</th>
+                    <th>Muestra</th>
+                    <th>Expresado como</th>
+                </tr>
+
+                @foreach (DETALLE_VISITA detalle in visita.DETALLE_VISITA)
+                {
+                    <tr>
+                        <td>@detalle.MUESTRA.nombre_muestra</td>
+                        <td>@detalle.value</td>
+                        <td>@detalle.MUESTRA.expresado</td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<div class="row">
+    <div class="col-sm-12">
+        <h4 class="page-header">
+            Análisis Asignados 
+
+            @if (procesoAnalista.id_estado_proceso_analista == 5)
+            { 
+                <small> > abierto para corrección</small>
+            }
+
+            @if (ViewBag.reportesFinalizados && (procesoAnalista.id_estado_proceso_analista == 2 || procesoAnalista.id_estado_proceso_analista == 5))
+            {
+                <a href="#" class="btn btn-success pull-right finalizar" data-value="@Model.id_solicitud">Enviar reporte de resultados</a>
+            }
+            
+        </h4>
+
+        <div class="row">
+            <div class="col-sm-8" style="overflow-y: auto; max-height: 350px">
+                <table class="table table-hover table-condensed table-striped table-bordered">
+                    <tr >
+                        <th class="text-center">
+                            Análisis
+                        </th>
+                        <th class="text-center">
+                            Resultado
+                        </th>
+                        <th class="text-center">
+                            Incertezas
+                        </th>
+                        <th class="text-center">
+                            Unidades
+                        </th>
+                        <th class="text-center">
+                            Límite de Detección
+                        </th>
+                        <th class="text-center">
+                            Método
+                        </th>
+                        <th>
+
+                        </th>
+                        <th>
+
+                        </th>
+                    </tr>
+
+                    @foreach (ANALISIS_EMPLEADO analisisEmpleado in analisis)
+                    {
+
+                        REPORTE reporte = analisisEmpleado.REPORTEs.FirstOrDefault();
+
+                        <tr>
+                            <td>
+                                @analisisEmpleado.DETALLE_SOLICITUD.ANALISI.nombre
+                            </td>
+                            @if (reporte != null)
+                            {
+                                <td>
+                                    @reporte.resultado
+                                </td>
+                                <td>
+                                    @reporte.incerteza
+                                </td>
+                                <td>
+                                    @reporte.unidades
+                                </td>
+                                <td>
+                                    @reporte.limite_deteccion
+                                </td>
+                                <td>
+                                    @reporte.metodo
+                                </td>
+                            }
+                            else
+                            {
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            }
+                            @if (procesoAnalista.id_estado_proceso_analista > 1)
+                            {
+                                <td>
+                                    @if (reporte == null)
+                                {
+                                        <a href="#" class="btn btn-sm btn-primary add" id="@analisisEmpleado.id_analisis_empleado">Resultado</a>
+                                }
+                                else
+                                {
+                                    if (procesoAnalista.id_estado_proceso_analista == 2 || procesoAnalista.id_estado_proceso_analista == 5)
+                                    {
+                                        <a href="#" class="btn btn-sm btn-primary edit" id="@reporte.id_reporte">Editar</a>
+                                    }
+                                }
+                                </td>
+
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-link reactivos" data-value="@analisisEmpleado.id_analisis_empleado">Reactivos</a>
+                                </td>
+                            }
+                        </tr>
+                    }
+
+                </table>
+            </div>
+            <div class="col-sm-4" id="detalleReactivo">
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="nuevoIngreso">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Ingreso de Resultado</h4>
+            </div>
+            <div class="modal-body" id="nuevoIngresoModalContent">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="Editar">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Editar Resultado</h4>
+            </div>
+            <div class="modal-body" id="nuevoEditarModalContent">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body" id="modalBody">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+
+    <script type="text/javascript">
+
+
+    $(function () {
+        $(".add").click(function (e) {
+            e.preventDefault();
+            var element = $(this);
+            var id = element.attr("id");
+            $.ajax({
+                url: "/Reporte/Create",
+                data: { idAnalisisEmpleado: id },
+                success: function (html) {
+                    $("#nuevoIngreso").modal("show");
+                    $("#nuevoIngresoModalContent").html(html);
+                    $("#guardar").click(function (e) {
+                        e.preventDefault();
+                        $.ajax(
+                            {
+                                url: "/Reporte/Create",
+                                data: $("#formularioIngresoReporte").serialize(),
+                                dataType: "JSON",
+                                type: "POST",
+                                success: function (json) {
+                                    $("#alert").removeClass("hide").show();
+
+                                    if (json.valid) {
+                                        $("#alertMsg")
+                                            .removeAttr("class")
+                                            .addClass("alert")
+                                            .addClass("alert-success")
+                                            .html("Ingreso registrado con éxito");
+
+                                        setTimeout(function () { window.location = ''; }, 2000)
+                                    }
+                                    else {
+                                        $("#alertMsg")
+                                            .removeAttr("class")
+                                            .addClass("alert")
+                                            .addClass("alert-danger")
+                                            .html();
+                                    }
+                                }
+                            }
+                            );
+                    });
+                }
+            });
+        });
+
+        $(".edit").click(function (e) {
+            e.preventDefault();
+            var element = $(this);
+            var idReporte = element.attr("id");
+            $.ajax({
+                url: "/Reporte/Editar",
+                data: { idReporte: idReporte },
+                success: function (html) {
+                    $("#Editar").modal("show");
+                    $("#nuevoEditarModalContent").html(html);
+                    $("#guardar").click(function (e) {
+                        e.preventDefault();
+                        $.ajax(
+                            {
+                                url: "/Reporte/Editar",
+                                data: $("#formularioEditarReporte").serialize(),
+                                dataType: "JSON",
+                                type: "POST",
+                                success: function (json) {
+                                    $("#alert").removeClass("hide").show();
+
+                                    if (json.valid) {
+                                        $("#alertMsg")
+                                            .removeAttr("class")
+                                            .addClass("alert")
+                                            .addClass("alert-success")
+                                            .html("Registro editado con éxito");
+
+                                        setTimeout(function () { window.location = ''; }, 2000)
+                                    }
+                                    else {
+                                        $("#alertMsg")
+                                            .removeAttr("class")
+                                            .addClass("alert")
+                                            .addClass("alert-danger")
+                                            .html();
+                                    }
+                                }
+                            }
+                            );
+                    });
+                }
+            });
+        });
+
+        $(".finalizar").click(function (e) {
+            e.preventDefault();
+            var element = $(this);
+            element.attr("disabled", "disabled");
+            var idSolicitud = element.data("value");
+            $.ajax({
+                url: '@Url.Action("EnviarResultado", "Reporte")',
+                dataType: "JSON",
+                type: 'POST',
+                data: { idSolicitud: idSolicitud },
+                success: function (json) {
+                    element.removeAttr("disabled");
+                    if (json.valid) {
+                        $("#alertMsg")
+                        .removeAttr("class")
+                        .addClass("alert")
+                        .addClass("alert-success")
+                        .html("Resultados Enviados");
+
+                        setTimeout(function () { window.location = ''; }, 2000)
+                    } else {
+                        $("#alertMsg")
+                          .removeAttr("class")
+                          .addClass("alert")
+                          .addClass("alert-danger")
+                          .html();
+                    }
+                }
+            });
+        });
+
+        $(".reactivos").click(function (e) {
+            e.preventDefault();
+            var element = $(this);
+            var analisisEmpleado = element.data("value");
+
+            $.ajax({
+                url: '@Url.Action("Lista", "InventarioAnalista")',
+                type: 'POST',
+                data: { idAnalisisEmpleado: analisisEmpleado },
+                success: function (html) {
+                    $("#detalleReactivo").html(html);
+
+                    $("#agregarReactivo").click(function (e) {
+                        e.preventDefault();
+                        $.ajax({
+                            url: '@Url.Action("Salida", "InventarioAnalista")',
+                            type: "GET",
+                            success: function (html) {
+
+                                $("#modal").modal("show");
+                                $("#modalBody").html(html);
+
+                                var reactivoSalida = $("#reactivoSalida").val();
+
+                                $.ajax({
+                                    url: '@Url.Action("ExistenciaReactivo", "InventarioAnalista")',
+                                    type: "POST",
+                                    data: { idReactivo: reactivoSalida },
+                                    dataType: "JSON",
+                                    success: function (json) {
+                                        $("#cantidadExistencia").val(json.cantidad);
+                                    }
+                                });
+
+                                $("#reactivoSalida").change(function () {
+                                    reactivoSalida = $(this).val();
+                                    $("#cantidadExistencia").val("");
+                                    $.ajax({
+                                        url: '@Url.Action("ExistenciaReactivo", "InventarioAnalista")',
+                                        type: "POST",
+                                        data: { idReactivo: reactivoSalida },
+                                        dataType: "JSON",
+                                        success: function (json) {
+                                            $("#cantidadExistencia").val(json.cantidad);
+                                        }
+                                    });
+                                });
+
+                                $("#salida").click(function (e) {
+                                    e.preventDefault();
+                                    cantidadExistencia = $("#cantidadExistencia").val();
+                                    cantidadUso = $("#cantidadUso").val();
+
+                                    if (cantidadExistencia == "" || cantidadUso == "")
+                                    {
+                                        return;
+                                    }
+
+                                    if (parseFloat(cantidadExistencia) < parseFloat(cantidadUso))
+                                    {
+                                        return;
+                                    }
+
+                                    $.ajax({
+                                        url: "@Url.Action("Salida", "InventarioAnalista")",
+                                        type: "POST",
+                                        data: { idAnalisisEmpleado: analisisEmpleado, idReactivo: reactivoSalida, cantidadSalida: cantidadUso },
+                                        dataType: "JSON",
+                                        success: function (json) {
+                                            $("#alert").removeClass("hide").show();
+                                            if (json.valid) {
+                                                $("#alertMsg")
+                                                    .removeAttr("class")
+                                                    .addClass("alert")
+                                                    .addClass("alert-success")
+                                                    .html("Operacion exitosa");
+
+                                                setTimeout(function () {
+                                                    //cerrar modal
+                                                    // hacer click en Reactivos del analisEmpleado
+
+                                                    $("#modal").modal("hide");
+                                                    $(".reactivos[data-value='" + analisisEmpleado + "']").click();
+
+                                                }, 2000)
+                                            }
+                                            else {
+                                                $("#alertMsg")
+                                                    .removeAttr("class")
+                                                    .addClass("alert")
+                                                    .addClass("alert-danger")
+                                                    .html(json.msg);
+                                            }
+                                        }
+                                    });
+                                });
+                            }
+                        });
+                    });
+
+                    $(".editarReactivo").click(function (e) {
+                        e.preventDefault();
+
+                    });
+
+                    $(".eliminarReactivo").click(function () {
+                        e.preventDefault();
+                    });
+
+                    $("#cerrarReactivos").click(function (e) {
+                        e.preventDefault();
+                        $('#detalleReactivo').html('');
+                    });
+                }
+            });
+        });
+    })
+    </script>
+}
+
+

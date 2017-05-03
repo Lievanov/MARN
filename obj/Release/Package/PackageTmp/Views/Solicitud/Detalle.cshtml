@@ -1,0 +1,904 @@
+﻿@model LaboratorioMarn.SOLICITUD
+
+<br />
+<input type="hidden" id="solicitud" value="@Model.id_solicitud"/>
+
+<div class="row">
+    <div class="col-md-4">
+        @if (Model.id_estado == 4)
+        {
+            <form action="@Url.Action("ExportarCSV", "Solicitud")" method="post">
+                <input type="hidden" value="@Model.id_solicitud" name="idSolicitud" />
+                <div class="col-md-4">
+                    <button type="submit" class="btn-success btn-sm btn btn-block">Descargar CSV</button>
+                </div>
+            </form>
+            
+        }
+        
+        @if (Model.id_estado == 3 && Model.id_estado_proceso == 5)
+        {
+            <div class="col-md-6">
+                <a href="#" class="btn-warning btn-sm btn btn-block cambiarEstado" id="abrirCorreccionSolicitud">Abrir para Corrección</a>
+            </div>
+            <div class="col-md-6">
+                <a href="#" class="btn-danger btn-sm btn btn-block cambiarEstado" id="cerrarSolicitud">Cerrar Solicitud</a>
+            </div>
+            
+            <div class="col-md-10 col-md-offset-1">
+                <div class="col-md-12 hide" id="alertCambiarEstado">
+                    <div class="alert alert-success" role="alert" id="alertCambiarEstadoMsg"></div>
+                </div>
+            </div>
+        }
+        <div class="col-md-12">
+                     
+            <h4 class="page-header">
+                Datos de la Muestra
+            </h4>
+
+            <table class="table table-hover table-condensed">
+                <tr>
+                    <td>No.referencia:</td>
+                    <th>@Model.no_referencia</th>
+                </tr>
+                <tr>
+                    <td>Solicitud:</td>
+                    <th>@Model.VISITAs.First().GRUPO_SOLICITUD.identificador</th>
+                </tr>
+                <tr>
+                    <td>Visita</td>
+                    <th>@Model.VISITAs.First().id</th>
+                </tr>
+                <tr>
+                    <td>Fecha creación:</td>
+                    @if (Model.fecha_creacion != null)
+                    {
+                        <td>@Html.DisplayFor(model => model.fecha_creacion)</td>
+                    }
+                    else
+                    { 
+                        <td></td>
+                    }
+                </tr>
+                <tr>
+                    <td>Fecha inicio:</td>
+                    @if (Model.fecha_inicio != null)
+                    {
+                        <td>@Html.DisplayFor(model => model.fecha_inicio)</td>
+                    }
+                    else
+                    {
+                        <td>No iniciada</td>
+                    }
+                </tr>
+                <tr>
+                    <td>Fecha finalizacion:</td>
+                    @if (Model.fecha_finalizacion != null)
+                    {
+                        <td>@Html.DisplayFor(model => model.fecha_finalizacion)</td>
+                    }
+                    else
+                    {
+                        <td>No finzalizada</td>
+                    }
+                </tr>
+                <tr>
+                    <td>Nombre Solicitante:</td>
+                    <td>@Model.SOLICITANTE.nombre_solicitante</td>
+                </tr>
+                <tr>
+                    <td>Estado de la solicitud:</td>
+                    <td>@Model.ESTADO.nombre_estado</td>
+                </tr>
+                <tr>
+                    <td>Estado del proceso:</td>
+                    <td>
+                        @Model.ESTADO_PROCESO.nombre_estado_proceso
+
+                        @if (Model.ESTADO_PROCESO.id_estado_proceso < 3)
+                        { 
+                            <span> | <a href="#" id="inicarAnalisis">Iniciar análisis</a> <span href="#" class="glyphicon glyphicon-info-sign" data-toggle="popover" title="Iniciar análisis" data-content="Al iniciar el analisis para esta solicitud pondrá disponibles los trabajos para cada analista y podran iniciar su proceso de analisis. Una vez cambiado a este estado no es posible modificar elementos de la visita."></span></span>
+                        }
+                        
+                        @if (Model.ESTADO_PROCESO.id_estado_proceso == 6)
+                        {
+                            <span> | <a href="#" id="cancelarCorreccion">Cancelar</a></span>
+                        }
+                    </td>
+                </tr>
+                
+            </table>
+        </div>
+        <div class="col-md-12">
+            @if (Model.VISITAs.Count() > 0)
+            {
+                LaboratorioMarn.VISITA visita = Model.VISITAs.First();
+
+                <h4 class="page-header">
+                    Datos de la visita
+                </h4>
+                
+                <table class="table table-hover table-condensed">
+                    <tr>
+                        <td>Encargado:</td>
+                        <td>@visita.EMPLEADO.nombre_empleado</td>
+                    </tr>
+                    <tr>
+                        <td>Tipo:</td>
+                        <td>@visita.TIPO_MUESTRA.nombre_tipo_muestra</td>
+                    </tr>
+                    <tr>
+                        <td>Procedencia:</td>
+                        <td>@visita.PROCEDENCIA.nombre_procedencia</td>
+                    </tr>
+                    <tr>
+                        <td>Fecha de visita:</td>
+                        <td>@Html.DisplayFor(model => visita.fecha_visita)</td>
+                    </tr>
+                    <tr>
+                        <td>Hora de visita:</td>
+                        <td>@visita.fecha_visita.Value.ToShortTimeString()</td>
+                    </tr>
+                    <tr>
+                        <td>Sitio muestreo:</td>
+                        <td>@visita.SITIO_MUESTREO.nombre_sitio</td>
+                    </tr>
+                    <tr>
+                        <td>Dirección:</td>
+                        <td>@visita.SITIO_MUESTREO.direccion_sitio</td>
+                    </tr>
+                    <tr>
+                        <td>Latitud:</td>
+                        <td>@Html.DisplayFor(model => visita.lat)</td>
+                    </tr>
+                    <tr>
+                        <td>Longitud:</td>
+                        <td>@Html.DisplayFor(model => visita.lng)</td>
+                    </tr>
+                    <tr>
+                        <td>Fecha recepción muestra:</td>
+                        <td>@Html.DisplayFor(model => visita.fecha_entrega)</td>
+                    </tr>
+                    <tr>
+                        <td>Empleado entrega:</td>
+                        <td>@Html.DisplayFor(model => visita.id_empleado_entrega)</td>
+                    </tr>
+                    <tr>
+                        <td>Identificador:</td>
+                        <td>@Html.DisplayFor(model => visita.identificador)</td>
+                    </tr>
+                    <tr>
+                        <td>Frascos entregados:</td>
+                        <td>@Html.DisplayFor(model => visita.no_frascos)</td>
+                    </tr>
+                </table>
+
+                if (visita.DETALLE_VISITA.Count() == 0)
+                {
+                    <a href="#" id="completarInfoVisita" data-value="@visita.id_visita" class="btn btn-sm btn btn-info pull-right">Completar información de visita</a>
+                }
+                else
+                {
+                    <h4 class="page-header">
+                        Parámetros de campo
+
+                        @if (Model.id_estado_proceso < 3 || Model.id_estado_proceso == 6)
+                        {
+                            <a href="#" id="completarInfoVisita" data-value="@visita.id_visita" class="pull-right"><span title="editar" class="glyphicon glyphicon-pencil"></span></a><br>
+                        }
+                    </h4>
+
+                    IEnumerable<LaboratorioMarn.DETALLE_VISITA> detalleVisita = visita.DETALLE_VISITA.ToList();
+                    <table class="table table-condensed table-bordered">
+                        <tr>
+                            <th>Parámetro</th>
+                            <th>Muestra</th>
+                            <th>Expresado como</th>
+                        </tr>
+
+                        @foreach (DETALLE_VISITA detalle in detalleVisita)
+                        {
+                            <tr>
+                                <td>@detalle.MUESTRA.nombre_muestra</td>
+                                <td>@detalle.value</td>
+                                <td>@detalle.MUESTRA.expresado</td>
+                            </tr>
+                        }
+                    </table>
+                }
+            }
+            else
+            {
+                <h4 class="page-header">
+                    Datos de la visita
+                    <a href="#" id="nuevaVisita" class="pull-right"><span title="editar" class="glyphicon glyphicon-plus"></span></a><br>
+                </h4>
+            }
+        </div>
+        
+
+    </div>
+
+    <div class="col-md-8">
+        @if (Model.INFORMES.Count() > 0 || (Model.id_estado_proceso == 4 && Model.informe_generado == 0))
+        {
+            <h4 class="page-header">
+                Informes
+            </h4>
+        }
+
+        @if ((Model.id_estado_proceso == 4 || Model.id_estado_proceso == 6) && Model.informe_generado == 0)
+        {
+            <div class="row">
+                <div class="col-md-4 col-md-offset-5">
+                    <div class="col-md-12 hide" id="alertInforme">
+                        <div class="alert alert-success" role="alert" id="alertInformeMsg"></div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <a href="#" id="generarInforme" class="btn btn-block btn-sm btn-success">Generar Informe</a>
+                </div>
+            </div>
+            <br />
+        }
+        
+        @if (Model.INFORMES.Count() > 0)
+        {
+            
+            <table class="table table-bordered table-condensed table-striped">
+                <tr>
+                    <th>Fecha de creación</th>
+                    <th>Tipo</th>
+                    <th>Areas</th>
+                    <th>Informe</th>
+                </tr>
+
+                @foreach (INFORME informe in Model.INFORMES.OrderByDescending(i => i.fecha_creacion).ToList())
+                {
+                    <tr>
+                        <th>@informe.fecha_creacion</th>
+                        <th>@informe.tipo</th>
+                        <th>@informe.areas</th>
+                        <th>@Html.ActionLink("ver informe", "Informe", "Solicitud", new { idInforme = informe.id_informe }, new { target = "_blank" })</th>
+                    </tr>
+                }
+
+            </table>
+        }
+
+        <h4 class="page-header">
+            Análisis por empleado
+            @if (Model.id_estado_proceso != 3 && Model.id_estado_proceso != 5 && Model.id_estado_proceso != 7)
+            {
+                <a href="@Url.Action("FormDetalleSolicitud", "Solicitud")?idSolicitud=@Model.id_solicitud" id="" class="pull-right"><span title="editar" class="glyphicon glyphicon-pencil"></span></a>
+            }
+        </h4>
+
+        @foreach (KeyValuePair<string, List<string>> entry in ViewBag.AnalisisPorEmpleado)
+        {
+            
+            <div class="col-md-3" >
+                @{ PROCESO_ANALISTA procesoAnalista = Model.PROCESO_ANALISTA.Where(pa => pa.EMPLEADO.nombre_empleado == entry.Key).First(); }
+                @{ ESTADO_PROCESO_ANALISTA estadoProcesoAnalista = procesoAnalista.ESTADO_PROCESO_ANALISTA; }
+                
+                @if (estadoProcesoAnalista != null)
+                { 
+                    <div class="col-md-12">
+                        @switch (estadoProcesoAnalista.id_estado_proceso_analista)
+                        {
+                            case 1:
+                                <p class="alert bg-warning">@estadoProcesoAnalista.nombre</p>
+                                break;
+                            case 2:
+                                <p class="alert bg-info">@estadoProcesoAnalista.nombre</p>
+                                break;
+                            case 3:
+                                // Reportado
+                                <p class="alert bg-primary"><a href="#" style="color: #fff" class="verResultados" data-value="@procesoAnalista.id_proceso_analista">@estadoProcesoAnalista.nombre</a></p>
+                                break;
+                            case 4:
+                                // Finalizado
+                                <p class="alert bg-success"><a  href="#" class="verResultados" data-value="@procesoAnalista.id_proceso_analista">@estadoProcesoAnalista.nombre</a></p>
+                                break;
+                            case 5:
+                                // Correccion
+                                <p class="alert bg-warning">@estadoProcesoAnalista.nombre</p>
+                                break;
+                            case 6:
+                                // Cerrado
+                            <p class="alert bg-success text-center"><a href="#" class="verResultados" data-value="@procesoAnalista.id_proceso_analista">@estadoProcesoAnalista.nombre <br> (ver reporte)</a></p>
+                                break;
+                        }
+
+                    </div>                
+                }
+                
+                <div class="col-md-12">
+                    @if (Model.id_estado_proceso == 6 && estadoProcesoAnalista.id_estado_proceso_analista == 6)
+                    {
+                        <p class="bg-primary  text-center text-uppercase"><a href="#" style="color: #fff" class="abrirCorrecionAnalista" data-value="@procesoAnalista.id_proceso_analista">Abrir para correccion</a></p>
+                    }
+                </div>
+
+                <div class="col-md-12" style="max-height: 350px;overflow-y: auto;">
+                    <table class="table table-bordered table-condensed table-striped">
+                        <tr>
+                            <th>@entry.Key</th>
+                        </tr>
+                        @foreach (var analisis in entry.Value)
+                        {
+                            <tr>
+                                <td>@analisis</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="modal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"></h4>
+            </div>
+            <div class="modal-body" id="modalBody">
+
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+    var muestras = new Array();
+    $(function () {
+        $('[data-toggle="popover"]').popover();
+
+        $("#inicarAnalisis").click(function (e) {
+            e.preventDefault();
+            c = confirm("¿Está seguro que desea iniciar el proceso de análisis");
+
+            if (c) {
+                $.ajax({
+                    url: "@Url.Action("IniciarAnalisis", "Solicitud")",
+                    data: { idSolicitud: $("#solicitud").val() },
+                    type: "POST",
+                    dataType: "JSON",
+                    success: function (json) {
+                        if (json.valid) {
+                            alert("El proceso de analisis ha iniciado con éxito");
+
+                            window.location = '';
+                        }
+                        else {
+                            alert(json.msg);
+                        }
+                    }
+                })
+            }
+        });
+
+        $("#nuevaVisita").click(function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: "@Url.Action("Create", "Visita")",
+                data: { idSolicitud: $("#solicitud").val() },
+                type: 'GET',
+                success: function (html) {
+                    $("#modal").modal("show");
+                    $("#modalBody").html(html);
+                    $("#fechaVisita").datepicker({ format: "yyyy-mm-dd" });
+
+                    $("#crearVisita").click(function (e) {
+                        e.preventDefault();
+                        $.ajax({
+                            url: "@Url.Action("Create", "Visita")",
+                            data: $("#crearVisita").closest("form").serialize(),
+                            type: 'POST',
+                            dataType: 'JSON',
+                            success: function (json) {
+                                $("#alert").removeClass("hide").show();
+                                if (json.valid) {
+                                    $("#alertMsg")
+                                        .removeAttr("class")
+                                        .addClass("alert")
+                                        .addClass("alert-success")
+                                        .html("La visita se creó exitosamente");
+
+                                    setTimeout(function () { window.location = ''; }, 2000)
+                                }
+                                else {
+                                    $("#alertMsg")
+                                        .removeAttr("class")
+                                        .addClass("alert")
+                                        .addClass("alert-danger")
+                                        .html();
+
+                                    for (var i = 0; i < json.msgs.length; i++) {
+                                        $("#alertMsg").append(json.msgs[i]);
+                                        $("#alertMsg").append($("<br>"));
+                                    }
+                                }
+                            }
+                        });
+                    });
+                }
+            });
+        });
+
+        $("#editarVisita").click(function (e) {
+            e.preventDefault();
+            var idVisita = $(this).data("value");
+            $.ajax({
+                url: "@Url.Action("Edit", "Visita")"  + "/" + idVisita,
+                type: 'GET',
+                data: { idSolicitud: $("#solicitud").val() },
+                success: function (html) {
+                    $("#modal").modal("show");
+                    $("#modalBody").html(html);
+                    $("#fechaVisita").datepicker({ format: "yyyy-mm-dd" });
+
+                    $("#guardarVisita").click(function (e) {
+                        e.preventDefault();
+                        $.ajax({
+                            url: "@Url.Action("Edit", "Visita")"  + "/" + idVisita,
+                            data: $("#guardarVisita").closest("form").serialize(),
+                            type: 'POST',
+                            dataType: 'JSON',
+                            success: function (json) {
+                                $("#alert").removeClass("hide").show();
+                                if (json.valid) {
+                                    $("#alertMsg")
+                                        .removeAttr("class")
+                                        .addClass("alert")
+                                        .addClass("alert-success")
+                                        .html("La visita se guardó exitosamente");
+
+                                    setTimeout(function () { window.location = ''; }, 2000)
+                                }
+                                else {
+                                    $("#alertMsg")
+                                        .removeAttr("class")
+                                        .addClass("alert")
+                                        .addClass("alert-danger")
+                                        .html();
+
+                                    for (var i = 0; i < json.msgs.length; i++) {
+                                        $("#alertMsg").append(json.msgs[i]);
+                                        $("#alertMsg").append($("<br>"));
+                                    }
+                                }
+                            }
+                        });
+                    });
+                }
+            });
+        });
+
+        $("#completarInfoVisita").click(function (e) {
+            e.preventDefault();
+
+            var idVisita = $(this).data("value");
+
+            $.ajax({
+                url: "@Url.Action("CompleteVisit", "Visita")"  + "/" + idVisita,
+                type: 'GET',
+                success: function (html) {
+                    $("#modal").modal("show");
+                    $("#modalBody").html(html);
+                    $("#fechaEntrega").datepicker({ format: "yyyy-mm-dd"});
+                    var editMuestra = null;
+
+                    $(".editarDetalle").click(function (e) {
+                        e.preventDefault();
+
+                        var id = $(this).data('value');
+
+                        $.each(muestras, function (i, muestra) {
+                            if (muestra.id == id)
+                            {
+                                editMuestra = muestra;
+                            }
+                        });
+
+                        $("#seleccionMuestra").val(editMuestra.muestra);
+                        $("#valorMuestra").val(editMuestra.value);
+                    });
+
+                    $(".eliminarDetalle").click(function (e) {
+                        e.preventDefault();
+
+                        $(this).parent().parent().remove();
+                        var id = $(this).data('value');
+
+                        $.each(muestras, function (i, muestra) {
+                            if (muestra.id == id) {
+
+                                muestras.splice(i, 1);
+                                return;
+                            }
+                        });
+                    });
+
+                    $("#guardarMuestra").click(function (e) {
+                        e.preventDefault();
+
+                        var muestra = $("#seleccionMuestra").val();
+                        var nombre = $("#seleccionMuestra option:selected").text();
+                        var value = $("#valorMuestra").val();
+
+                        if (editMuestra == null)
+                        {
+                            editMuestra = { id: muestras.length + 1, muestra: muestra, value: value, nombre: nombre };
+
+                            td1 = $("<td>").addClass("nombreMuestra").html(editMuestra.nombre);
+                            td2 = $("<td>").addClass("valueMuestra").html(editMuestra.value);
+                            td3 = $("<td>").html($("<a>").attr("href", "#").addClass("editarDetalle").attr("data-value", editMuestra.id).html("editar"));
+                            td4 = $("<td>").html($("<a>").attr("href", "#").addClass("eliminarDetalle").attr("data-value", editMuestra.id).html("quitar"));
+
+                            $("#detalleMuestraTable tbody")
+                                .append(
+                                    $("<tr>")
+                                        .append(td1)
+                                        .append(td2)
+                                        .append(td3)
+                                        .append(td4)
+                                    );
+
+                            muestras.push(editMuestra);
+
+                            $(".editarDetalle").click(function (e) {
+                                e.preventDefault();
+
+                                var id = $(this).data('value');
+
+                                $.each(muestras, function (i, muestra) {
+                                    if (muestra.id == id) {
+                                        editMuestra = muestra;
+                                    }
+                                });
+
+                                $("#seleccionMuestra").val(editMuestra.muestra);
+                                $("#valorMuestra").val(editMuestra.value);
+                            });
+
+                            $(".eliminarDetalle").click(function (e) {
+                                e.preventDefault();
+
+                                $(this).parent().parent().remove();
+                                var id = $(this).data('value');
+
+                                $.each(muestras, function (i, muestra) {
+                                    if (muestra.id == id) {
+                                        mustras.splice(i, 1);
+                                        return;
+                                    }
+                                });
+                            });
+                        }
+                        else
+                        {
+                            editMuestra.muestra = muestra;
+                            editMuestra.value = value;
+                            editMuestra.nombre = nombre;
+
+                            $.each(muestras, function (i, muestra) {
+                                if (muestra.id == editMuestra.id) {
+                                    muestras[i] = editMuestra;
+                                }
+                            });
+
+                            var trEdit = $('.editarDetalle[data-value="' + editMuestra.id + '"]')
+                                .parent().parent();
+
+                            trEdit.children(".nombreMuestra").html(editMuestra.nombre);
+                            trEdit.children(".valueMuestra").html(editMuestra.value);
+                        }
+
+                        $("#seleccionMuestra").val(0);
+                        $("#valorMuestra").val("");
+                        editMuestra = null;
+
+                    });
+
+                    //*****
+                    $("#guardarDetalle").click(function (e) {
+                        e.preventDefault();
+
+                        jsonObject = { visita: $("#id_visita").val(), hora: $("#horaVisita").val(), identificador: $("#identificacion").val(), entrega: $("#empleado_entrega").val(), fechaEntrega: $("#fechaEntrega").val(), horaEntrega: $("#horaEntrega").val(), frascos: $("#frascos").val(), lat: $("#lat").val(), lng: $("#lng").val(), detalles: muestras }
+
+                        $.ajax({
+                            url: "@Url.Action("CompleteVisit", "Visita")",
+                            data: JSON.stringify(jsonObject),
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "JSON",
+                            method: "POST",
+                            success: function (json) {
+                                $("#alert").removeClass("hide").show();
+                                if (json.isValid) {
+                                    $("#alertMsg")
+                                        .removeAttr("class")
+                                        .addClass("alert")
+                                        .addClass("alert-success")
+                                        .html("Los detalles se guardaron exitosamente");
+
+                                    setTimeout(function () { window.location = ''; }, 2000)
+                                }
+                                else {
+                                    $("#alertMsg")
+                                        .removeAttr("class")
+                                        .addClass("alert")
+                                        .addClass("alert-danger")
+                                        .html(json.msg);
+                                }
+                            }
+                        });
+                    });
+                }
+            });
+        });
+
+        $(".verResultados").click(function (e) {
+            e.preventDefault();
+            var procesoId = $(this).data("value");
+
+            $.ajax({
+                url: "@Url.Action("Get", "Reporte")",
+                data: { procesoId: procesoId },
+                type: "POST",
+                success: function (html) {
+                    $("#modal").modal("show");
+                    $("#modalBody").html(html);
+
+                    $(".accionResultado").click(function (e) {
+                        e.preventDefault();
+                        var accion = $(this).data("accion");
+
+                        $.ajax({
+                            url: "@Url.Action("Revisar", "Reporte")",
+                            data: { procesoId: procesoId, accion: accion },
+                            type: "POST",
+                            datatype: "JSON",
+                            success: function (json) {
+                                $("#alert").removeClass("hide").show();
+                                if (json.valid) {
+                                    $("#alertMsg")
+                                        .removeAttr("class")
+                                        .addClass("alert")
+                                        .addClass("alert-success")
+                                        .html(json.msg);
+
+                                    setTimeout(function () { window.location = ''; }, 2000)
+                                }
+                                else {
+                                    $("#alertMsg")
+                                        .removeAttr("class")
+                                        .addClass("alert")
+                                        .addClass("alert-danger")
+                                        .html(json.msg);
+                                }
+                            }
+                        });
+                    });
+                }
+            });
+        });
+
+        $("#generarInforme").click(function (e) {
+            e.preventDefault();
+
+            var c = confirm("¿Seguro que desea generar el informe?")
+
+            if (c)
+            {
+                $.ajax({
+                    url: "@Url.Action("CrearInforme", "Solicitud")",
+                    data: { idSolicitud: $("#solicitud").val() },
+                    type: "POST",
+                    success: function (json)
+                    {
+                        $("#alertInforme").removeClass("hide").show();
+                        if (json.valid) {
+                            $("#alertInformeMsg")
+                                .removeAttr("class")
+                                .addClass("alert")
+                                .addClass("alert-success")
+                                .html(json.msg);
+
+                            setTimeout(function () {
+                                window.location = '';
+                            }, 2000)
+                        }
+                        else {
+                            $("#alertInformeMsg")
+                                .removeAttr("class")
+                                .addClass("alert")
+                                .addClass("alert-danger")
+                                .html(json.msg);
+                        }
+                    }
+                });
+            }
+        });
+
+        $("#cerrarSolicitud").click(function (e) {
+            e.preventDefault();
+
+            var c = confirm("¿Seguro que desea establer como cerrada esta solicitud?\nAl establecerla como cerrada no podra hacer modificaciones")
+
+            if (c)
+            {
+                $.ajax({
+                    url: "@Url.Action("Cerrar", "Solicitud")",
+                    type: "POST",
+                    data: { idSolicitud: $("#solicitud").val() },
+                    success: function(json)
+                    {
+                        $("#alertCambiarEstado").removeClass("hide");
+                        if (json.valid) {
+                            $(".cambiarEstado").hide();
+
+                            $("#alertCambiarEstadoMsg")
+                                .removeAttr("class")
+                                .addClass("alert")
+                                .addClass("alert-success")
+                                .html("La solicitud fue cerrada exitosamente");
+                        }
+                        else {
+                            $("#alertCambiarEstadoMsg")
+                                .removeAttr("class")
+                                .addClass("alert")
+                                .addClass("alert-danger")
+                                .html(json.msg);
+                        }
+                    }
+                });
+            }
+        });
+
+        $("#abrirCorreccionSolicitud").click(function (e) {
+            e.preventDefault();
+
+            var c = confirm("¿Seguro que desea abrir esta solicitud para correcion?");
+
+            if (c)
+            {
+                $.ajax({
+                    url: "@Url.Action("AbrirCorreccion", "Solicitud")",
+                    type: "POST",
+                    data: { idSolicitud: $("#solicitud").val() },
+                    success: function(json)
+                    {
+                        $("#alertCambiarEstado").removeClass("hide");
+                        if (json.valid) {
+                            $(".cambiarEstado").hide();
+
+                            $("#alertCambiarEstadoMsg")
+                                .removeAttr("class")
+                                .addClass("alert")
+                                .addClass("alert-success")
+                                .html("La solicitud ha sido abierta para correccion");
+
+                            setTimeout(function () {
+                                window.location = '';
+                            }, 2000);
+                        }
+                        else {
+                            $("#alertCambiarEstadoMsg")
+                                .removeAttr("class")
+                                .addClass("alert")
+                                .addClass("alert-danger")
+                                .html(json.msg);
+                        }
+                    }
+                });
+            }
+        });
+
+        $("#cancelarCorreccion").click(function (e) {
+            e.preventDefault();
+            var c = confirm("¿Seguro que desea cancelar la correccion?");
+
+            if (c)
+            {
+                $.ajax({
+                    url: "@Url.Action("CancelarCorreccion", "Solicitud")",
+                    type: "POST",
+                    data: { idSolicitud: $("#solicitud").val() },
+                    success: function(json)
+                    {
+                        if (json.valid) {
+                            
+                            setTimeout(function () {
+                                window.location = '';
+                            }, 500);
+                        }
+                    }
+                });
+            }
+        });
+
+        $(".abrirCorrecionAnalista").click(function (e) {
+            e.preventDefault();
+
+            var element = $(this);
+            var procesoAnalista = element.data("value")
+
+            
+            $("#modalBody").html(
+                $("<input>")
+                    .addClass("form-control")
+                    .attr("id", "comentarioAperturaAnalista")
+                    .attr("type", "text")
+                    .attr("placeholder", "Ingrese un comentario del reporte")
+                     
+                )
+                .append($("<br>"))
+                .append(
+                    $("<div>").addClass("row").html(
+                        $("<div>")
+                            .addClass("col-md-12")
+                            .html(
+                                $("<button>")
+                                    .addClass("btn")
+                                    .addClass("btn-success")
+                                    .addClass("pull-right")
+                                    .attr("id", "abrirCorreccionAnalistaButton")
+                                    .html("Aceptar")
+                            )
+                    )
+                );
+            $("#modal").modal("show");
+            
+            $("#abrirCorreccionAnalistaButton").click(function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: "@Url.Action("AbrirProcesoAnalistaCorreccion", "Solicitud")",
+                    type: "POST",
+                    data: { idProcesoAnalista: procesoAnalista, comentario: $("#comentarioAperturaAnalista").val() },
+                    success: function(json)
+                    {
+                        if (json.valid) {
+
+                            $("#abrirCorreccionAnalistaButton").parent().prepend(
+                                $("<p>")
+                                    .addClass("alert")
+                                    .addClass("alert-success")
+                                    .text("El proceso del analista se abrio y se notifico")
+                            );
+
+                            setTimeout(function () {
+                                window.location = '';
+                            }, 2000);
+                        }
+                        else {
+                            alert("Un error ha ocurrido")
+                        }
+                    }
+                });
+            });
+        });
+    });
+    </script>    
+}
+
+@section Styles {
+<style type="text/css">
+    .bg-primary {
+        color: #fff;
+    }
+</style>
+
+}
+
+
+

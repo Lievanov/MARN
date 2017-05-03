@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Calidad de Agua</title>
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=calibri">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="@Url.Content("~/Content/font-awesome.min.css")" rel="stylesheet" type="text/css" />
+    @RenderSection("Styles", required: false)
+
+    <style>
+        body {
+          font-family: 'calibri', serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="/"><img src="http://s3.amazonaws.com/marn/images/marn+solo+letra.png" style="max-height: 50px; margin-top: 5px" class="img-responsive" /></a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        @Html.ActionLink("Inicio", "Index", "Home")
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                            Solicitud <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Solicitudes", "Index", "GrupoSolicitud")</li>
+                            <li>@Html.ActionLink("Nueva Solicitud", "Create", "GrupoSolicitud")</li>
+                            <li>@Html.ActionLink("Muestras", "Index", "Solicitud")</li>
+                        </ul>
+                    </li>
+                    
+                    <li >
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                            Reportes <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Actividad", "Reporte", "ReportesSolicitud")</li>
+                            <li>@Html.ActionLink("Trabajo y costos", "TrabajoCosto", "ReportesSolicitud")</li>
+                        </ul>
+                        
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                            Inventario <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Reactivos", "Index", "Reactivo")</li>
+                            <li>@Html.ActionLink("Productos en Bodega", "Index", "Producto")</li>
+                            <li>@Html.ActionLink("Detalle Salidas", "ReporteSalida", "Producto")</li>
+                            <li>@Html.ActionLink("Reporte de uso", "ReporteUso", "Producto")</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button">
+                            Otros <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>@Html.ActionLink("Solicitantes", "Index", "Solicitante")</li>
+                            <li>@Html.ActionLink("Sitios Muestreo", "Index", "SitioMuestreo")</li>
+                            <li>@Html.ActionLink("Analisis", "Index", "Analisi")</li>
+                            <li>@Html.ActionLink("Parametros Muestra", "Index", "Muestra")</li>
+                            <li>@Html.ActionLink("Empleados de Campo", "Index", "EmpleadoCampo")</li>
+                        </ul>
+                    </li>
+                    <li>
+                        @Html.ActionLink("Usuarios", "Index", "Admin")
+                    </li>
+
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Laboratorio Calidad de Agua MARN</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+
+        var countNotifications = function () {
+            $.ajax({
+                url: "@Url.Action("GetUnreadCount", "Notificacion")",
+                type: "POST",
+                success: function (json)
+                {
+                    $("#countNotifications").text(json.count);
+                }
+            });
+        };
+
+        $(function () {
+            // navbar notification popups
+            $(".notification-dropdown").each(function (index, el) {
+                var $el = $(el);
+                var $dialog = $el.find(".pop-dialog");
+                var $trigger = $el.find(".trigger");
+
+                $dialog.click(function (e) {
+                    e.stopPropagation()
+                });
+                $dialog.find(".close-icon").click(function (e) {
+                    e.preventDefault();
+                    $dialog.removeClass("is-visible");
+                    $trigger.removeClass("active");
+                });
+                $("body").click(function () {
+                    $dialog.removeClass("is-visible");
+                    $trigger.removeClass("active");
+                });
+
+                $trigger.click(function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+
+                    // hide all other pop-dialogs
+                    $(".notification-dropdown .pop-dialog").removeClass("is-visible");
+                    $(".notification-dropdown .trigger").removeClass("active")
+
+                    $dialog.toggleClass("is-visible");
+                    if ($dialog.hasClass("is-visible")) {
+                        $(this).addClass("active");
+                    } else {
+                        $(this).removeClass("active");
+                    }
+                });
+            });
+
+            $("#verNotificaciones").click(function () {
+                $.ajax({
+                    url: "@Url.Action("GetLast", "Notificacion", new { number = 5 }, null)",
+                    success: function (html) {
+                        $("#mensajesNotificaciones").html(html);
+                    }
+                });
+            });
+
+            countNotifications();
+
+            setInterval(countNotifications, 180000);
+        });
+    </script>
+</body>
+</html>

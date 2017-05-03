@@ -1,0 +1,101 @@
+﻿@model LaboratorioMarn.VISITA
+
+<div class="form-horizontal">
+    <input type="hidden" name="visitaId" value="@Model.id" />
+
+    <div class="form-group">
+
+        @Html.LabelFor(model => model.id_empleado, "Encargado", htmlAttributes: new { @class = "control-label col-sm-4" })
+        <div class="col-sm-7">
+            @Html.DropDownListFor(model => model.id_empleado, (IEnumerable<SelectListItem>)ViewBag.EmpleadoSelection, htmlAttributes: new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+
+        @Html.LabelFor(model => model.id_empleado_entrega, "Entrega", htmlAttributes: new { @class = "control-label col-sm-4" })
+        <div class="col-sm-7">
+            @Html.DropDownListFor(model => model.id_empleado_entrega, (IEnumerable<SelectListItem>)ViewBag.Empleado2Selection, htmlAttributes: new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.id_procedencia, "Procedencia", htmlAttributes: new { @class = "control-label col-sm-4" })
+        <div class="col-sm-7">
+            @Html.DropDownListFor(model => model.id_procedencia, (IEnumerable<SelectListItem>)ViewBag.ProcedenciaSelection, htmlAttributes: new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.id_tipo_muestra, "Tipo muestra", htmlAttributes: new { @class = "control-label col-sm-4" })
+        <div class="col-sm-7">
+            @Html.DropDownListFor(model => model.id_tipo_muestra, (IEnumerable<SelectListItem>)ViewBag.MuestraSelection, htmlAttributes: new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-4" for="id_sitio_muestreo">Sitio de muestreo</label>
+        <div class="col-sm-7">
+            @Html.DropDownList("id_sitio_muestreo", (IEnumerable<SelectListItem>)ViewBag.SitioMuestreoSelection, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.id_sitio_muestreo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-4" for="id_sitio_muestreo">Fecha muestreo</label>
+        <div class="col-sm-7">
+            @Html.EditorFor(model => model.fecha_visita, new { htmlAttributes = new { @class = "form-control", @id = "fechaVisita" } })
+            @Html.ValidationMessageFor(model => model.fecha_visita, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-4" for="id_sitio_muestreo">Fecha recepción</label>
+        <div class="col-sm-7">
+            @Html.EditorFor(model => model.fecha_entrega, new { htmlAttributes = new { @class = "form-control", @id = "fechaEntrega" } })
+            @Html.ValidationMessageFor(model => model.fecha_entrega, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="hora_entrega" class="control-label col-md-4">Hora de recepción</label>
+        <div class="col-md-7">
+            <input type="text" class="form-control" name="hora_entrega" id="horaEntrega" value="@Model.fecha_entrega.Value.ToShortTimeString()">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="id" class="control-label col-md-4">Identificador de la Visita</label>
+        <div class="col-md-7">
+            @Html.EditorFor(model => model.id, new { htmlAttributes = new { @class = "form-control" } })
+        </div>
+    </div>
+
+    @{
+        MARNEntities db = new MARNEntities();
+        var cantidad = db.SOLICITUDs.Where(s => s.VISITAs.First().id == Model.id).Count();
+    }
+
+    <div class="form-group">
+        <label for="hora_visita" class="control-label col-md-4">Cantidad de muestras</label>
+        <div class="col-md-7">
+            <input type="text" class="form-control" name="cantidad_muestras" value="@cantidad">
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-11">
+            <div class="col-md-8">
+                <div class="hide" id="alert">
+                    <div class="alert alert-success" role="alert" id="alertMsg"></div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <input type="submit" value="Crear" class="btn btn-success btn-block" id="editarVisita" />
+            </div>
+        </div>
+    </div>
+</div>
+
+

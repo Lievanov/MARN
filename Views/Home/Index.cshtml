@@ -1,0 +1,127 @@
+﻿@model IEnumerable<LaboratorioMarn.EMPLEADO>
+
+@{
+    ViewBag.Title = "Home";
+    IEnumerable<LaboratorioMarn.EMPLEADO> empleados = Model;
+    IEnumerable<LaboratorioMarn.SOLICITUD> solicitudes = ViewBag.Solicitudes;
+    IEnumerable<LaboratorioMarn.PRODUCTO> productos = ViewBag.Productos;
+}
+
+<h1 class="page-header">
+    <img src="~/Images/marn logo 2.png" style="max-height: 65px" />
+    Laboratorio de Calidad de Agua</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="col-md-offset- col-md-11" >
+            <h3 class="page-header">Solicitudes en Proceso</h3>
+            <div style="max-height:250px; overflow-y: auto;">
+                <table id="tablaA" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Solicitud</th>
+                            <th>Solicitante</th>
+                            <th>Fecha Creación</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (SOLICITUD solicitud in solicitudes)
+                        {
+                            <tr>
+                                <td>  @solicitud.no_referencia  </td>
+                                <td>  @solicitud.SOLICITANTE.nombre_solicitante </td>
+                                <td>  @solicitud.fecha_creacion.Value.ToShortDateString() </td>
+                                <td>  @solicitud.ESTADO.nombre_estado </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="col-md-offset- col-md-12">
+            <h3 class="page-header">Seguimiento Empleados</h3>
+
+            <table id="tablaA" class="table table-bordered table-striped" >
+                <thead>
+                    <tr class="text-center">
+                        <th>Empleado</th>
+                        <th>Area</th>
+                        <th>Finalizados</th>
+                        <th>Analisis</th>
+                        <th>Pendientes</th>
+                        <th>Analisis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (EMPLEADO empleado in empleados)
+                    {
+                        IEnumerable<PROCESO_ANALISTA> procesosAnalista = empleado.PROCESO_ANALISTA.Where(s => (s.fecha_asignacion >= ViewBag.inicio_datetime && s.fecha_asignacion <= ViewBag.fin_datetime) || s.fecha_fin == null).ToList();
+
+                        <tr class="text-center">
+                            <td>@empleado.nombre_empleado </td>
+                            <td>@empleado.AREA.nombre_area </td>
+                            <td>@procesosAnalista.Count(pe => pe.fecha_fin != null)</td>
+                            @if (procesosAnalista.Where(pe => pe.fecha_fin != null).Count() > 0)
+                            {
+                                <td>@procesosAnalista.Where(pe => pe.fecha_fin != null).GroupBy(pe => pe.empleado_id).Select(p => p.Sum(w => w.cantidad_analisis)).First()</td>
+                            }
+                            else
+                            {
+                                <td>0</td>
+                            }
+                            <td>@procesosAnalista.Count(pe => pe.fecha_fin == null)</td>
+                            @if (procesosAnalista.Where(pe => pe.fecha_fin == null).Count() > 0)
+                            {
+                                <td>@procesosAnalista.Where(pe => pe.fecha_fin == null).GroupBy(pe => pe.empleado_id).Select(p => p.Sum(w => w.cantidad_analisis)).First()</td>
+                            }
+                            else
+                            {
+                                <td>0</td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="col-md-offset- col-md-11">
+            <h3 class="page-header">Productos en Invetario en alerta</h3>
+            <div style="max-height:250px; overflow-y: auto;">
+                <table id="tablaA" class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Reactivo</th>
+                            <th>Catalogo</th>
+                            <th>Lote</th>
+                            <th>Existencia</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (PRODUCTO producto in productos)
+                        {
+                            <tr>
+                                <td>@producto.REACTIVO.nombre</td>
+                                <td>@producto.CATALOGO.nombre_catalogo</td>
+                                <td>@producto.LOTE.nombre</td>
+                                <td>@producto.EXISTENCIA_PRODUCTO.Sum(ep => ep.cantidad)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,875 @@
+﻿@model LaboratorioMarn.Models.reporteSolicitudxsolicitantes
+@{   
+ ViewBag.Title = "Reporte";
+    var i = 1;
+    var myHtmlString = new HtmlString("");
+   
+}
+@using System.Globalization;
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">
+
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Dashboard</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-check-square-o fa-4x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge"  ><h3>@ViewBag.solfinalizadas</h3>  </div>
+                                <div>Mes Actual!</div>
+                            </div>
+                        </div>
+                    </div>
+                  
+                        <div class="panel-footer">
+                            <span class="pull-left" style="color:blue">Solicitudes Finalizadas</span>
+                            
+                            <div class="clearfix"></div>
+                        </div>
+                  
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-flask fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge"><h3> @ViewBag.analisisFinalizados</h3></div>
+                                <div>Mes Actual!</div>
+                            </div>
+                        </div>
+                    </div>
+                   
+                        <div class="panel-footer">
+                            <span class="pull-left" style="color:blue">Análisis Finalizados</span>
+                           
+                            <div class="clearfix"></div>
+                        </div>
+                    
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="panel  panel-danger">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-tasks fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge"> <h3>@ViewBag.solicitudesEnProceso</h3> </div>
+                                <div><br /></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                        <div class="panel-footer">
+                            <span class="pull-left" style="color:blue">Solicitudes En Proceso</span>
+                            
+                            <div class="clearfix"></div>
+                        </div>
+                    
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <div class="row">
+                            <div class="col-xs-3">
+                                <i class="fa fa-clock-o fa-5x"></i>
+                            </div>
+                            <div class="col-xs-9 text-right">
+                                <div class="huge"><h3>@ViewBag.analisisPendientes</h3></div>
+                                <div><br /></div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#">
+                        <div class="panel-footer">
+                            <span class="pull-left" style="color:blue">Análisis En Proceso</span>
+                           
+                            <div class="clearfix"><br /></div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <!--botones de formulario-->
+        
+        <div class="row">
+         
+
+            <div class="col-md-7 col-md-offset-2">
+                <label class="control-label col-md-2">Fecha inicio</label>
+                <div class="col-md-3">
+                    <div class='input-group date' id='datetimepicker1'>
+                        <input id="fechaInicio" type="text" name="inicio" class="form-control fechaInicio" value="@ViewBag.fecha_inicio" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                    </div>
+                <label class="control-label col-md-2">Fecha fin</label>
+                <div class="col-md-3">
+                    <div class='input-group date' id='datetimepicker2'>
+                        <input id="fechaFin" type="text" name="fin" class="form-control fechaFin" value="@ViewBag.fecha_fin" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                        <br />
+
+                    </div>
+                <input  id="enviar" type="submit" value="Generar" class="btn btn-primary pull-right enviar" />
+                
+              
+              
+            </div>
+        </div>
+        <!--botones de formulario-->
+        <br />
+        <!--Boton para ocultar graficos-->
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                <i class="fa fa-gear"></i>  <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li>
+                    <a id="bottonSolicitudSolicitanteMostrar">Solicitudes por Solicitante</a>
+                </li>
+                <li>
+                    <a id="bottonAnalisisSolicitanteMostrar">Análisis por Solicitante</a>
+                </li>
+                <li>
+                    <a id="bottonAnalisisAreaMostrar">Análisis por Area</a>
+                </li>
+
+            </ul>
+        </div>
+        <!--Boton para ocultar graficos-->
+        <br />
+        <br />
+
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                
+                <!-- /.panel -->
+                <div  id="graphSolicitudesSolicitante">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Solicitudes por solicitante
+                            @*<div class="pull-right">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                Actions
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li>
+                                    <a href="#">Action</a>
+                                </li>
+                                <li>
+                                    <a href="#">Another action</a>
+                                </li>
+                                <li>
+                                    <a href="#">Something else here</a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="#">Separated link</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>*@
+                        </div>
+                        <!-- /.panel-heading -->
+
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-7">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-hover table-striped" id="tablar1">
+                                            @foreach (var fila in ViewBag.solicitudxsolicitante)
+                                        {
+                                            if (i == 1)
+                                            {
+
+                                                myHtmlString = new HtmlString("<tbody>");
+                                                i++;
+                                                <thead>
+                                                    <tr>
+                                                        @foreach (var columna in fila)
+                                                        {
+                                                            <th>@columna</th>
+                                                        }
+                                                    </tr>
+                                                </thead>
+
+                                                @myHtmlString;
+
+                                                             continue;
+
+
+                                            }
+
+                                            <tr>
+
+                                                @foreach (var columna in fila)
+                                                {
+                                                    <td>@columna</td>
+                                                }
+
+                                            </tr>
+                                        }
+
+                                            @{ myHtmlString = new HtmlString("</tbody>"); }
+                                            @myHtmlString
+
+                                            <tfoot id="fnFooterCallback">
+
+                                                @foreach (var filaTotal in ViewBag.solicitudxsolicitantetotal)
+                                            {
+
+                                                    <tr>
+
+                                                        @foreach (var columna in filaTotal)
+                                                    {
+                                                            <td>
+                                                                @columna
+                                                            </td>
+                                                    }
+
+                                                    </tr>
+
+                                            }
+                                            </tfoot>
+                                        </table>
+
+
+                                    </div>
+                                    <!-- /.table-responsive -->
+
+                                </div>
+
+                                <!-- /.col-lg-4 (nested) -->
+
+                                <div class="col-lg-offset-7">
+                                    <div id="myfirstchart"></div>
+                                </div>
+
+                                <!-- /.col-lg-8 (nested) -->
+                            </div>
+                            <!-- /.row -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                </div>  
+                    <!-- /.panel -->
+                    <!-- /.panel -->
+                    <div  id="graphAnalisisSolicitante">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <i class="fa fa-bar-chart-o fa-fw"></i>Análisis por solicitante
+                                @*<div class="pull-right">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
+                                    Actions
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu pull-right" role="menu">
+                                    <li>
+                                        <a href="#">Action</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Another action</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Something else here</a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="#">Separated link</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>*@
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-7">
+                                        <div class="table-responsive">
+
+
+                                            <table class="table table-bordered table-hover table-striped" id="tablar2">
+                                                @{ i = 1; }
+                                                @foreach (var fila in ViewBag.analisisxsolicitante)
+                                            {
+                                                if (i == 1)
+                                                {
+
+                                                    myHtmlString = new HtmlString("<tbody>");
+                                                    i++;
+                                                    <thead>
+                                                        <tr>
+                                                            @foreach (var columna in fila)
+                                                            {
+                                                                <th>@columna</th>
+                                                            }
+                                                        </tr>
+                                                    </thead>
+
+                                                    @myHtmlString;
+
+                                                                 continue;
+
+
+                                                }
+
+                                                <tr>
+
+                                                    @foreach (var columna in fila)
+                                                    {
+                                                        <td>@columna</td>
+                                                    }
+
+                                                </tr>
+                                            }
+
+                                                @{ myHtmlString = new HtmlString("</tbody>"); }
+                                                @myHtmlString
+
+
+                                                <tfoot id="fnFooterCallback">
+
+                                                    @foreach (var fila in ViewBag.analisisxsolicitantetotal)
+                                                {
+
+                                                        <tr>
+
+                                                            @foreach (var columna in fila)
+                                                        {
+                                                                <td>
+                                                                    @columna
+                                                                </td>
+                                                        }
+
+                                                        </tr>
+
+                                                }
+                                                </tfoot>
+                                            </table>
+
+
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.col-lg-4 (nested) -->
+                                    <div class="col-lg-offset-7">
+                                        <div id="analisisxsolicitante"></div>
+                                        @*<div id="morris-bar-chart"></div>*@
+                                    </div>
+                                    <!-- /.col-lg-8 (nested) -->
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                    </div>
+                    <!-- /.panel -->
+                    <!--Boton para ocultar graficos-->
+                    @*<div class="btn-group">
+                        <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-gear"></i>  <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a id="bottonAnalisisAreaOcultar">Ocultar</a>
+                            </li>
+                            <li>
+                                <a id="bottonAnalisisAreaMostrar">Mostrar</a>
+                            </li>
+
+                        </ul>
+                    </div>*@
+                    <!--Boton para ocultar graficos-->
+                    
+                    <!-- /.panel -->
+                    <div  id="graphAnalisisArea">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <i class="fa fa-bar-chart-o fa-fw"></i>Análisis por Area
+
+                            </div>
+                            <!-- /.panel-heading -->
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-7">
+                                        <div class="table-responsive">
+
+
+                                            <table class="table table-bordered table-hover table-striped"  id="tablar3">
+                                                @{ i = 1; }
+                                                @foreach (var fila in ViewBag.analisisxarea)
+                                                {
+                                                    if (i == 1)
+                                                    {
+
+                                                        myHtmlString = new HtmlString("<tbody>");
+                                                        i++;
+                                                        <thead>
+                                                            <tr>
+                                                                @foreach (var columna in fila)
+                                                                {
+                                                                    <th>@columna</th>
+                                                                }
+                                                            </tr>
+                                                        </thead>
+
+                                                        @myHtmlString;
+
+                                                                 continue;
+
+
+                                                    }
+
+                                                    <tr>
+
+                                                        @foreach (var columna in fila)
+                                                        {
+                                                            <td>@columna</td>
+                                                        }
+
+                                                    </tr>
+                                                }
+
+                                                @{ myHtmlString = new HtmlString("</tbody>"); }
+                                                @myHtmlString
+
+                                                <tfoot id="fnFooterCallback">
+
+                                                    @foreach (var fila in ViewBag.analisisxareatotal)
+                                                    {
+
+                                                        <tr>
+
+                                                            @foreach (var columna in fila)
+                                                            {
+                                                                <td>
+                                                                    @columna
+                                                                </td>
+                                                            }
+
+                                                        </tr>
+
+                                                    }
+                                                </tfoot>
+
+                                            </table>
+
+
+                                        </div>
+                                        <!-- /.table-responsive -->
+                                    </div>
+                                    <!-- /.col-lg-4 (nested) -->
+                                    <div class="col-lg-offset-7">
+                                        <div id="analisisxarea"></div>
+
+                                    </div>
+                                    <!-- /.col-lg-8 (nested) -->
+                                </div>
+                                <!-- /.row -->
+                            </div>
+                            <!-- /.panel-body -->
+                        </div>
+                        <!-- /.panel -->
+                    </div>
+
+                </div>
+            <!-- /.col-lg-8 -->
+            <div class="col-lg-6">
+                <!-- /.panel -->
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-bar-chart-o fa-fw"></i> Análisis por analistas
+                    </div>
+                    <div class="panel-body">
+                        <div id="donut-chart-base"></div>
+                     
+                        @*<p class="btn btn-default btn-block">Año actual</p>*@
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+                
+                    @*<!-- START WIDGET CLOCK -->
+            <div class="panel panel-primary text-center no-boder bg-color-blue" style="background-color:grey">
+                <i class="fa fa-clock-o fa-5x"></i>
+                <div class="panel-defaultr" style="color:white; font-size:50px">@DateTime.Now.Hour:@DateTime.Now.Minute</div>
+                <div class="panel-body">@DateTime.Now.Day , @DateTime.Now.Month, @DateTime.Now.Year </div>
+
+            </div>
+            <!-- END WIDGET CLOCK -->
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-bell fa-fw"></i> Notifications Panel
+                </div>
+                <!-- /.panel-heading -->
+                <div class="panel-body">
+                    <div class="list-group">
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-comment fa-fw"></i>
+                            <span class="pull-right text-muted small">
+                                <em>4 minutes ago</em>
+                            </span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                            <span class="pull-right text-muted small">
+                                <em>12 minutes ago</em>
+                            </span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-envelope fa-fw"></i> Message Sent
+                            <span class="pull-right text-muted small">
+                                <em>27 minutes ago</em>
+                            </span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-tasks fa-fw"></i> New Task
+                            <span class="pull-right text-muted small">
+                                <em>43 minutes ago</em>
+                            </span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                            <span class="pull-right text-muted small">
+                                <em>11:32 AM</em>
+                            </span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-bolt fa-fw"></i> Server Crashed!
+                            <span class="pull-right text-muted small">
+                                <em>11:13 AM</em>
+                            </span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-warning fa-fw"></i> Server Not Responding
+                            <span class="pull-right text-muted small">
+                                <em>10:57 AM</em>
+                            </span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-shopping-cart fa-fw"></i> New Order Placed
+                            <span class="pull-right text-muted small">
+                                <em>9:49 AM</em>
+                            </span>
+                        </a>
+                        <a href="#" class="list-group-item">
+                            <i class="fa fa-money fa-fw"></i> Payment Received
+                            <span class="pull-right text-muted small">
+                                <em>Yesterday</em>
+                            </span>
+                        </a>
+                    </div>
+                    <!-- /.list-group -->
+                    <a href="#" class="btn btn-default btn-block">View All Alerts</a>
+                </div>
+                <!-- /.panel-body -->
+            </div>*@
+
+                    <!-- /.panel .chat-panel -->
+                </div>
+            <!-- /.col-lg-4 -->
+            <div class="col-lg-6">
+                
+                <div class="show" id="graphTop">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <i class="fa fa-bar-chart-o fa-fw"></i> Top 15 de Análisis más Solicitados
+                        </div>
+                        <div class="panel-body">
+                            <div id="graph"></div>
+
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                </div>
+                </div>
+            </div>
+        <!-- /.row -->
+       
+
+
+    </div>
+}
+@section Scripts {
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+
+    <script src="@Url.Content("~/Scripts/morris.min.js")"></script>
+    <script src="@Url.Content("~/Scripts/data.js")"></script>
+<script src="@Url.Content("~/Scripts/bootstrap-datepicker.js")"></script>
+
+ 
+
+    <script type="text/javascript" src="//cdn.datatables.net/u/dt/dt-1.10.12/datatables.min.js"></script>
+    <link href="//cdn.datatables.net/buttons/1.2.1/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js"></script>
+   <script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.1/js/buttons.flash.min.js"></script>
+    
+    <script type="text/javascript">
+        var dataSolicitanteSolicitud = new Array();
+        var objetoDataSolicitanteSolictud;
+
+        var tablaSolicitante;
+        var tablaSolicitantexanalisis;
+        var tablaareaxanalisis;
+       
+
+        $(function () {
+            tablaSolicitante = $("#tablar1").DataTable({
+                language: {
+                    url: '/Scripts/spanish.json'
+                }
+            });
+
+            tablaSolicitantexanalisis = $("#tablar2").DataTable({
+                language: {
+                    url: '/Scripts/spanish.json'
+                }
+               
+
+            });
+
+
+            tablaareaxanalisis = $("#tablar3").DataTable({
+                language: {
+                    url: '/Scripts/spanish.json'
+                }
+            });
+        });        
+    </script>
+   
+
+<script type="text/javascript">
+    var json = @Html.Raw(Json.Encode(ViewBag.jsonDataSolicitanteSolicitud));
+    var data = json.Data;
+    Morris.Line({
+        // ID of the element in which to draw the chart.
+        element: 'myfirstchart',
+        // Chart data records -- each entry in this array corresponds to a point on
+        // the chart.
+        data: data,
+        // The name of the data record attribute that contains x-values.
+        xkey: 'year',
+
+        // A list of names of data record attributes that contain y-values.
+        ykeys: @Html.Raw(Json.Encode(ViewBag.nombresSolicitantes)),
+        // Labels for the ykeys -- will be displayed when you hover over the
+        // chart.
+        labels: @Html.Raw(Json.Encode(ViewBag.nombresSolicitantes)),
+        redraw: true
+
+    })
+</script>
+
+<script type="text/javascript">
+    var json = @Html.Raw(Json.Encode(ViewBag.jsonDataAnalisisSolicitante));
+    var data = json.Data;
+    var analisisxsolicitante= Morris.Line({
+        // ID of the element in which to draw the chart.
+        element: 'analisisxsolicitante',
+        // Chart data records -- each entry in this array corresponds to a point on
+        // the chart.
+        data: data,
+        // The name of the data record attribute that contains x-values.
+        xkey: 'year',
+
+        // A list of names of data record attributes that contain y-values.
+        ykeys: @Html.Raw(Json.Encode(ViewBag.nombresSolicitantes)),
+        // Labels for the ykeys -- will be displayed when you hover over the
+        // chart.
+        labels: @Html.Raw(Json.Encode(ViewBag.nombresSolicitantes)),
+        
+    })
+</script>
+
+
+<script type="text/javascript">
+    var json = @Html.Raw(Json.Encode(ViewBag.jsonDataAnalisisAreas));
+    var data = json.Data;
+   var analisisxarea= Morris.Line({
+        // ID of the element in which to draw the chart.
+        element: 'analisisxarea',
+        // Chart data records -- each entry in this array corresponds to a point on
+        // the chart.
+        data: data,
+        // The name of the data record attribute that contains x-values.
+        xkey: 'year',
+
+        // A list of names of data record attributes that contain y-values.
+        ykeys: @Html.Raw(Json.Encode(ViewBag.nombresAreas)),
+        // Labels for the ykeys -- will be displayed when you hover over the
+        // chart.
+        labels: @Html.Raw(Json.Encode(ViewBag.nombresAreas)),
+        redraw: true
+
+    })
+</script>
+
+<script type="text/javascript">
+    var json = @Html.Raw(Json.Encode(ViewBag.jsonDataAnalisisEmpleado));
+    var data = json.Data;
+    Morris.Donut({
+        // ID of the element in which to draw the chart.
+        element: 'donut-chart-base',
+        // Chart data records -- each entry in this array corresponds to a point on
+        // the chart.
+        data: data,
+        redraw: true
+
+
+    })
+</script>
+
+<script type="text/javascript">
+        var json = @Html.Raw(Json.Encode(ViewBag.jsonDataAnalisis));
+        var data = json.Data;
+        var chart = Morris.Bar({
+            // ID of the element in which to draw the chart.
+            element: 'graph',
+            // Chart data records -- each entry in this array corresponds to a point on
+            // the chart.
+            data: data,
+
+            xkey: 'label',
+             
+            // A list of names of data record attributes that contain y-values.
+            ykeys: @Html.Raw(Json.Encode(ViewBag.nombresAnalisis)),
+            // Labels for the ykeys -- will be displayed when you hover over the
+            // chart.
+             labels: @Html.Raw(Json.Encode(ViewBag.nombresAnalisis)),
+             stacked: true,
+             hideHover: 'auto',
+             resize: true,
+             redraw: true,
+             xLabelAngle: 45
+        });
+   
+    
+    </script>
+
+
+
+<script type="text/javascript">
+
+    $("#graphSolicitudesSolicitante").show();
+    $("#graphAnalisisSolicitante").hide();
+    $("#graphAnalisisArea").hide();
+
+    $("#bottonSolicitudSolicitanteMostrar").click(function () { 
+        $("#graphSolicitudesSolicitante").show();
+        $("#graphAnalisisSolicitante").hide();
+        $("#graphAnalisisArea").hide();
+
+    });
+
+    $("#bottonAnalisisSolicitanteMostrar").click(function () { 
+        $("#graphSolicitudesSolicitante").hide();
+        $("#graphAnalisisSolicitante").show();
+        tablaSolicitantexanalisis.draw();
+        $("#graphAnalisisArea").hide();  
+    });
+
+    $("#bottonAnalisisAreaMostrar").click(function () { 
+        $("#graphSolicitudesSolicitante").hide();
+        $("#graphAnalisisSolicitante").hide();
+        $("#graphAnalisisArea").show();
+       
+       
+        
+    });
+   
+    
+</script>
+<script type="text/javascript">
+    var datepicker1= $(function () {
+        $('#datetimepicker1').datepicker({ format: "yyyy/mm/dd",
+            autoclose:true,
+            language:'es'
+        });
+        
+        
+    });
+    var datepicker2= $(function () {
+        $('#datetimepicker2').datepicker({ format: "yyyy/mm/dd",
+            defaultViewDate: 'today',
+            autoclose:true,
+            language:'es'
+        });
+        
+    });
+    datepicker1.noConflict();
+    datepicker2.noConflict();
+</script>
+
+
+
+<script type="text/javascript">
+    if(@ViewBag.Fecha ==0){
+
+    alert("Rango de Fechas Incorrecto");
+    }
+    </script>
+
+}
+
+@section Styles {
+    <link href="https://cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker.min.css" />
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/css/datepicker3.min.css" />
+
+    <style type="text/css">
+        table.dataTable thead {
+            font-size: 0.85em;
+        }
+
+        table.dataTable tbody {
+            font-size: 0.85em;
+        }
+
+        table.dataTable tfoot {
+            font-size: 0.85em;
+        }
+
+            table.dataTable tfoot td {
+                padding: 8px 10px 8px 10px;
+            }
+      
+ 
+          
+    </style>
+
+}

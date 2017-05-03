@@ -1,0 +1,70 @@
+﻿@model IEnumerable<LaboratorioMarn.ALMACEN>
+
+@{
+    ViewBag.Title = "Almacen";
+}
+<br />
+<p>
+    @Html.ActionLink("<< Regresar a Inventario", "Index", "Producto")
+</p>
+
+<h2 class="page-header">Almacenes</h2>
+
+<p>
+    @Html.ActionLink("Crear nuevo", "Create")
+</p>
+
+<div class="row">
+    <div class="col-md-6">
+        <table class="table" id="tablaAlmacen">
+            <thead>
+                <tr>
+                    <th>
+                        @*@Html.DisplayNameFor(model => model.estante)*@
+                        Estante
+                    </th>
+                    <th>
+                        @*@Html.DisplayNameFor(model => model.nivel)*@
+                        Nivel
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+
+            @foreach (var item in Model)
+            {
+                <tbody>
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.estante)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nivel)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Editar", "Edit", new { id = item.id_almacen }) |
+                            @Html.ActionLink("Eliminar", "Delete", new { id = item.id_almacen })
+                        </td>
+                    </tr>
+                </tbody>
+            }
+
+        </table>
+
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script type="text/javascript">
+        $(function () {
+            $("#tablaAlmacen").DataTable({
+                language: {
+                    url: '/Scripts/spanish.json'
+                }
+            });
+
+        });
+    </script>
+}

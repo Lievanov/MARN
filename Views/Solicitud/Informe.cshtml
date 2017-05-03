@@ -1,0 +1,174 @@
+﻿@using LaboratorioMarn.Models.Informe
+
+@model InformeSolicitud
+
+@{
+    ViewBag.Title = "Informe";
+    INFORME informe = ViewBag.Informe;
+}
+
+<div class="row">
+    <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 col-xs-4 col-xs-offset-4">
+                <div class="col-md-10 col-md-offset-1 col-xs-10 col-xs-offset-1">
+                    <img src="http://s3.amazonaws.com/marn/images/logo+marn.jpg" alt="Alternate Text" class="img-responsive" />
+                </div>
+            </div>
+        </div>
+
+        <center class="row">
+            <h4>
+            DIRECCION GENERAL DEL OBSERVATORIO AMBIENTAL <br />
+            LABORATORIO DE CALIDAD DE AGUA <br />
+            @if (Model.areas == "FQAA")
+            {
+                <span>ÁREA DE ANÁLISIS FÍSICO QUÍMICO Y ABSORCIÓN ATÓMICA</span> <br />
+            }
+            else
+            {
+                <span>ÁREA DE ANÁLISIS BACTEREOLOGÍA</span> <br />
+            }
+            INFORME DE RESULTADOS EN MUESTRAS DE AGUA</h4>
+        </center>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1 col-xs-5 col-xs-offset-1"><b>Número de Referencia:</b></div>
+            <div class="col-md-6 col-xs-5"><strong>@Model.numeroReferencia</strong></div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1 col-xs-5 col-xs-offset-1"><b>Identificación de la muestra:</b></div>
+            <div class="col-md-6 col-xs-5"><strong>@Model.identificacion</strong></div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1 col-xs-5 col-xs-offset-1"><b>Nombre Solicitante:</b></div>
+            <div class="col-md-6 col-xs-5">@Model.solicitante</div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1 col-xs-5 col-xs-offset-1"><b>Dirección de Solicitante:</b></div>
+            <div class="col-md-6 col-xs-5">@Model.direccion</div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1 col-xs-5 col-xs-offset-1"><b>Fecha de toma de muestras:</b></div>
+            <div class="col-md-6 col-xs-5">@Model.fechaTomaMuestra</div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1 col-xs-5 col-xs-offset-1"><b>Fecha de recepción en Laboratorio:</b></div>
+            <div class="col-md-6 col-xs-5">@Model.fechaRecepcion</div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1 col-xs-5 col-xs-offset-1"><b>Fecha de Inicio de Análisis:</b></div>
+            <div class="col-md-6 col-xs-5">@Model.fechaInicio</div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1 col-xs-5 col-xs-offset-1"><b>Fecha de Finalización de Análisis:</b></div>
+            <div class="col-md-6 col-xs-5">@Model.fechaFinalizacion</div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1 col-xs-5 col-xs-offset-1"><b>Fecha de Generación de Reporte:</b></div>
+            <div class="col-md-6 col-xs-5">@Model.fechaGeneracion</div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1 col-xs-5 col-xs-offset-1"><b>Responsable de Toma de Muestras:</b></div>
+            <div class="col-md-6 col-xs-5">@Model.responsableMuestra</div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1 col-xs-5 col-xs-offset-1"><b>Tipo de muestra:</b></div>
+            <div class="col-md-6 col-xs-5">@Model.tipoMuestra</div>
+        </div>
+        <div class="row">
+            <div class="col-md-5 col-md-offset-1 col-xs-5 col-xs-offset-1"><b>Procedencia:</b></div>
+            <div class="col-md-6 col-xs-5">@Model.procedencia</div>
+        </div>
+        <br />
+        <div class="row">
+            <center class="col-md-10 col-md-offset-1">
+                <h4>Parametros de campo reportados</h4>
+                <table class="table table-bordered table-condensed">
+                    <tr>
+                        <td> </td>
+                        <td> </td>
+                        <td><b>Expresado como: </b></td>
+                    </tr>
+                    <tr>
+                        <td>Fecha: </td>
+                        <td>@Model.fechaTomaMuestra</td>
+                        <td> </td>
+
+                    </tr>
+                    @foreach (Parametro parametro in Model.Parametros)
+                    {
+                        <tr>
+                            <td>@parametro.nombre</td>
+                            <td>@parametro.valor</td>
+                            <td>@parametro.expresado</td>
+                        </tr>
+                    }
+                </table>
+            </center>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <h4 style="text-align: center">Resultados de Análisis de Laboratorio</h4>
+                <table class="table table-bordered table-condensed">
+                    <tr>
+                        <th>PARAMETRO</th>
+                        <th>RESULTADO</th>
+                        @if (Model.areas == "FQAA")
+                        {
+                            <th>INCERTEZA</th>
+                        }
+                        else
+                        {
+                            <th>PRECISIÓN</th>
+                        }
+                        <th>UNIDADES</th>
+                        <th>LIMITE DE DETECCION</th>
+                        <th>METODO</th>
+                    </tr>
+
+                    @foreach (Resultado resultado in Model.Resultados)
+                    {
+                        <tr>
+                            <td>@resultado.analisis</td>
+                            <td>@resultado.resultado</td>
+                            <td>+/- @resultado.incerteza</td>
+                            <td>@resultado.unidades</td>                            
+                            <td>@resultado.metodo</td>
+                        </tr>
+                    }
+                </table>
+
+                <p style="font-size: 0.8em;">
+                    <b>Abreviaturas: </b>ND: No Detectable &nbsp;&nbsp;&nbsp;&nbsp;NR: No Realizado &nbsp;&nbsp;&nbsp;&nbsp;SMEWW: Standard  Methods for Examination of water and Wastewater
+                </p>
+
+                <p style="font-size: 0.9em;">
+                    <b>Notas:</b>
+
+                    <ul>
+                        <li>Este informe de Resultados de análisis no puede ser reproducido parcial ni totalmente sin la aprobación por escrito del Laboratorio de Calidad de Aguas.</li>
+                        <li>Los resultados de análisis corresponden únicamente a la muestra ingresada a este Laboratorio.</li>
+                        <li>El Laboratorio no realiza muestreo</li>
+                    </ul>
+
+                    <b>
+                        Registro de Acreditación: LEA-02:16 en los Alcances de la Acreditación: DBO 5 , DQO, pH, Grasas y Aceites, Sólidos Sedimentables,
+                        Sólidos Suspendidos Totales, Cloruros, Oxigeno Disuelto, Turbidez, Coliformes totales y Coliformes fecales, con el Organismo
+                        Salvadoreño de Acreditación
+                    </b>
+                </p>
+
+                <br /><br /><br />
+
+                <p style="font-size: 0.9em; text-align: center">
+                    Lic. Regina Cortez <br />
+                    Coordinadora del Laboratorio
+                </p>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+

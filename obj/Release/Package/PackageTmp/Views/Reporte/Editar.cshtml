@@ -1,0 +1,68 @@
+﻿@model LaboratorioMarn.REPORTE
+@{
+    DETALLE_SOLICITUD detalleSolicitud = ViewBag.DetalleSol;
+    REPORTE reporte = ViewBag.Reporte;
+}
+<div class="row">
+    <div class="col-sm-12">
+        @using (Html.BeginForm("Edit", "Reporte", FormMethod.Post, htmlAttributes: new { @id = "formularioEditarReporte", @class = "form-horizontal" }))
+        {
+            <input type="hidden" name="idReporte" value="@reporte.id_reporte" />
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(model => model.id_reporte)
+
+            <div class="form-group">
+                <label class="control-label col-md-4" for="resultado">Análisis: </label>
+                <label class="control-label col-md-7" style="text-align: center" for="resultado">@detalleSolicitud.ANALISI.nombre</label>
+                @Html.HiddenFor(model => model.id_analisis_empleado)
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4" for="resultado">Resultado: </label>
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.resultado, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.resultado, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4" for="resultado">Incerteza: </label>
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.incerteza, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.incerteza, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4" for="resultado">Unidades: </label>
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.unidades, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.unidades, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4" for="resultado">Límite de Detección: </label>
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.limite_deteccion, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.limite_deteccion, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4" for="resultado">Método: </label>
+                <div class="col-md-7">
+                    @Html.EditorFor(model => model.metodo, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.metodo, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-12">
+                    <div class="col-md-6 hide" id="alert">
+                        <div class="alert alert-success" role="alert" id="alertMsg"></div>
+                    </div>
+                    <div class="col-md-5 pull-right">
+                        <button type="submit" class="btn btn-success" id="guardar">Guardar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

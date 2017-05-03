@@ -1,0 +1,20 @@
+﻿@model IEnumerable<LaboratorioMarn.NOTIFICACION>
+
+@foreach (NOTIFICACION notificacion in Model)
+{
+    var classNotifiacacion = "notificacion-leido";
+    if (notificacion.leido == 0)
+    {
+        classNotifiacacion = "notificacion-noleido";
+    }
+    
+    <a href="@Url.Action("View", "Notificacion")?id=@notificacion.id_notificacion" class="item @classNotifiacacion">
+        <img src="@notificacion.EMPLEADO.avatar" class="display" />
+        <div class="name">@notificacion.EMPLEADO.nombre_empleado</div>
+        <div class="msg">
+            @notificacion.titulo
+        </div>
+        <span class="time"><i class="glyphicon glyphicon-time"></i> @notificacion.fecha_notificacion </span>
+    </a>
+}
+

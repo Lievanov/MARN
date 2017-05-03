@@ -1,0 +1,75 @@
+﻿@model LaboratorioMarn.SOLICITANTE
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+
+<h3>¿Está seguro que desea eliminar:    @Model.nombre_solicitante ?</h3>
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Nombre Solicitante: 
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre_solicitante)
+        </dd>
+
+        <dt>
+            Dirección Solicitante: 
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.direccion_solicitante)
+        </dd>
+
+        <dt>
+            Contacto Solicitante: 
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.contacto_solicitante)
+        </dd>
+
+        <dt>
+            Correo Electrónico
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.correo_solicitante)
+        </dd>
+
+        <dt>
+            Número Telefónico: 
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.telefono_1_solicitante)
+        </dd>
+    1
+        <dt>
+            Otro Número Telefónico
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.telefono_2_solicitante)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color col-md-offset-1">
+        @*<input type="submit" value="Eliminar" class="btn btn-default" />*@
+        <button type="submit" class="btn btn-primary">Eliminar</button> |
+        @Html.ActionLink("Regresar al listado de Solicitantes", "Index")
+    </div>
+    }
+
+    @*<button type="submit" class="btn btn-primary">Eliminar</button>*@

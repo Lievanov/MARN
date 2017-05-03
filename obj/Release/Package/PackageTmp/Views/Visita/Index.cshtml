@@ -1,0 +1,128 @@
+﻿@model IEnumerable<LaboratorioMarn.VISITA>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2 class="page-header">Visitas realizadas</h2>
+
+<table id="tabla" class="table">
+    <thead>
+        <tr>
+            <th># Solicitud</th>
+            <th>
+                Solicitante
+            </th>
+            <th>
+                Sitio de muestreo
+            </th>
+            <th>
+                Fecha de muestreo
+            </th>
+            <th>
+                Procedencia
+            </th>
+            <th>
+                Tipo
+            </th>
+            <th>
+                Latitud
+            </th>
+
+            <th>
+                Longitud
+            </th>
+            <th>
+                Encargado
+            </th>
+            <th>
+                Entregó
+            </th>
+            <th>
+                Fecha de Recepción
+            </th>
+
+            <th>
+                Identificador
+            </th>
+
+            <th>
+                No Frascos
+            </th>
+
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (VISITA visita in Model)
+        {
+            <tr>
+                <td>
+                    <a href="@Url.Action("Detalle", "Solicitud")/@visita.SOLICITUD.id_solicitud">@visita.SOLICITUD.no_referencia</a>
+                <td>
+                    @visita.SOLICITUD.SOLICITANTE.nombre_solicitante
+                </td>
+                <td>
+                    @visita.SITIO_MUESTREO.nombre_sitio
+                </td>
+                <td>
+                    @visita.fecha_visita
+                </td>
+                <td>
+                    @visita.PROCEDENCIA.nombre_procedencia
+                </td>
+                <td>
+                    @visita.TIPO_MUESTRA.nombre_tipo_muestra
+                </td>
+                <td>
+                    @visita.SITIO_MUESTREO.lat
+                </td>
+                <td>
+                    @visita.SITIO_MUESTREO.lng
+                </td>
+                <td>
+                    @visita.EMPLEADO.nombre_empleado
+                </td>
+                <td>
+                    @visita.id_empleado_entrega
+                </td>
+                <td>
+                    @visita.fecha_entrega
+                </td>
+                <td>
+                    @visita.identificador
+                </td>
+                <td>
+                    @visita.no_frascos
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <script type="text/javascript">
+        var tabla;
+        $(function () {
+            tabla = $("#tabla").DataTable({
+                language: {
+                    url: '/Scripts/spanish.json'
+                }
+            });
+        })
+
+    </script>
+}
+
+@section Styles {
+
+    <style type="text/css">
+        table.dataTable thead {
+            font-size: 0.85em;
+        }
+
+        table.dataTable tbody {
+            font-size: 0.85em;
+        }
+    </style>
+}

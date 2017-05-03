@@ -1,0 +1,75 @@
+﻿@model IEnumerable<LaboratorioMarn.SITIO_MUESTREO>
+
+@{
+    ViewBag.Title = "Index";
+    
+}
+
+<h2 class="page-header">Sitios de Muestreo</h2>
+
+<p>
+    @Html.ActionLink("Ingresar Nuevo Sitio de Muestreo", "Create")
+</p>
+
+<div class="row">
+
+    <div class="col-sm-8">
+        <table class="table table-striped" id="detalle">
+            <thead>
+
+                <tr>
+                    <th>
+                        Nombre Sitio
+                    </th>
+                    <th>
+                        Dirección
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nombre_sitio)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.direccion_sitio)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Editar", "Edit", new { id = item.id_sitio_muestreo }) |
+                            @Html.ActionLink("Eliminar", "Delete", new { id = item.id_sitio_muestreo })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="//cdn.datatables.net/u/dt/dt-1.10.12/datatables.min.js"></script>
+    <script type="text/javascript">
+    $(function () {
+        $('#detalle').DataTable({
+            language: {
+                url: 'Scripts/spanish.json'
+            }
+        });
+    });
+    </script>
+}
+@section Styles {
+    <link href="https://cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css" rel="stylesheet" />
+    <style type="text/css">
+        table.dataTable thead {
+            font-size: 0.85em;
+        }
+
+        table.dataTable tbody {
+            font-size: 0.85em;
+        }
+    </style>
+
+}

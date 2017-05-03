@@ -1,0 +1,172 @@
+﻿@model IEnumerable<LaboratorioMarn.NOTIFICACION>
+
+<style>
+    .notificacion {
+        padding: 5px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .viewNotification {
+        cursor: pointer;
+    }
+
+    .notificacion:hover {
+        background-color: #f5f5f5;
+    }
+
+    .notificacion-leido {
+        background-color: #fff;
+    }
+
+    .notificacion-noleido {
+        background-color: #eee;
+    }
+
+    .topIcon {
+        position: absolute;
+        top: 1em;
+        right: 1em;
+    }
+
+    .botIcon {
+        position: absolute;
+        top: 3em;
+        right: 1em;
+    }
+
+</style>
+
+<div class="row">
+    <div class="col-sm-11 col-sm-offset-1">
+        <h2 class="page-header">Notificaciones</h2>
+
+        @foreach (NOTIFICACION notificacion in Model)
+        {
+            var classNotifiacacion = "notificacion-leido";
+            if (notificacion.leido == 0)
+            {
+                classNotifiacacion = "notificacion-noleido";
+            }
+
+            <div class="row">
+                <div class="col-sm-8 notificacion @classNotifiacacion" id="@notificacion.id_notificacion">
+                    <div class="col-sm-2 viewNotification" data-value="@notificacion.id_notificacion">
+                        <img src="@notificacion.EMPLEADO.avatar" class="img-responsive img-circle" alt="No avatar" />
+                    </div>
+
+                    <div class="col-sm-8 viewNotification" data-value="@notificacion.id_notificacion">
+                        <div class="col-sm-12 first-line">
+                            <strong>@notificacion.EMPLEADO.nombre_empleado :</strong>
+                            @notificacion.titulo
+                        </div>
+
+
+
+                        <div class="col-sm-12 secondLine">
+                            <p>@notificacion.mensaje</p>
+                        </div>
+
+                        <div class="col-sm-12 thirdLine">
+                            <div class="pull-right text-muted">
+                                <span class="glyphicon glyphicon-time"></span>
+                                @notificacion.fecha_notificacion
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2" id="options">
+                        <a href="#" class="removeNotification pull-right topIcon" data-value="@notificacion.id_notificacion" title="eliminar notificacion">
+                            <span class="glyphicon glyphicon-remove-circle"></span>
+                        </a>
+
+                        @if (notificacion.leido == 1)
+                        {
+                            <span class="glyphicon glyphicon-certificate botIcon" title="Leido"></span>
+                        }
+                        else
+                        {
+                            <a href="#" class="markAsRead pull-right botIcon" data-value="@notificacion.id_notificacion" title="marcar como leida">
+                                <span class="glyphicon glyphicon-record"></span>
+                            </a>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+@section Scripts {
+    
+    <script type="text/javascript">
+
+        $(function () {
+            
+
+            $(".removeNotification").click(function (e) {
+                e.preventDefault();
+                var id = $(this).data("value");
+
+                $.ajax({
+                    url: "@Url.Action("Remove", "Notificacion")",
+                    data: { id: id },
+                    type: "POST",
+                    success: function (json) {
+                        if (json.valid) {
+                            $("#" + id).remove();
+                        }
+                        else {
+                            alert("Ha ocurrido un error inesperado, por favor intentelo de nuevo");
+                        }
+
+                    }
+                });
+            });
+
+            $(".markAsRead").click(function (e) {
+                e.preventDefault();
+
+                var element = $(this);
+                var id = $(this).data("value");
+
+                $.ajax({
+                    url: "@Url.Action("MarkAsRead", "Notificacion")",
+                    data: { id: id },
+                    type: "POST",
+                    success: function (json) {
+                        if (json.valid) {
+                            $("#" + id)
+                                .removeClass("notificacion-noleido")
+                                .addClass("notificacion-leido");
+
+                            element.remove();
+                            $("#options").append('<span class="glyphicon glyphicon-certificate botIcon" title="Leido"></span>');
+                        }
+                        else {
+                            alert("Ha ocurrido un error inesperado, por favor intentelo de nuevo");
+                        }
+
+                    }
+                });
+            });
+
+            $(".viewNotification").click(function (e) {
+                e.preventDefault();
+
+                var id = $(this).data("value");
+
+                window.location = "@Url.Action("View", "Notificacion")?id=" + id;
+            });
+        });
+
+    </script>
+        
+}
+
+
+
+
+
+
+

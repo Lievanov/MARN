@@ -1,0 +1,3372 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MARNModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ALMACEN">
+          <Key>
+            <PropertyRef Name="id_almacen" />
+          </Key>
+          <Property Name="id_almacen" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="estante" Type="tinyint" />
+          <Property Name="nivel" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="ANALISIS">
+          <Key>
+            <PropertyRef Name="id_analisis" />
+          </Key>
+          <Property Name="id_analisis" Type="int" Nullable="false" />
+          <Property Name="id_area" Type="tinyint" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="metodo" Type="varchar" MaxLength="100" />
+          <Property Name="formula" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="unidades" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="incertezas" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="costo" Type="decimal" Precision="6" Scale="2" />
+          <Property Name="costo_iva" Type="decimal" Precision="6" Scale="2" />
+        </EntityType>
+        <EntityType Name="ANALISIS_EMPLEADO">
+          <Key>
+            <PropertyRef Name="id_analisis_empleado" />
+          </Key>
+          <Property Name="id_analisis_empleado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_empleado" Type="tinyint" Nullable="false" />
+          <Property Name="id_detalle_solicitud" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ANALISIS_REACTIVO">
+          <Key>
+            <PropertyRef Name="id_analisis_reactivo" />
+          </Key>
+          <Property Name="id_analisis_reactivo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_reactivo" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="id_unidad" Type="tinyint" Nullable="false" />
+          <Property Name="id_analisis_empleado" Type="int" Nullable="false" />
+          <Property Name="fecha" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AREA">
+          <Key>
+            <PropertyRef Name="id_area" />
+          </Key>
+          <Property Name="id_area" Type="tinyint" Nullable="false" />
+          <Property Name="nombre_area" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CALCULO">
+          <Key>
+            <PropertyRef Name="id_calculo" />
+          </Key>
+          <Property Name="id_calculo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_analisis_empleado" Type="int" Nullable="false" />
+          <Property Name="id_resultado" Type="int" Nullable="false" />
+          <Property Name="resultado_calculo" Type="decimal" Precision="8" Scale="3" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CATALOGO">
+          <Key>
+            <PropertyRef Name="id_catalogo" />
+          </Key>
+          <Property Name="id_catalogo" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_catalogo" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DETALLE_SOLICITUD">
+          <Key>
+            <PropertyRef Name="id_detalle_solicitud" />
+          </Key>
+          <Property Name="id_detalle_solicitud" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_solicitud" Type="int" Nullable="false" />
+          <Property Name="id_analisis" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DETALLE_VISITA">
+          <Key>
+            <PropertyRef Name="id_detalle_visita" />
+          </Key>
+          <Property Name="id_detalle_visita" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_visita" Type="int" Nullable="false" />
+          <Property Name="id_muestra" Type="int" Nullable="false" />
+          <Property Name="value" Type="decimal" Precision="6" Scale="3" />
+        </EntityType>
+        <EntityType Name="EMPLEADO">
+          <Key>
+            <PropertyRef Name="id_empleado" />
+          </Key>
+          <Property Name="id_empleado" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_area" Type="tinyint" />
+          <Property Name="id_tipo_empleado" Type="tinyint" Nullable="false" />
+          <Property Name="nombre_empleado" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="telefono_empleado" Type="varchar" MaxLength="8" />
+          <Property Name="id_aspnet_user" Type="nvarchar" MaxLength="128" />
+          <Property Name="avatar" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="ESTADO">
+          <Key>
+            <PropertyRef Name="id_estado" />
+          </Key>
+          <Property Name="id_estado" Type="tinyint" Nullable="false" />
+          <Property Name="nombre_estado" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ESTADO_PROCESO">
+          <Key>
+            <PropertyRef Name="id_estado_proceso" />
+          </Key>
+          <Property Name="id_estado_proceso" Type="tinyint" Nullable="false" />
+          <Property Name="nombre_estado_proceso" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ESTADO_PROCESO_ANALISTA">
+          <Key>
+            <PropertyRef Name="id_estado_proceso_analista" />
+          </Key>
+          <Property Name="id_estado_proceso_analista" Type="tinyint" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EXISTENCIA_PRODUCTO">
+          <Key>
+            <PropertyRef Name="id_existencia_producto" />
+          </Key>
+          <Property Name="id_existencia_producto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_producto" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="estado" Type="varchar" MaxLength="25" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EXISTENCIA_SOLUCION">
+          <Key>
+            <PropertyRef Name="id_existencia_solucion" />
+          </Key>
+          <Property Name="id_existencia_solucion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_empleado" Type="tinyint" Nullable="false" />
+          <Property Name="id_solucion" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="id_unidad" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="GRUPO_SOLICITUD">
+          <Key>
+            <PropertyRef Name="id_grupo_solicitud" />
+          </Key>
+          <Property Name="id_grupo_solicitud" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_solicitante" Type="int" Nullable="false" />
+          <Property Name="fecha_solicitud" Type="datetime" Nullable="false" />
+          <Property Name="fecha_creacion" Type="datetime" Nullable="false" />
+          <Property Name="preset" Type="varchar" MaxLength="255" />
+          <Property Name="identificador" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="INFORMES">
+          <Key>
+            <PropertyRef Name="id_informe" />
+          </Key>
+          <Property Name="id_informe" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_solicitud" Type="int" Nullable="false" />
+          <Property Name="tipo" Type="nchar" MaxLength="1" Nullable="false" />
+          <Property Name="data" Type="varchar" MaxLength="1500" Nullable="false" />
+          <Property Name="fecha_creacion" Type="datetime" Nullable="false" />
+          <Property Name="activo" Type="tinyint" Nullable="false" />
+          <Property Name="areas" Type="nchar" MaxLength="4" />
+        </EntityType>
+        <EntityType Name="INPUT">
+          <Key>
+            <PropertyRef Name="id_input" />
+          </Key>
+          <Property Name="id_input" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_variable" Type="int" Nullable="false" />
+          <Property Name="id_calculo" Type="int" Nullable="false" />
+          <Property Name="valor" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="lectura" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LOTE">
+          <Key>
+            <PropertyRef Name="id_lote" />
+          </Key>
+          <Property Name="id_lote" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MARCA">
+          <Key>
+            <PropertyRef Name="id_marca" />
+          </Key>
+          <Property Name="id_marca" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="nchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="MUESTRA">
+          <Key>
+            <PropertyRef Name="id_muestra" />
+          </Key>
+          <Property Name="id_muestra" Type="int" Nullable="false" />
+          <Property Name="nombre_muestra" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="expresado" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="NOTIFICACION">
+          <Key>
+            <PropertyRef Name="id_notificacion" />
+          </Key>
+          <Property Name="id_notificacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="empleado_remitente" Type="tinyint" Nullable="false" />
+          <Property Name="titulo" Type="varchar" MaxLength="150" />
+          <Property Name="mensaje" Type="varchar" MaxLength="300" />
+          <Property Name="fecha_notificacion" Type="datetime" Nullable="false" />
+          <Property Name="empleado_receptor" Type="tinyint" Nullable="false" />
+          <Property Name="leido" Type="tinyint" Nullable="false" />
+          <Property Name="fecha_lectura" Type="datetime" />
+          <Property Name="redireccion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="eliminado" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PROCEDENCIA">
+          <Key>
+            <PropertyRef Name="id_procedencia" />
+          </Key>
+          <Property Name="id_procedencia" Type="tinyint" Nullable="false" />
+          <Property Name="nombre_procedencia" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PROCESO_ANALISTA">
+          <Key>
+            <PropertyRef Name="id_proceso_analista" />
+          </Key>
+          <Property Name="id_proceso_analista" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fecha_asignacion" Type="datetime" />
+          <Property Name="fecha_inicio" Type="datetime" />
+          <Property Name="fecha_fin" Type="datetime" />
+          <Property Name="solicitud_id" Type="int" Nullable="false" />
+          <Property Name="empleado_id" Type="tinyint" Nullable="false" />
+          <Property Name="cantidad_analisis" Type="tinyint" Nullable="false" />
+          <Property Name="id_analisis" Type="nchar" MaxLength="10" />
+          <Property Name="id_estado_proceso_analista" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="PRODUCTO">
+          <Key>
+            <PropertyRef Name="id_producto" />
+          </Key>
+          <Property Name="id_producto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_almacen" Type="tinyint" Nullable="false" />
+          <Property Name="id_marca" Type="tinyint" Nullable="false" />
+          <Property Name="id_catalogo" Type="tinyint" Nullable="false" />
+          <Property Name="id_lote" Type="int" Nullable="false" />
+          <Property Name="id_reactivo" Type="int" Nullable="false" />
+          <Property Name="fecha_ingreso" Type="date" Nullable="false" />
+          <Property Name="fecha_vencimiento" Type="datetime" />
+          <Property Name="presentacion_cantidad" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="id_unidad" Type="tinyint" Nullable="false" />
+          <Property Name="minimo_porcentaje" Type="tinyint" Nullable="false" />
+          <Property Name="estado" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="REACTIVO">
+          <Key>
+            <PropertyRef Name="id_reactivo" />
+          </Key>
+          <Property Name="id_reactivo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="REACTIVO_SOLUCION">
+          <Key>
+            <PropertyRef Name="id_reactivo_solucion" />
+          </Key>
+          <Property Name="id_reactivo_solucion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_solucion" Type="int" Nullable="false" />
+          <Property Name="id_reactivo" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="decimal" Precision="6" Scale="2" />
+          <Property Name="id_unidad" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="REPORTE">
+          <Key>
+            <PropertyRef Name="id_reporte" />
+          </Key>
+          <Property Name="id_reporte" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_analisis_empleado" Type="int" Nullable="false" />
+          <Property Name="resultado" Type="decimal" Precision="10" Scale="3" Nullable="false" />
+          <Property Name="incerteza" Type="decimal" Precision="6" Scale="4" Nullable="false" />
+          <Property Name="unidades" Type="varchar" MaxLength="25" Nullable="false" />
+          <Property Name="limite_deteccion" Type="decimal" Precision="6" Scale="5" Nullable="false" />
+          <Property Name="metodo" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RESULTADO">
+          <Key>
+            <PropertyRef Name="id_resultado" />
+          </Key>
+          <Property Name="id_resultado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="promedio" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="incertidumbre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SALIDA_EXISTENCIA">
+          <Key>
+            <PropertyRef Name="id_salida_existencia" />
+          </Key>
+          <Property Name="id_salida_existencia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_existencia_producto" Type="int" Nullable="false" />
+          <Property Name="id_empleado" Type="tinyint" />
+          <Property Name="cantidad_salida" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="cantidad_existencia" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="fecha_salida" Type="datetime" />
+          <Property Name="id_unidad" Type="tinyint" Nullable="false" />
+          <Property Name="id_reactivo" Type="int" />
+        </EntityType>
+        <EntityType Name="SALIDA_SOLUCION">
+          <Key>
+            <PropertyRef Name="id_salida_solucion" />
+          </Key>
+          <Property Name="id_salida_solucion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_salida_existencia" Type="int" Nullable="false" />
+          <Property Name="id_existencia_solucion" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SITIO_MUESTREO">
+          <Key>
+            <PropertyRef Name="id_sitio_muestreo" />
+          </Key>
+          <Property Name="id_sitio_muestreo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_sitio" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="direccion_sitio" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="observacione" Type="varchar" MaxLength="500" />
+          <Property Name="lat" Type="decimal" Precision="18" Scale="15" />
+          <Property Name="lng" Type="decimal" Precision="18" Scale="15" />
+        </EntityType>
+        <EntityType Name="SOLICITANTE">
+          <Key>
+            <PropertyRef Name="id_solicitante" />
+          </Key>
+          <Property Name="id_solicitante" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_solicitante" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="direccion_solicitante" Type="varchar" MaxLength="300" Nullable="false" />
+          <Property Name="contacto_solicitante" Type="varchar" MaxLength="100" />
+          <Property Name="correo_solicitante" Type="varchar" MaxLength="100" />
+          <Property Name="telefono_1_solicitante" Type="varchar" MaxLength="10" />
+          <Property Name="telefono_2_solicitante" Type="varchar" MaxLength="10" />
+          <Property Name="preset_analisis" Type="varchar" MaxLength="300" />
+        </EntityType>
+        <EntityType Name="SOLICITUD">
+          <Key>
+            <PropertyRef Name="id_solicitud" />
+          </Key>
+          <Property Name="id_solicitud" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="no_referencia" Type="varchar" MaxLength="10" />
+          <Property Name="id_empleado" Type="tinyint" Nullable="false" />
+          <Property Name="id_estado" Type="tinyint" Nullable="false" />
+          <Property Name="id_solicitante" Type="int" />
+          <Property Name="id_estado_proceso" Type="tinyint" Nullable="false" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="fecha_inicio" Type="datetime" />
+          <Property Name="fecha_finalizacion" Type="datetime" />
+          <Property Name="informe_generado" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="SOLUCION">
+          <Key>
+            <PropertyRef Name="id_solucion" />
+          </Key>
+          <Property Name="id_solucion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="cantidad" Type="decimal" Precision="6" Scale="2" />
+          <Property Name="unidad" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="TIPO_EMPLEADO">
+          <Key>
+            <PropertyRef Name="id_tipo_empleado" />
+          </Key>
+          <Property Name="id_tipo_empleado" Type="tinyint" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TIPO_MUESTRA">
+          <Key>
+            <PropertyRef Name="id_tipo_muestra" />
+          </Key>
+          <Property Name="id_tipo_muestra" Type="tinyint" Nullable="false" />
+          <Property Name="nombre_tipo_muestra" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TIPO_VARIABLE">
+          <Key>
+            <PropertyRef Name="id_tipovariable" />
+          </Key>
+          <Property Name="id_tipovariable" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UNIDAD">
+          <Key>
+            <PropertyRef Name="id_unidad" />
+          </Key>
+          <Property Name="id_unidad" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="unidad" Type="varchar" MaxLength="50" />
+          <Property Name="equivalencia" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="VARIABLE">
+          <Key>
+            <PropertyRef Name="id_variable" />
+          </Key>
+          <Property Name="id_variable" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_analisis" Type="int" Nullable="false" />
+          <Property Name="id_tipovariable" Type="tinyint" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="50" />
+          <Property Name="id_solucion" Type="int" />
+          <Property Name="id_muestra" Type="int" />
+        </EntityType>
+        <EntityType Name="VISITA">
+          <Key>
+            <PropertyRef Name="id_visita" />
+          </Key>
+          <Property Name="id_visita" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_solicitud" Type="int" Nullable="false" />
+          <Property Name="id_empleado" Type="tinyint" Nullable="false" />
+          <Property Name="fecha_visita" Type="datetime" />
+          <Property Name="fecha_entrega" Type="datetime" />
+          <Property Name="id_procedencia" Type="tinyint" Nullable="false" />
+          <Property Name="id_tipo_muestra" Type="tinyint" Nullable="false" />
+          <Property Name="fecha_creacion" Type="datetime" />
+          <Property Name="id_sitio_muestreo" Type="int" />
+          <Property Name="id_empleado_entrega" Type="tinyint" />
+          <Property Name="identificador" Type="varchar" MaxLength="50" />
+          <Property Name="no_frascos" Type="tinyint" />
+          <Property Name="lat" Type="decimal" Precision="18" Scale="10" />
+          <Property Name="lng" Type="decimal" Precision="18" Scale="10" />
+          <Property Name="id" Type="varchar" MaxLength="50" />
+          <Property Name="id_grupo_solicitud" Type="int" />
+        </EntityType>
+        <Association Name="FK_ANALISIS_AREA">
+          <End Role="AREA" Type="Self.AREA" Multiplicity="1" />
+          <End Role="ANALISIS" Type="Self.ANALISIS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AREA">
+              <PropertyRef Name="id_area" />
+            </Principal>
+            <Dependent Role="ANALISIS">
+              <PropertyRef Name="id_area" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ANALISIS_EMPLEADO_DETALLE_SOLICITUD">
+          <End Role="DETALLE_SOLICITUD" Type="Self.DETALLE_SOLICITUD" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ANALISIS_EMPLEADO" Type="Self.ANALISIS_EMPLEADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DETALLE_SOLICITUD">
+              <PropertyRef Name="id_detalle_solicitud" />
+            </Principal>
+            <Dependent Role="ANALISIS_EMPLEADO">
+              <PropertyRef Name="id_detalle_solicitud" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ANALISIS_EMPLEADO_EMPLEADO">
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+          <End Role="ANALISIS_EMPLEADO" Type="Self.ANALISIS_EMPLEADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="ANALISIS_EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ANALISIS_REACTIVO_ANALISIS_EMPLEADO">
+          <End Role="ANALISIS_EMPLEADO" Type="Self.ANALISIS_EMPLEADO" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ANALISIS_REACTIVO" Type="Self.ANALISIS_REACTIVO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ANALISIS_EMPLEADO">
+              <PropertyRef Name="id_analisis_empleado" />
+            </Principal>
+            <Dependent Role="ANALISIS_REACTIVO">
+              <PropertyRef Name="id_analisis_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ANALISIS_REACTIVO_REACTIVO">
+          <End Role="REACTIVO" Type="Self.REACTIVO" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ANALISIS_REACTIVO" Type="Self.ANALISIS_REACTIVO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REACTIVO">
+              <PropertyRef Name="id_reactivo" />
+            </Principal>
+            <Dependent Role="ANALISIS_REACTIVO">
+              <PropertyRef Name="id_reactivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ANALISIS_REACTIVO_UNIDAD">
+          <End Role="UNIDAD" Type="Self.UNIDAD" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ANALISIS_REACTIVO" Type="Self.ANALISIS_REACTIVO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UNIDAD">
+              <PropertyRef Name="id_unidad" />
+            </Principal>
+            <Dependent Role="ANALISIS_REACTIVO">
+              <PropertyRef Name="id_unidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CALCULO_CALCULO">
+          <End Role="ANALISIS_EMPLEADO" Type="Self.ANALISIS_EMPLEADO" Multiplicity="1" />
+          <End Role="CALCULO" Type="Self.CALCULO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ANALISIS_EMPLEADO">
+              <PropertyRef Name="id_analisis_empleado" />
+            </Principal>
+            <Dependent Role="CALCULO">
+              <PropertyRef Name="id_analisis_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CALCULO_RESULTADO">
+          <End Role="RESULTADO" Type="Self.RESULTADO" Multiplicity="1" />
+          <End Role="CALCULO" Type="Self.CALCULO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RESULTADO">
+              <PropertyRef Name="id_resultado" />
+            </Principal>
+            <Dependent Role="CALCULO">
+              <PropertyRef Name="id_resultado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DETALLE_SOLICITUD_ANALISIS">
+          <End Role="ANALISIS" Type="Self.ANALISIS" Multiplicity="1" />
+          <End Role="DETALLE_SOLICITUD" Type="Self.DETALLE_SOLICITUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ANALISIS">
+              <PropertyRef Name="id_analisis" />
+            </Principal>
+            <Dependent Role="DETALLE_SOLICITUD">
+              <PropertyRef Name="id_analisis" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DETALLE_SOLICITUD_SOLICITUD">
+          <End Role="SOLICITUD" Type="Self.SOLICITUD" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DETALLE_SOLICITUD" Type="Self.DETALLE_SOLICITUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOLICITUD">
+              <PropertyRef Name="id_solicitud" />
+            </Principal>
+            <Dependent Role="DETALLE_SOLICITUD">
+              <PropertyRef Name="id_solicitud" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DETALLE_VISITA_MUESTRA">
+          <End Role="MUESTRA" Type="Self.MUESTRA" Multiplicity="1" />
+          <End Role="DETALLE_VISITA" Type="Self.DETALLE_VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MUESTRA">
+              <PropertyRef Name="id_muestra" />
+            </Principal>
+            <Dependent Role="DETALLE_VISITA">
+              <PropertyRef Name="id_muestra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DETALLE_VISITA_VISITA">
+          <End Role="VISITA" Type="Self.VISITA" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="DETALLE_VISITA" Type="Self.DETALLE_VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VISITA">
+              <PropertyRef Name="id_visita" />
+            </Principal>
+            <Dependent Role="DETALLE_VISITA">
+              <PropertyRef Name="id_visita" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLEADO_AREA">
+          <End Role="AREA" Type="Self.AREA" Multiplicity="0..1" />
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AREA">
+              <PropertyRef Name="id_area" />
+            </Principal>
+            <Dependent Role="EMPLEADO">
+              <PropertyRef Name="id_area" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLEADO_TIPO_EMPLEADO">
+          <End Role="TIPO_EMPLEADO" Type="Self.TIPO_EMPLEADO" Multiplicity="1" />
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_EMPLEADO">
+              <PropertyRef Name="id_tipo_empleado" />
+            </Principal>
+            <Dependent Role="EMPLEADO">
+              <PropertyRef Name="id_tipo_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EXISTENCIA_PRODUCTO_PRODUCTO">
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
+          <End Role="EXISTENCIA_PRODUCTO" Type="Self.EXISTENCIA_PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTO">
+              <PropertyRef Name="id_producto" />
+            </Principal>
+            <Dependent Role="EXISTENCIA_PRODUCTO">
+              <PropertyRef Name="id_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EXISTENCIA_SOLUCION_EMPLEADO">
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+          <End Role="EXISTENCIA_SOLUCION" Type="Self.EXISTENCIA_SOLUCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="EXISTENCIA_SOLUCION">
+              <PropertyRef Name="id_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EXISTENCIA_SOLUCION_SOLUCION">
+          <End Role="SOLUCION" Type="Self.SOLUCION" Multiplicity="1" />
+          <End Role="EXISTENCIA_SOLUCION" Type="Self.EXISTENCIA_SOLUCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOLUCION">
+              <PropertyRef Name="id_solucion" />
+            </Principal>
+            <Dependent Role="EXISTENCIA_SOLUCION">
+              <PropertyRef Name="id_solucion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_GROUPO_SOLICITANTE">
+          <End Role="SOLICITANTE" Type="Self.SOLICITANTE" Multiplicity="1" />
+          <End Role="GRUPO_SOLICITUD" Type="Self.GRUPO_SOLICITUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOLICITANTE">
+              <PropertyRef Name="id_solicitante" />
+            </Principal>
+            <Dependent Role="GRUPO_SOLICITUD">
+              <PropertyRef Name="id_solicitante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INFORMES_SOLICITUD">
+          <End Role="SOLICITUD" Type="Self.SOLICITUD" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="INFORMES" Type="Self.INFORMES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOLICITUD">
+              <PropertyRef Name="id_solicitud" />
+            </Principal>
+            <Dependent Role="INFORMES">
+              <PropertyRef Name="id_solicitud" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INPUT_CALCULO">
+          <End Role="CALCULO" Type="Self.CALCULO" Multiplicity="1" />
+          <End Role="INPUT" Type="Self.INPUT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CALCULO">
+              <PropertyRef Name="id_calculo" />
+            </Principal>
+            <Dependent Role="INPUT">
+              <PropertyRef Name="id_calculo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INPUT_VARIABLE">
+          <End Role="VARIABLE" Type="Self.VARIABLE" Multiplicity="1" />
+          <End Role="INPUT" Type="Self.INPUT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VARIABLE">
+              <PropertyRef Name="id_variable" />
+            </Principal>
+            <Dependent Role="INPUT">
+              <PropertyRef Name="id_variable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NOTIFICACION_EMPLEADO">
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+          <End Role="NOTIFICACION" Type="Self.NOTIFICACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="NOTIFICACION">
+              <PropertyRef Name="empleado_remitente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NOTIFICACION_EMPLEADO1">
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+          <End Role="NOTIFICACION" Type="Self.NOTIFICACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="NOTIFICACION">
+              <PropertyRef Name="empleado_receptor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROCESO_ANALISTA_EMPLEADO">
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+          <End Role="PROCESO_ANALISTA" Type="Self.PROCESO_ANALISTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="PROCESO_ANALISTA">
+              <PropertyRef Name="empleado_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROCESO_ANALISTA_ESTADO_PROCESO_ANALISTA">
+          <End Role="ESTADO_PROCESO_ANALISTA" Type="Self.ESTADO_PROCESO_ANALISTA" Multiplicity="0..1" />
+          <End Role="PROCESO_ANALISTA" Type="Self.PROCESO_ANALISTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ESTADO_PROCESO_ANALISTA">
+              <PropertyRef Name="id_estado_proceso_analista" />
+            </Principal>
+            <Dependent Role="PROCESO_ANALISTA">
+              <PropertyRef Name="id_estado_proceso_analista" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROCESO_ANALISTA_SOLICITUD">
+          <End Role="SOLICITUD" Type="Self.SOLICITUD" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PROCESO_ANALISTA" Type="Self.PROCESO_ANALISTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOLICITUD">
+              <PropertyRef Name="id_solicitud" />
+            </Principal>
+            <Dependent Role="PROCESO_ANALISTA">
+              <PropertyRef Name="solicitud_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTO_ALMACEN">
+          <End Role="ALMACEN" Type="Self.ALMACEN" Multiplicity="1" />
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ALMACEN">
+              <PropertyRef Name="id_almacen" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="id_almacen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTO_CATALOGO">
+          <End Role="CATALOGO" Type="Self.CATALOGO" Multiplicity="1" />
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATALOGO">
+              <PropertyRef Name="id_catalogo" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="id_catalogo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTO_LOTE">
+          <End Role="LOTE" Type="Self.LOTE" Multiplicity="1" />
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOTE">
+              <PropertyRef Name="id_lote" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="id_lote" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTO_MARCA">
+          <End Role="MARCA" Type="Self.MARCA" Multiplicity="1" />
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARCA">
+              <PropertyRef Name="id_marca" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="id_marca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTO_REACTIVO">
+          <End Role="REACTIVO" Type="Self.REACTIVO" Multiplicity="1" />
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REACTIVO">
+              <PropertyRef Name="id_reactivo" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="id_reactivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTO_UNIDAD">
+          <End Role="UNIDAD" Type="Self.UNIDAD" Multiplicity="1" />
+          <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UNIDAD">
+              <PropertyRef Name="id_unidad" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="id_unidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REACTIVO_SOLUCION_REACTIVO">
+          <End Role="REACTIVO" Type="Self.REACTIVO" Multiplicity="1" />
+          <End Role="REACTIVO_SOLUCION" Type="Self.REACTIVO_SOLUCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REACTIVO">
+              <PropertyRef Name="id_reactivo" />
+            </Principal>
+            <Dependent Role="REACTIVO_SOLUCION">
+              <PropertyRef Name="id_reactivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REACTIVO_SOLUCION_SOLUCION">
+          <End Role="SOLUCION" Type="Self.SOLUCION" Multiplicity="1" />
+          <End Role="REACTIVO_SOLUCION" Type="Self.REACTIVO_SOLUCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOLUCION">
+              <PropertyRef Name="id_solucion" />
+            </Principal>
+            <Dependent Role="REACTIVO_SOLUCION">
+              <PropertyRef Name="id_solucion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REACTIVO_SOLUCION_UNIDAD">
+          <End Role="UNIDAD" Type="Self.UNIDAD" Multiplicity="0..1" />
+          <End Role="REACTIVO_SOLUCION" Type="Self.REACTIVO_SOLUCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UNIDAD">
+              <PropertyRef Name="id_unidad" />
+            </Principal>
+            <Dependent Role="REACTIVO_SOLUCION">
+              <PropertyRef Name="id_unidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REPORTE_ANALISIS_EMPLEADO">
+          <End Role="ANALISIS_EMPLEADO" Type="Self.ANALISIS_EMPLEADO" Multiplicity="1" />
+          <End Role="REPORTE" Type="Self.REPORTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ANALISIS_EMPLEADO">
+              <PropertyRef Name="id_analisis_empleado" />
+            </Principal>
+            <Dependent Role="REPORTE">
+              <PropertyRef Name="id_analisis_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SALIDA_EXISTENCIA_EMPLEADO">
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="0..1" />
+          <End Role="SALIDA_EXISTENCIA" Type="Self.SALIDA_EXISTENCIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="SALIDA_EXISTENCIA">
+              <PropertyRef Name="id_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SALIDA_EXISTENCIA_EXISTENCIA_PRODUCTO">
+          <End Role="EXISTENCIA_PRODUCTO" Type="Self.EXISTENCIA_PRODUCTO" Multiplicity="1" />
+          <End Role="SALIDA_EXISTENCIA" Type="Self.SALIDA_EXISTENCIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EXISTENCIA_PRODUCTO">
+              <PropertyRef Name="id_existencia_producto" />
+            </Principal>
+            <Dependent Role="SALIDA_EXISTENCIA">
+              <PropertyRef Name="id_existencia_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SALIDA_EXISTENCIA_REACITVO">
+          <End Role="REACTIVO" Type="Self.REACTIVO" Multiplicity="0..1" />
+          <End Role="SALIDA_EXISTENCIA" Type="Self.SALIDA_EXISTENCIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REACTIVO">
+              <PropertyRef Name="id_reactivo" />
+            </Principal>
+            <Dependent Role="SALIDA_EXISTENCIA">
+              <PropertyRef Name="id_reactivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SALIDA_EXISTENCIA_UNIDAD">
+          <End Role="UNIDAD" Type="Self.UNIDAD" Multiplicity="1" />
+          <End Role="SALIDA_EXISTENCIA" Type="Self.SALIDA_EXISTENCIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UNIDAD">
+              <PropertyRef Name="id_unidad" />
+            </Principal>
+            <Dependent Role="SALIDA_EXISTENCIA">
+              <PropertyRef Name="id_unidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SALIDA_SOLUCION_EXISTENCIA_SOLUCION">
+          <End Role="EXISTENCIA_SOLUCION" Type="Self.EXISTENCIA_SOLUCION" Multiplicity="1" />
+          <End Role="SALIDA_SOLUCION" Type="Self.SALIDA_SOLUCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EXISTENCIA_SOLUCION">
+              <PropertyRef Name="id_existencia_solucion" />
+            </Principal>
+            <Dependent Role="SALIDA_SOLUCION">
+              <PropertyRef Name="id_existencia_solucion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SALIDA_SOLUCION_SALIDA_EXISTENCIA">
+          <End Role="SALIDA_EXISTENCIA" Type="Self.SALIDA_EXISTENCIA" Multiplicity="1" />
+          <End Role="SALIDA_SOLUCION" Type="Self.SALIDA_SOLUCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SALIDA_EXISTENCIA">
+              <PropertyRef Name="id_salida_existencia" />
+            </Principal>
+            <Dependent Role="SALIDA_SOLUCION">
+              <PropertyRef Name="id_salida_existencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SOLICITUD_EMPLEADO">
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+          <End Role="SOLICITUD" Type="Self.SOLICITUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="SOLICITUD">
+              <PropertyRef Name="id_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SOLICITUD_ESTADO">
+          <End Role="ESTADO" Type="Self.ESTADO" Multiplicity="1" />
+          <End Role="SOLICITUD" Type="Self.SOLICITUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ESTADO">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="SOLICITUD">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SOLICITUD_ESTADO_PROCESO">
+          <End Role="ESTADO_PROCESO" Type="Self.ESTADO_PROCESO" Multiplicity="1" />
+          <End Role="SOLICITUD" Type="Self.SOLICITUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ESTADO_PROCESO">
+              <PropertyRef Name="id_estado_proceso" />
+            </Principal>
+            <Dependent Role="SOLICITUD">
+              <PropertyRef Name="id_estado_proceso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SOLICITUD_SOLICITANTE">
+          <End Role="SOLICITANTE" Type="Self.SOLICITANTE" Multiplicity="0..1" />
+          <End Role="SOLICITUD" Type="Self.SOLICITUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOLICITANTE">
+              <PropertyRef Name="id_solicitante" />
+            </Principal>
+            <Dependent Role="SOLICITUD">
+              <PropertyRef Name="id_solicitante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VARIABLE_ANALISIS">
+          <End Role="ANALISIS" Type="Self.ANALISIS" Multiplicity="1" />
+          <End Role="VARIABLE" Type="Self.VARIABLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ANALISIS">
+              <PropertyRef Name="id_analisis" />
+            </Principal>
+            <Dependent Role="VARIABLE">
+              <PropertyRef Name="id_analisis" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VARIABLE_MUESTRA">
+          <End Role="MUESTRA" Type="Self.MUESTRA" Multiplicity="0..1" />
+          <End Role="VARIABLE" Type="Self.VARIABLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MUESTRA">
+              <PropertyRef Name="id_muestra" />
+            </Principal>
+            <Dependent Role="VARIABLE">
+              <PropertyRef Name="id_muestra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VARIABLE_SOLUCION">
+          <End Role="SOLUCION" Type="Self.SOLUCION" Multiplicity="0..1" />
+          <End Role="VARIABLE" Type="Self.VARIABLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOLUCION">
+              <PropertyRef Name="id_solucion" />
+            </Principal>
+            <Dependent Role="VARIABLE">
+              <PropertyRef Name="id_solucion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VARIABLE_TIPO_VARIABLE">
+          <End Role="TIPO_VARIABLE" Type="Self.TIPO_VARIABLE" Multiplicity="1" />
+          <End Role="VARIABLE" Type="Self.VARIABLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_VARIABLE">
+              <PropertyRef Name="id_tipovariable" />
+            </Principal>
+            <Dependent Role="VARIABLE">
+              <PropertyRef Name="id_tipovariable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VISITA_EMPLEADO">
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+          <End Role="VISITA" Type="Self.VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="VISITA">
+              <PropertyRef Name="id_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VISITA_EMPLEADO2">
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="0..1" />
+          <End Role="VISITA" Type="Self.VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="VISITA">
+              <PropertyRef Name="id_empleado_entrega" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VISITA_GRUPO_SOLICITUD">
+          <End Role="GRUPO_SOLICITUD" Type="Self.GRUPO_SOLICITUD" Multiplicity="0..1" />
+          <End Role="VISITA" Type="Self.VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GRUPO_SOLICITUD">
+              <PropertyRef Name="id_grupo_solicitud" />
+            </Principal>
+            <Dependent Role="VISITA">
+              <PropertyRef Name="id_grupo_solicitud" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VISITA_PROCEDENCIA">
+          <End Role="PROCEDENCIA" Type="Self.PROCEDENCIA" Multiplicity="1" />
+          <End Role="VISITA" Type="Self.VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROCEDENCIA">
+              <PropertyRef Name="id_procedencia" />
+            </Principal>
+            <Dependent Role="VISITA">
+              <PropertyRef Name="id_procedencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VISITA_SITIO_MUESTREO">
+          <End Role="SITIO_MUESTREO" Type="Self.SITIO_MUESTREO" Multiplicity="0..1" />
+          <End Role="VISITA" Type="Self.VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SITIO_MUESTREO">
+              <PropertyRef Name="id_sitio_muestreo" />
+            </Principal>
+            <Dependent Role="VISITA">
+              <PropertyRef Name="id_sitio_muestreo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VISITA_SOLICITUD">
+          <End Role="SOLICITUD" Type="Self.SOLICITUD" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="VISITA" Type="Self.VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOLICITUD">
+              <PropertyRef Name="id_solicitud" />
+            </Principal>
+            <Dependent Role="VISITA">
+              <PropertyRef Name="id_solicitud" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VISITA_VISITA">
+          <End Role="TIPO_MUESTRA" Type="Self.TIPO_MUESTRA" Multiplicity="1" />
+          <End Role="VISITA" Type="Self.VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_MUESTRA">
+              <PropertyRef Name="id_tipo_muestra" />
+            </Principal>
+            <Dependent Role="VISITA">
+              <PropertyRef Name="id_tipo_muestra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MARNModelStoreContainer">
+          <EntitySet Name="ALMACEN" EntityType="Self.ALMACEN" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ANALISIS" EntityType="Self.ANALISIS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ANALISIS_EMPLEADO" EntityType="Self.ANALISIS_EMPLEADO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ANALISIS_REACTIVO" EntityType="Self.ANALISIS_REACTIVO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AREA" EntityType="Self.AREA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CALCULO" EntityType="Self.CALCULO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CATALOGO" EntityType="Self.CATALOGO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DETALLE_SOLICITUD" EntityType="Self.DETALLE_SOLICITUD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DETALLE_VISITA" EntityType="Self.DETALLE_VISITA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EMPLEADO" EntityType="Self.EMPLEADO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ESTADO" EntityType="Self.ESTADO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ESTADO_PROCESO" EntityType="Self.ESTADO_PROCESO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ESTADO_PROCESO_ANALISTA" EntityType="Self.ESTADO_PROCESO_ANALISTA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EXISTENCIA_PRODUCTO" EntityType="Self.EXISTENCIA_PRODUCTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EXISTENCIA_SOLUCION" EntityType="Self.EXISTENCIA_SOLUCION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GRUPO_SOLICITUD" EntityType="Self.GRUPO_SOLICITUD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="INFORMES" EntityType="Self.INFORMES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="INPUT" EntityType="Self.INPUT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LOTE" EntityType="Self.LOTE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MARCA" EntityType="Self.MARCA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MUESTRA" EntityType="Self.MUESTRA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NOTIFICACION" EntityType="Self.NOTIFICACION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PROCEDENCIA" EntityType="Self.PROCEDENCIA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PROCESO_ANALISTA" EntityType="Self.PROCESO_ANALISTA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="REACTIVO" EntityType="Self.REACTIVO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="REACTIVO_SOLUCION" EntityType="Self.REACTIVO_SOLUCION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="REPORTE" EntityType="Self.REPORTE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RESULTADO" EntityType="Self.RESULTADO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SALIDA_EXISTENCIA" EntityType="Self.SALIDA_EXISTENCIA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SALIDA_SOLUCION" EntityType="Self.SALIDA_SOLUCION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SITIO_MUESTREO" EntityType="Self.SITIO_MUESTREO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SOLICITANTE" EntityType="Self.SOLICITANTE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SOLICITUD" EntityType="Self.SOLICITUD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SOLUCION" EntityType="Self.SOLUCION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TIPO_EMPLEADO" EntityType="Self.TIPO_EMPLEADO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TIPO_MUESTRA" EntityType="Self.TIPO_MUESTRA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TIPO_VARIABLE" EntityType="Self.TIPO_VARIABLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UNIDAD" EntityType="Self.UNIDAD" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VARIABLE" EntityType="Self.VARIABLE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VISITA" EntityType="Self.VISITA" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ANALISIS_AREA" Association="Self.FK_ANALISIS_AREA">
+            <End Role="AREA" EntitySet="AREA" />
+            <End Role="ANALISIS" EntitySet="ANALISIS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ANALISIS_EMPLEADO_DETALLE_SOLICITUD" Association="Self.FK_ANALISIS_EMPLEADO_DETALLE_SOLICITUD">
+            <End Role="DETALLE_SOLICITUD" EntitySet="DETALLE_SOLICITUD" />
+            <End Role="ANALISIS_EMPLEADO" EntitySet="ANALISIS_EMPLEADO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ANALISIS_EMPLEADO_EMPLEADO" Association="Self.FK_ANALISIS_EMPLEADO_EMPLEADO">
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+            <End Role="ANALISIS_EMPLEADO" EntitySet="ANALISIS_EMPLEADO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ANALISIS_REACTIVO_ANALISIS_EMPLEADO" Association="Self.FK_ANALISIS_REACTIVO_ANALISIS_EMPLEADO">
+            <End Role="ANALISIS_EMPLEADO" EntitySet="ANALISIS_EMPLEADO" />
+            <End Role="ANALISIS_REACTIVO" EntitySet="ANALISIS_REACTIVO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ANALISIS_REACTIVO_REACTIVO" Association="Self.FK_ANALISIS_REACTIVO_REACTIVO">
+            <End Role="REACTIVO" EntitySet="REACTIVO" />
+            <End Role="ANALISIS_REACTIVO" EntitySet="ANALISIS_REACTIVO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ANALISIS_REACTIVO_UNIDAD" Association="Self.FK_ANALISIS_REACTIVO_UNIDAD">
+            <End Role="UNIDAD" EntitySet="UNIDAD" />
+            <End Role="ANALISIS_REACTIVO" EntitySet="ANALISIS_REACTIVO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CALCULO_CALCULO" Association="Self.FK_CALCULO_CALCULO">
+            <End Role="ANALISIS_EMPLEADO" EntitySet="ANALISIS_EMPLEADO" />
+            <End Role="CALCULO" EntitySet="CALCULO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CALCULO_RESULTADO" Association="Self.FK_CALCULO_RESULTADO">
+            <End Role="RESULTADO" EntitySet="RESULTADO" />
+            <End Role="CALCULO" EntitySet="CALCULO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DETALLE_SOLICITUD_ANALISIS" Association="Self.FK_DETALLE_SOLICITUD_ANALISIS">
+            <End Role="ANALISIS" EntitySet="ANALISIS" />
+            <End Role="DETALLE_SOLICITUD" EntitySet="DETALLE_SOLICITUD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DETALLE_SOLICITUD_SOLICITUD" Association="Self.FK_DETALLE_SOLICITUD_SOLICITUD">
+            <End Role="SOLICITUD" EntitySet="SOLICITUD" />
+            <End Role="DETALLE_SOLICITUD" EntitySet="DETALLE_SOLICITUD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DETALLE_VISITA_MUESTRA" Association="Self.FK_DETALLE_VISITA_MUESTRA">
+            <End Role="MUESTRA" EntitySet="MUESTRA" />
+            <End Role="DETALLE_VISITA" EntitySet="DETALLE_VISITA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DETALLE_VISITA_VISITA" Association="Self.FK_DETALLE_VISITA_VISITA">
+            <End Role="VISITA" EntitySet="VISITA" />
+            <End Role="DETALLE_VISITA" EntitySet="DETALLE_VISITA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLEADO_AREA" Association="Self.FK_EMPLEADO_AREA">
+            <End Role="AREA" EntitySet="AREA" />
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLEADO_TIPO_EMPLEADO" Association="Self.FK_EMPLEADO_TIPO_EMPLEADO">
+            <End Role="TIPO_EMPLEADO" EntitySet="TIPO_EMPLEADO" />
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EXISTENCIA_PRODUCTO_PRODUCTO" Association="Self.FK_EXISTENCIA_PRODUCTO_PRODUCTO">
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+            <End Role="EXISTENCIA_PRODUCTO" EntitySet="EXISTENCIA_PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EXISTENCIA_SOLUCION_EMPLEADO" Association="Self.FK_EXISTENCIA_SOLUCION_EMPLEADO">
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+            <End Role="EXISTENCIA_SOLUCION" EntitySet="EXISTENCIA_SOLUCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EXISTENCIA_SOLUCION_SOLUCION" Association="Self.FK_EXISTENCIA_SOLUCION_SOLUCION">
+            <End Role="SOLUCION" EntitySet="SOLUCION" />
+            <End Role="EXISTENCIA_SOLUCION" EntitySet="EXISTENCIA_SOLUCION" />
+          </AssociationSet>
+          <AssociationSet Name="fk_GROUPO_SOLICITANTE" Association="Self.fk_GROUPO_SOLICITANTE">
+            <End Role="SOLICITANTE" EntitySet="SOLICITANTE" />
+            <End Role="GRUPO_SOLICITUD" EntitySet="GRUPO_SOLICITUD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INFORMES_SOLICITUD" Association="Self.FK_INFORMES_SOLICITUD">
+            <End Role="SOLICITUD" EntitySet="SOLICITUD" />
+            <End Role="INFORMES" EntitySet="INFORMES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INPUT_CALCULO" Association="Self.FK_INPUT_CALCULO">
+            <End Role="CALCULO" EntitySet="CALCULO" />
+            <End Role="INPUT" EntitySet="INPUT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INPUT_VARIABLE" Association="Self.FK_INPUT_VARIABLE">
+            <End Role="VARIABLE" EntitySet="VARIABLE" />
+            <End Role="INPUT" EntitySet="INPUT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NOTIFICACION_EMPLEADO" Association="Self.FK_NOTIFICACION_EMPLEADO">
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+            <End Role="NOTIFICACION" EntitySet="NOTIFICACION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NOTIFICACION_EMPLEADO1" Association="Self.FK_NOTIFICACION_EMPLEADO1">
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+            <End Role="NOTIFICACION" EntitySet="NOTIFICACION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROCESO_ANALISTA_EMPLEADO" Association="Self.FK_PROCESO_ANALISTA_EMPLEADO">
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+            <End Role="PROCESO_ANALISTA" EntitySet="PROCESO_ANALISTA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROCESO_ANALISTA_ESTADO_PROCESO_ANALISTA" Association="Self.FK_PROCESO_ANALISTA_ESTADO_PROCESO_ANALISTA">
+            <End Role="ESTADO_PROCESO_ANALISTA" EntitySet="ESTADO_PROCESO_ANALISTA" />
+            <End Role="PROCESO_ANALISTA" EntitySet="PROCESO_ANALISTA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROCESO_ANALISTA_SOLICITUD" Association="Self.FK_PROCESO_ANALISTA_SOLICITUD">
+            <End Role="SOLICITUD" EntitySet="SOLICITUD" />
+            <End Role="PROCESO_ANALISTA" EntitySet="PROCESO_ANALISTA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTO_ALMACEN" Association="Self.FK_PRODUCTO_ALMACEN">
+            <End Role="ALMACEN" EntitySet="ALMACEN" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTO_CATALOGO" Association="Self.FK_PRODUCTO_CATALOGO">
+            <End Role="CATALOGO" EntitySet="CATALOGO" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTO_LOTE" Association="Self.FK_PRODUCTO_LOTE">
+            <End Role="LOTE" EntitySet="LOTE" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTO_MARCA" Association="Self.FK_PRODUCTO_MARCA">
+            <End Role="MARCA" EntitySet="MARCA" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTO_REACTIVO" Association="Self.FK_PRODUCTO_REACTIVO">
+            <End Role="REACTIVO" EntitySet="REACTIVO" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTO_UNIDAD" Association="Self.FK_PRODUCTO_UNIDAD">
+            <End Role="UNIDAD" EntitySet="UNIDAD" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REACTIVO_SOLUCION_REACTIVO" Association="Self.FK_REACTIVO_SOLUCION_REACTIVO">
+            <End Role="REACTIVO" EntitySet="REACTIVO" />
+            <End Role="REACTIVO_SOLUCION" EntitySet="REACTIVO_SOLUCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REACTIVO_SOLUCION_SOLUCION" Association="Self.FK_REACTIVO_SOLUCION_SOLUCION">
+            <End Role="SOLUCION" EntitySet="SOLUCION" />
+            <End Role="REACTIVO_SOLUCION" EntitySet="REACTIVO_SOLUCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REACTIVO_SOLUCION_UNIDAD" Association="Self.FK_REACTIVO_SOLUCION_UNIDAD">
+            <End Role="UNIDAD" EntitySet="UNIDAD" />
+            <End Role="REACTIVO_SOLUCION" EntitySet="REACTIVO_SOLUCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REPORTE_ANALISIS_EMPLEADO" Association="Self.FK_REPORTE_ANALISIS_EMPLEADO">
+            <End Role="ANALISIS_EMPLEADO" EntitySet="ANALISIS_EMPLEADO" />
+            <End Role="REPORTE" EntitySet="REPORTE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SALIDA_EXISTENCIA_EMPLEADO" Association="Self.FK_SALIDA_EXISTENCIA_EMPLEADO">
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+            <End Role="SALIDA_EXISTENCIA" EntitySet="SALIDA_EXISTENCIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SALIDA_EXISTENCIA_EXISTENCIA_PRODUCTO" Association="Self.FK_SALIDA_EXISTENCIA_EXISTENCIA_PRODUCTO">
+            <End Role="EXISTENCIA_PRODUCTO" EntitySet="EXISTENCIA_PRODUCTO" />
+            <End Role="SALIDA_EXISTENCIA" EntitySet="SALIDA_EXISTENCIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SALIDA_EXISTENCIA_REACITVO" Association="Self.FK_SALIDA_EXISTENCIA_REACITVO">
+            <End Role="REACTIVO" EntitySet="REACTIVO" />
+            <End Role="SALIDA_EXISTENCIA" EntitySet="SALIDA_EXISTENCIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SALIDA_EXISTENCIA_UNIDAD" Association="Self.FK_SALIDA_EXISTENCIA_UNIDAD">
+            <End Role="UNIDAD" EntitySet="UNIDAD" />
+            <End Role="SALIDA_EXISTENCIA" EntitySet="SALIDA_EXISTENCIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SALIDA_SOLUCION_EXISTENCIA_SOLUCION" Association="Self.FK_SALIDA_SOLUCION_EXISTENCIA_SOLUCION">
+            <End Role="EXISTENCIA_SOLUCION" EntitySet="EXISTENCIA_SOLUCION" />
+            <End Role="SALIDA_SOLUCION" EntitySet="SALIDA_SOLUCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SALIDA_SOLUCION_SALIDA_EXISTENCIA" Association="Self.FK_SALIDA_SOLUCION_SALIDA_EXISTENCIA">
+            <End Role="SALIDA_EXISTENCIA" EntitySet="SALIDA_EXISTENCIA" />
+            <End Role="SALIDA_SOLUCION" EntitySet="SALIDA_SOLUCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SOLICITUD_EMPLEADO" Association="Self.FK_SOLICITUD_EMPLEADO">
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+            <End Role="SOLICITUD" EntitySet="SOLICITUD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SOLICITUD_ESTADO" Association="Self.FK_SOLICITUD_ESTADO">
+            <End Role="ESTADO" EntitySet="ESTADO" />
+            <End Role="SOLICITUD" EntitySet="SOLICITUD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SOLICITUD_ESTADO_PROCESO" Association="Self.FK_SOLICITUD_ESTADO_PROCESO">
+            <End Role="ESTADO_PROCESO" EntitySet="ESTADO_PROCESO" />
+            <End Role="SOLICITUD" EntitySet="SOLICITUD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SOLICITUD_SOLICITANTE" Association="Self.FK_SOLICITUD_SOLICITANTE">
+            <End Role="SOLICITANTE" EntitySet="SOLICITANTE" />
+            <End Role="SOLICITUD" EntitySet="SOLICITUD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VARIABLE_ANALISIS" Association="Self.FK_VARIABLE_ANALISIS">
+            <End Role="ANALISIS" EntitySet="ANALISIS" />
+            <End Role="VARIABLE" EntitySet="VARIABLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VARIABLE_MUESTRA" Association="Self.FK_VARIABLE_MUESTRA">
+            <End Role="MUESTRA" EntitySet="MUESTRA" />
+            <End Role="VARIABLE" EntitySet="VARIABLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VARIABLE_SOLUCION" Association="Self.FK_VARIABLE_SOLUCION">
+            <End Role="SOLUCION" EntitySet="SOLUCION" />
+            <End Role="VARIABLE" EntitySet="VARIABLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VARIABLE_TIPO_VARIABLE" Association="Self.FK_VARIABLE_TIPO_VARIABLE">
+            <End Role="TIPO_VARIABLE" EntitySet="TIPO_VARIABLE" />
+            <End Role="VARIABLE" EntitySet="VARIABLE" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VISITA_EMPLEADO" Association="Self.FK_VISITA_EMPLEADO">
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+            <End Role="VISITA" EntitySet="VISITA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VISITA_EMPLEADO2" Association="Self.FK_VISITA_EMPLEADO2">
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+            <End Role="VISITA" EntitySet="VISITA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VISITA_GRUPO_SOLICITUD" Association="Self.FK_VISITA_GRUPO_SOLICITUD">
+            <End Role="GRUPO_SOLICITUD" EntitySet="GRUPO_SOLICITUD" />
+            <End Role="VISITA" EntitySet="VISITA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VISITA_PROCEDENCIA" Association="Self.FK_VISITA_PROCEDENCIA">
+            <End Role="PROCEDENCIA" EntitySet="PROCEDENCIA" />
+            <End Role="VISITA" EntitySet="VISITA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VISITA_SITIO_MUESTREO" Association="Self.FK_VISITA_SITIO_MUESTREO">
+            <End Role="SITIO_MUESTREO" EntitySet="SITIO_MUESTREO" />
+            <End Role="VISITA" EntitySet="VISITA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VISITA_SOLICITUD" Association="Self.FK_VISITA_SOLICITUD">
+            <End Role="SOLICITUD" EntitySet="SOLICITUD" />
+            <End Role="VISITA" EntitySet="VISITA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VISITA_VISITA" Association="Self.FK_VISITA_VISITA">
+            <End Role="TIPO_MUESTRA" EntitySet="TIPO_MUESTRA" />
+            <End Role="VISITA" EntitySet="VISITA" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MARNModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="MARNEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ALMACENs" EntityType="MARNModel.ALMACEN" />
+          <EntitySet Name="ANALISIS" EntityType="MARNModel.ANALISI" />
+          <EntitySet Name="ANALISIS_EMPLEADO" EntityType="MARNModel.ANALISIS_EMPLEADO" />
+          <EntitySet Name="AREAs" EntityType="MARNModel.AREA" />
+          <EntitySet Name="CALCULOes" EntityType="MARNModel.CALCULO" />
+          <EntitySet Name="CATALOGOes" EntityType="MARNModel.CATALOGO" />
+          <EntitySet Name="DETALLE_SOLICITUD" EntityType="MARNModel.DETALLE_SOLICITUD" />
+          <EntitySet Name="DETALLE_VISITA" EntityType="MARNModel.DETALLE_VISITA" />
+          <EntitySet Name="EMPLEADOes" EntityType="MARNModel.EMPLEADO" />
+          <EntitySet Name="ESTADOes" EntityType="MARNModel.ESTADO" />
+          <EntitySet Name="ESTADO_PROCESO" EntityType="MARNModel.ESTADO_PROCESO" />
+          <EntitySet Name="EXISTENCIA_PRODUCTO" EntityType="MARNModel.EXISTENCIA_PRODUCTO" />
+          <EntitySet Name="EXISTENCIA_SOLUCION" EntityType="MARNModel.EXISTENCIA_SOLUCION" />
+          <EntitySet Name="INPUTs" EntityType="MARNModel.INPUT" />
+          <EntitySet Name="LOTEs" EntityType="MARNModel.LOTE" />
+          <EntitySet Name="MARCAs" EntityType="MARNModel.MARCA" />
+          <EntitySet Name="MUESTRAs" EntityType="MARNModel.MUESTRA" />
+          <EntitySet Name="PROCEDENCIAs" EntityType="MARNModel.PROCEDENCIA" />
+          <EntitySet Name="PROCESO_ANALISTA" EntityType="MARNModel.PROCESO_ANALISTA" />
+          <EntitySet Name="PRODUCTOes" EntityType="MARNModel.PRODUCTO" />
+          <EntitySet Name="REACTIVOes" EntityType="MARNModel.REACTIVO" />
+          <EntitySet Name="REACTIVO_SOLUCION" EntityType="MARNModel.REACTIVO_SOLUCION" />
+          <EntitySet Name="REPORTEs" EntityType="MARNModel.REPORTE" />
+          <EntitySet Name="RESULTADOes" EntityType="MARNModel.RESULTADO" />
+          <EntitySet Name="SALIDA_EXISTENCIA" EntityType="MARNModel.SALIDA_EXISTENCIA" />
+          <EntitySet Name="SALIDA_SOLUCION" EntityType="MARNModel.SALIDA_SOLUCION" />
+          <EntitySet Name="SOLICITANTEs" EntityType="MARNModel.SOLICITANTE" />
+          <EntitySet Name="SOLICITUDs" EntityType="MARNModel.SOLICITUD" />
+          <EntitySet Name="SOLUCIONs" EntityType="MARNModel.SOLUCION" />
+          <EntitySet Name="TIPO_EMPLEADO" EntityType="MARNModel.TIPO_EMPLEADO" />
+          <EntitySet Name="TIPO_MUESTRA" EntityType="MARNModel.TIPO_MUESTRA" />
+          <EntitySet Name="TIPO_VARIABLE" EntityType="MARNModel.TIPO_VARIABLE" />
+          <EntitySet Name="UNIDADs" EntityType="MARNModel.UNIDAD" />
+          <EntitySet Name="VARIABLEs" EntityType="MARNModel.VARIABLE" />
+          <EntitySet Name="VISITAs" EntityType="MARNModel.VISITA" />
+          <AssociationSet Name="FK_PRODUCTO_ALMACEN" Association="MARNModel.FK_PRODUCTO_ALMACEN">
+            <End Role="ALMACEN" EntitySet="ALMACENs" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ANALISIS_AREA" Association="MARNModel.FK_ANALISIS_AREA">
+            <End Role="AREA" EntitySet="AREAs" />
+            <End Role="ANALISI" EntitySet="ANALISIS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DETALLE_SOLICITUD_ANALISIS" Association="MARNModel.FK_DETALLE_SOLICITUD_ANALISIS">
+            <End Role="ANALISI" EntitySet="ANALISIS" />
+            <End Role="DETALLE_SOLICITUD" EntitySet="DETALLE_SOLICITUD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VARIABLE_ANALISIS" Association="MARNModel.FK_VARIABLE_ANALISIS">
+            <End Role="ANALISI" EntitySet="ANALISIS" />
+            <End Role="VARIABLE" EntitySet="VARIABLEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ANALISIS_EMPLEADO_DETALLE_SOLICITUD" Association="MARNModel.FK_ANALISIS_EMPLEADO_DETALLE_SOLICITUD">
+            <End Role="DETALLE_SOLICITUD" EntitySet="DETALLE_SOLICITUD" />
+            <End Role="ANALISIS_EMPLEADO" EntitySet="ANALISIS_EMPLEADO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ANALISIS_EMPLEADO_EMPLEADO" Association="MARNModel.FK_ANALISIS_EMPLEADO_EMPLEADO">
+            <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
+            <End Role="ANALISIS_EMPLEADO" EntitySet="ANALISIS_EMPLEADO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CALCULO_CALCULO" Association="MARNModel.FK_CALCULO_CALCULO">
+            <End Role="ANALISIS_EMPLEADO" EntitySet="ANALISIS_EMPLEADO" />
+            <End Role="CALCULO" EntitySet="CALCULOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REPORTE_ANALISIS_EMPLEADO" Association="MARNModel.FK_REPORTE_ANALISIS_EMPLEADO">
+            <End Role="ANALISIS_EMPLEADO" EntitySet="ANALISIS_EMPLEADO" />
+            <End Role="REPORTE" EntitySet="REPORTEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLEADO_AREA" Association="MARNModel.FK_EMPLEADO_AREA">
+            <End Role="AREA" EntitySet="AREAs" />
+            <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CALCULO_RESULTADO" Association="MARNModel.FK_CALCULO_RESULTADO">
+            <End Role="RESULTADO" EntitySet="RESULTADOes" />
+            <End Role="CALCULO" EntitySet="CALCULOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INPUT_CALCULO" Association="MARNModel.FK_INPUT_CALCULO">
+            <End Role="CALCULO" EntitySet="CALCULOes" />
+            <End Role="INPUT" EntitySet="INPUTs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTO_CATALOGO" Association="MARNModel.FK_PRODUCTO_CATALOGO">
+            <End Role="CATALOGO" EntitySet="CATALOGOes" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DETALLE_SOLICITUD_SOLICITUD" Association="MARNModel.FK_DETALLE_SOLICITUD_SOLICITUD">
+            <End Role="SOLICITUD" EntitySet="SOLICITUDs" />
+            <End Role="DETALLE_SOLICITUD" EntitySet="DETALLE_SOLICITUD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DETALLE_VISITA_MUESTRA" Association="MARNModel.FK_DETALLE_VISITA_MUESTRA">
+            <End Role="MUESTRA" EntitySet="MUESTRAs" />
+            <End Role="DETALLE_VISITA" EntitySet="DETALLE_VISITA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DETALLE_VISITA_VISITA" Association="MARNModel.FK_DETALLE_VISITA_VISITA">
+            <End Role="VISITA" EntitySet="VISITAs" />
+            <End Role="DETALLE_VISITA" EntitySet="DETALLE_VISITA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EMPLEADO_TIPO_EMPLEADO" Association="MARNModel.FK_EMPLEADO_TIPO_EMPLEADO">
+            <End Role="TIPO_EMPLEADO" EntitySet="TIPO_EMPLEADO" />
+            <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EXISTENCIA_SOLUCION_EMPLEADO" Association="MARNModel.FK_EXISTENCIA_SOLUCION_EMPLEADO">
+            <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
+            <End Role="EXISTENCIA_SOLUCION" EntitySet="EXISTENCIA_SOLUCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROCESO_ANALISTA_EMPLEADO" Association="MARNModel.FK_PROCESO_ANALISTA_EMPLEADO">
+            <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
+            <End Role="PROCESO_ANALISTA" EntitySet="PROCESO_ANALISTA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SALIDA_EXISTENCIA_EMPLEADO" Association="MARNModel.FK_SALIDA_EXISTENCIA_EMPLEADO">
+            <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
+            <End Role="SALIDA_EXISTENCIA" EntitySet="SALIDA_EXISTENCIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SOLICITUD_EMPLEADO" Association="MARNModel.FK_SOLICITUD_EMPLEADO">
+            <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
+            <End Role="SOLICITUD" EntitySet="SOLICITUDs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VISITA_EMPLEADO" Association="MARNModel.FK_VISITA_EMPLEADO">
+            <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
+            <End Role="VISITA" EntitySet="VISITAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SOLICITUD_ESTADO" Association="MARNModel.FK_SOLICITUD_ESTADO">
+            <End Role="ESTADO" EntitySet="ESTADOes" />
+            <End Role="SOLICITUD" EntitySet="SOLICITUDs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SOLICITUD_ESTADO_PROCESO" Association="MARNModel.FK_SOLICITUD_ESTADO_PROCESO">
+            <End Role="ESTADO_PROCESO" EntitySet="ESTADO_PROCESO" />
+            <End Role="SOLICITUD" EntitySet="SOLICITUDs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EXISTENCIA_PRODUCTO_PRODUCTO" Association="MARNModel.FK_EXISTENCIA_PRODUCTO_PRODUCTO">
+            <End Role="PRODUCTO" EntitySet="PRODUCTOes" />
+            <End Role="EXISTENCIA_PRODUCTO" EntitySet="EXISTENCIA_PRODUCTO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SALIDA_EXISTENCIA_EXISTENCIA_PRODUCTO" Association="MARNModel.FK_SALIDA_EXISTENCIA_EXISTENCIA_PRODUCTO">
+            <End Role="EXISTENCIA_PRODUCTO" EntitySet="EXISTENCIA_PRODUCTO" />
+            <End Role="SALIDA_EXISTENCIA" EntitySet="SALIDA_EXISTENCIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EXISTENCIA_SOLUCION_SOLUCION" Association="MARNModel.FK_EXISTENCIA_SOLUCION_SOLUCION">
+            <End Role="SOLUCION" EntitySet="SOLUCIONs" />
+            <End Role="EXISTENCIA_SOLUCION" EntitySet="EXISTENCIA_SOLUCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SALIDA_SOLUCION_EXISTENCIA_SOLUCION" Association="MARNModel.FK_SALIDA_SOLUCION_EXISTENCIA_SOLUCION">
+            <End Role="EXISTENCIA_SOLUCION" EntitySet="EXISTENCIA_SOLUCION" />
+            <End Role="SALIDA_SOLUCION" EntitySet="SALIDA_SOLUCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INPUT_VARIABLE" Association="MARNModel.FK_INPUT_VARIABLE">
+            <End Role="VARIABLE" EntitySet="VARIABLEs" />
+            <End Role="INPUT" EntitySet="INPUTs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTO_LOTE" Association="MARNModel.FK_PRODUCTO_LOTE">
+            <End Role="LOTE" EntitySet="LOTEs" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTO_MARCA" Association="MARNModel.FK_PRODUCTO_MARCA">
+            <End Role="MARCA" EntitySet="MARCAs" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VARIABLE_MUESTRA" Association="MARNModel.FK_VARIABLE_MUESTRA">
+            <End Role="MUESTRA" EntitySet="MUESTRAs" />
+            <End Role="VARIABLE" EntitySet="VARIABLEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VISITA_PROCEDENCIA" Association="MARNModel.FK_VISITA_PROCEDENCIA">
+            <End Role="PROCEDENCIA" EntitySet="PROCEDENCIAs" />
+            <End Role="VISITA" EntitySet="VISITAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PROCESO_ANALISTA_SOLICITUD" Association="MARNModel.FK_PROCESO_ANALISTA_SOLICITUD">
+            <End Role="SOLICITUD" EntitySet="SOLICITUDs" />
+            <End Role="PROCESO_ANALISTA" EntitySet="PROCESO_ANALISTA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTO_REACTIVO" Association="MARNModel.FK_PRODUCTO_REACTIVO">
+            <End Role="REACTIVO" EntitySet="REACTIVOes" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PRODUCTO_UNIDAD" Association="MARNModel.FK_PRODUCTO_UNIDAD">
+            <End Role="UNIDAD" EntitySet="UNIDADs" />
+            <End Role="PRODUCTO" EntitySet="PRODUCTOes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REACTIVO_SOLUCION_REACTIVO" Association="MARNModel.FK_REACTIVO_SOLUCION_REACTIVO">
+            <End Role="REACTIVO" EntitySet="REACTIVOes" />
+            <End Role="REACTIVO_SOLUCION" EntitySet="REACTIVO_SOLUCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REACTIVO_SOLUCION_SOLUCION" Association="MARNModel.FK_REACTIVO_SOLUCION_SOLUCION">
+            <End Role="SOLUCION" EntitySet="SOLUCIONs" />
+            <End Role="REACTIVO_SOLUCION" EntitySet="REACTIVO_SOLUCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_REACTIVO_SOLUCION_UNIDAD" Association="MARNModel.FK_REACTIVO_SOLUCION_UNIDAD">
+            <End Role="UNIDAD" EntitySet="UNIDADs" />
+            <End Role="REACTIVO_SOLUCION" EntitySet="REACTIVO_SOLUCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SALIDA_EXISTENCIA_UNIDAD" Association="MARNModel.FK_SALIDA_EXISTENCIA_UNIDAD">
+            <End Role="UNIDAD" EntitySet="UNIDADs" />
+            <End Role="SALIDA_EXISTENCIA" EntitySet="SALIDA_EXISTENCIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SALIDA_SOLUCION_SALIDA_EXISTENCIA" Association="MARNModel.FK_SALIDA_SOLUCION_SALIDA_EXISTENCIA">
+            <End Role="SALIDA_EXISTENCIA" EntitySet="SALIDA_EXISTENCIA" />
+            <End Role="SALIDA_SOLUCION" EntitySet="SALIDA_SOLUCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SOLICITUD_SOLICITANTE" Association="MARNModel.FK_SOLICITUD_SOLICITANTE">
+            <End Role="SOLICITANTE" EntitySet="SOLICITANTEs" />
+            <End Role="SOLICITUD" EntitySet="SOLICITUDs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VISITA_SOLICITUD" Association="MARNModel.FK_VISITA_SOLICITUD">
+            <End Role="SOLICITUD" EntitySet="SOLICITUDs" />
+            <End Role="VISITA" EntitySet="VISITAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VARIABLE_SOLUCION" Association="MARNModel.FK_VARIABLE_SOLUCION">
+            <End Role="SOLUCION" EntitySet="SOLUCIONs" />
+            <End Role="VARIABLE" EntitySet="VARIABLEs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VISITA_VISITA" Association="MARNModel.FK_VISITA_VISITA">
+            <End Role="TIPO_MUESTRA" EntitySet="TIPO_MUESTRA" />
+            <End Role="VISITA" EntitySet="VISITAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VARIABLE_TIPO_VARIABLE" Association="MARNModel.FK_VARIABLE_TIPO_VARIABLE">
+            <End Role="TIPO_VARIABLE" EntitySet="TIPO_VARIABLE" />
+            <End Role="VARIABLE" EntitySet="VARIABLEs" />
+          </AssociationSet>
+          <EntitySet Name="ESTADO_PROCESO_ANALISTA" EntityType="MARNModel.ESTADO_PROCESO_ANALISTA" />
+          <EntitySet Name="INFORMES" EntityType="MARNModel.INFORME" />
+          <AssociationSet Name="FK_PROCESO_ANALISTA_ESTADO_PROCESO_ANALISTA" Association="MARNModel.FK_PROCESO_ANALISTA_ESTADO_PROCESO_ANALISTA">
+            <End Role="ESTADO_PROCESO_ANALISTA" EntitySet="ESTADO_PROCESO_ANALISTA" />
+            <End Role="PROCESO_ANALISTA" EntitySet="PROCESO_ANALISTA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_INFORMES_SOLICITUD" Association="MARNModel.FK_INFORMES_SOLICITUD">
+            <End Role="SOLICITUD" EntitySet="SOLICITUDs" />
+            <End Role="INFORME" EntitySet="INFORMES" />
+          </AssociationSet>
+          <EntitySet Name="NOTIFICACIONs" EntityType="MARNModel.NOTIFICACION" />
+          <AssociationSet Name="FK_NOTIFICACION_EMPLEADO" Association="MARNModel.FK_NOTIFICACION_EMPLEADO">
+            <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
+            <End Role="NOTIFICACION" EntitySet="NOTIFICACIONs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_NOTIFICACION_EMPLEADO_R" Association="MARNModel.FK_NOTIFICACION_EMPLEADO_R">
+            <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
+            <End Role="NOTIFICACION" EntitySet="NOTIFICACIONs" />
+          </AssociationSet>
+          <EntitySet Name="ANALISIS_REACTIVO" EntityType="MARNModel.ANALISIS_REACTIVO" />
+          <EntitySet Name="SITIO_MUESTREO" EntityType="MARNModel.SITIO_MUESTREO" />
+          <AssociationSet Name="FK_ANALISIS_REACTIVO_ANALISIS_EMPLEADO" Association="MARNModel.FK_ANALISIS_REACTIVO_ANALISIS_EMPLEADO">
+            <End Role="ANALISIS_EMPLEADO" EntitySet="ANALISIS_EMPLEADO" />
+            <End Role="ANALISIS_REACTIVO" EntitySet="ANALISIS_REACTIVO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ANALISIS_REACTIVO_REACTIVO" Association="MARNModel.FK_ANALISIS_REACTIVO_REACTIVO">
+            <End Role="REACTIVO" EntitySet="REACTIVOes" />
+            <End Role="ANALISIS_REACTIVO" EntitySet="ANALISIS_REACTIVO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ANALISIS_REACTIVO_UNIDAD" Association="MARNModel.FK_ANALISIS_REACTIVO_UNIDAD">
+            <End Role="UNIDAD" EntitySet="UNIDADs" />
+            <End Role="ANALISIS_REACTIVO" EntitySet="ANALISIS_REACTIVO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SALIDA_EXISTENCIA_REACITVO" Association="MARNModel.FK_SALIDA_EXISTENCIA_REACITVO">
+            <End Role="REACTIVO" EntitySet="REACTIVOes" />
+            <End Role="SALIDA_EXISTENCIA" EntitySet="SALIDA_EXISTENCIA" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VISITA_SITIO_MUESTREO" Association="MARNModel.FK_VISITA_SITIO_MUESTREO">
+            <End Role="SITIO_MUESTREO" EntitySet="SITIO_MUESTREO" />
+            <End Role="VISITA" EntitySet="VISITAs" />
+          </AssociationSet>
+          <EntitySet Name="GRUPO_SOLICITUD" EntityType="MARNModel.GRUPO_SOLICITUD" />
+          <AssociationSet Name="fk_GROUPO_SOLICITANTE" Association="MARNModel.fk_GROUPO_SOLICITANTE">
+            <End Role="SOLICITANTE" EntitySet="SOLICITANTEs" />
+            <End Role="GRUPO_SOLICITUD" EntitySet="GRUPO_SOLICITUD" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VISITA_GRUPO_SOLICITUD" Association="MARNModel.FK_VISITA_GRUPO_SOLICITUD">
+            <End Role="GRUPO_SOLICITUD" EntitySet="GRUPO_SOLICITUD" />
+            <End Role="VISITA" EntitySet="VISITAs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_VISITA_EMPLEADO2" Association="MARNModel.FK_VISITA_EMPLEADO2">
+            <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
+            <End Role="VISITA" EntitySet="VISITAs" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ALMACEN">
+          <Key>
+            <PropertyRef Name="id_almacen" />
+          </Key>
+          <Property Name="id_almacen" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="estante" Type="Byte" />
+          <Property Name="nivel" Type="Byte" />
+          <NavigationProperty Name="PRODUCTOes" Relationship="MARNModel.FK_PRODUCTO_ALMACEN" FromRole="ALMACEN" ToRole="PRODUCTO" />
+        </EntityType>
+        <EntityType Name="ANALISI">
+          <Key>
+            <PropertyRef Name="id_analisis" />
+          </Key>
+          <Property Name="id_analisis" Type="Int32" Nullable="false" />
+          <Property Name="id_area" Type="Byte" Nullable="false" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="metodo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="formula" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="unidades" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="incertezas" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+          <NavigationProperty Name="AREA" Relationship="MARNModel.FK_ANALISIS_AREA" FromRole="ANALISI" ToRole="AREA" />
+          <NavigationProperty Name="DETALLE_SOLICITUD" Relationship="MARNModel.FK_DETALLE_SOLICITUD_ANALISIS" FromRole="ANALISI" ToRole="DETALLE_SOLICITUD" />
+          <NavigationProperty Name="VARIABLEs" Relationship="MARNModel.FK_VARIABLE_ANALISIS" FromRole="ANALISI" ToRole="VARIABLE" />
+          <Property Name="costo" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="costo_iva" Type="Decimal" Precision="6" Scale="2" />
+        </EntityType>
+        <EntityType Name="ANALISIS_EMPLEADO">
+          <Key>
+            <PropertyRef Name="id_analisis_empleado" />
+          </Key>
+          <Property Name="id_analisis_empleado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_empleado" Type="Byte" Nullable="false" />
+          <Property Name="id_detalle_solicitud" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="DETALLE_SOLICITUD" Relationship="MARNModel.FK_ANALISIS_EMPLEADO_DETALLE_SOLICITUD" FromRole="ANALISIS_EMPLEADO" ToRole="DETALLE_SOLICITUD" />
+          <NavigationProperty Name="EMPLEADO" Relationship="MARNModel.FK_ANALISIS_EMPLEADO_EMPLEADO" FromRole="ANALISIS_EMPLEADO" ToRole="EMPLEADO" />
+          <NavigationProperty Name="CALCULOes" Relationship="MARNModel.FK_CALCULO_CALCULO" FromRole="ANALISIS_EMPLEADO" ToRole="CALCULO" />
+          <NavigationProperty Name="REPORTEs" Relationship="MARNModel.FK_REPORTE_ANALISIS_EMPLEADO" FromRole="ANALISIS_EMPLEADO" ToRole="REPORTE" />
+          <NavigationProperty Name="ANALISIS_REACTIVO" Relationship="MARNModel.FK_ANALISIS_REACTIVO_ANALISIS_EMPLEADO" FromRole="ANALISIS_EMPLEADO" ToRole="ANALISIS_REACTIVO" />
+        </EntityType>
+        <EntityType Name="AREA">
+          <Key>
+            <PropertyRef Name="id_area" />
+          </Key>
+          <Property Name="id_area" Type="Byte" Nullable="false" />
+          <Property Name="nombre_area" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ANALISIS" Relationship="MARNModel.FK_ANALISIS_AREA" FromRole="AREA" ToRole="ANALISI" />
+          <NavigationProperty Name="EMPLEADOes" Relationship="MARNModel.FK_EMPLEADO_AREA" FromRole="AREA" ToRole="EMPLEADO" />
+        </EntityType>
+        <EntityType Name="CALCULO">
+          <Key>
+            <PropertyRef Name="id_calculo" />
+          </Key>
+          <Property Name="id_calculo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_analisis_empleado" Type="Int32" Nullable="false" />
+          <Property Name="id_resultado" Type="Int32" Nullable="false" />
+          <Property Name="resultado_calculo" Type="Decimal" Nullable="false" Precision="8" Scale="3" />
+          <NavigationProperty Name="ANALISIS_EMPLEADO" Relationship="MARNModel.FK_CALCULO_CALCULO" FromRole="CALCULO" ToRole="ANALISIS_EMPLEADO" />
+          <NavigationProperty Name="RESULTADO" Relationship="MARNModel.FK_CALCULO_RESULTADO" FromRole="CALCULO" ToRole="RESULTADO" />
+          <NavigationProperty Name="INPUTs" Relationship="MARNModel.FK_INPUT_CALCULO" FromRole="CALCULO" ToRole="INPUT" />
+        </EntityType>
+        <EntityType Name="CATALOGO">
+          <Key>
+            <PropertyRef Name="id_catalogo" />
+          </Key>
+          <Property Name="id_catalogo" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_catalogo" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PRODUCTOes" Relationship="MARNModel.FK_PRODUCTO_CATALOGO" FromRole="CATALOGO" ToRole="PRODUCTO" />
+        </EntityType>
+        <EntityType Name="DETALLE_SOLICITUD">
+          <Key>
+            <PropertyRef Name="id_detalle_solicitud" />
+          </Key>
+          <Property Name="id_detalle_solicitud" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_solicitud" Type="Int32" Nullable="false" />
+          <Property Name="id_analisis" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ANALISI" Relationship="MARNModel.FK_DETALLE_SOLICITUD_ANALISIS" FromRole="DETALLE_SOLICITUD" ToRole="ANALISI" />
+          <NavigationProperty Name="ANALISIS_EMPLEADO" Relationship="MARNModel.FK_ANALISIS_EMPLEADO_DETALLE_SOLICITUD" FromRole="DETALLE_SOLICITUD" ToRole="ANALISIS_EMPLEADO" />
+          <NavigationProperty Name="SOLICITUD" Relationship="MARNModel.FK_DETALLE_SOLICITUD_SOLICITUD" FromRole="DETALLE_SOLICITUD" ToRole="SOLICITUD" />
+        </EntityType>
+        <EntityType Name="DETALLE_VISITA">
+          <Key>
+            <PropertyRef Name="id_detalle_visita" />
+          </Key>
+          <Property Name="id_detalle_visita" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_visita" Type="Int32" Nullable="false" />
+          <Property Name="id_muestra" Type="Int32" Nullable="false" />
+          <Property Name="value" Type="Decimal" Precision="6" Scale="3" />
+          <NavigationProperty Name="MUESTRA" Relationship="MARNModel.FK_DETALLE_VISITA_MUESTRA" FromRole="DETALLE_VISITA" ToRole="MUESTRA" />
+          <NavigationProperty Name="VISITA" Relationship="MARNModel.FK_DETALLE_VISITA_VISITA" FromRole="DETALLE_VISITA" ToRole="VISITA" />
+        </EntityType>
+        <EntityType Name="EMPLEADO">
+          <Key>
+            <PropertyRef Name="id_empleado" />
+          </Key>
+          <Property Name="id_empleado" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_area" Type="Byte" />
+          <Property Name="id_tipo_empleado" Type="Byte" Nullable="false" />
+          <Property Name="nombre_empleado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="telefono_empleado" Type="String" MaxLength="8" FixedLength="false" Unicode="false" />
+          <Property Name="id_aspnet_user" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ANALISIS_EMPLEADO" Relationship="MARNModel.FK_ANALISIS_EMPLEADO_EMPLEADO" FromRole="EMPLEADO" ToRole="ANALISIS_EMPLEADO" />
+          <NavigationProperty Name="AREA" Relationship="MARNModel.FK_EMPLEADO_AREA" FromRole="EMPLEADO" ToRole="AREA" />
+          <NavigationProperty Name="TIPO_EMPLEADO" Relationship="MARNModel.FK_EMPLEADO_TIPO_EMPLEADO" FromRole="EMPLEADO" ToRole="TIPO_EMPLEADO" />
+          <NavigationProperty Name="EXISTENCIA_SOLUCION" Relationship="MARNModel.FK_EXISTENCIA_SOLUCION_EMPLEADO" FromRole="EMPLEADO" ToRole="EXISTENCIA_SOLUCION" />
+          <NavigationProperty Name="PROCESO_ANALISTA" Relationship="MARNModel.FK_PROCESO_ANALISTA_EMPLEADO" FromRole="EMPLEADO" ToRole="PROCESO_ANALISTA" />
+          <NavigationProperty Name="SALIDA_EXISTENCIA" Relationship="MARNModel.FK_SALIDA_EXISTENCIA_EMPLEADO" FromRole="EMPLEADO" ToRole="SALIDA_EXISTENCIA" />
+          <NavigationProperty Name="SOLICITUDs" Relationship="MARNModel.FK_SOLICITUD_EMPLEADO" FromRole="EMPLEADO" ToRole="SOLICITUD" />
+          <NavigationProperty Name="VISITAs" Relationship="MARNModel.FK_VISITA_EMPLEADO" FromRole="EMPLEADO" ToRole="VISITA" />
+          <NavigationProperty Name="NOTIFICACIONs" Relationship="MARNModel.FK_NOTIFICACION_EMPLEADO" FromRole="EMPLEADO" ToRole="NOTIFICACION" />
+          <NavigationProperty Name="NOTIFICACIONs1" Relationship="MARNModel.FK_NOTIFICACION_EMPLEADO_R" FromRole="EMPLEADO" ToRole="NOTIFICACION" />
+          <Property Name="avatar" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="VISITAs1" Relationship="MARNModel.FK_VISITA_EMPLEADO2" FromRole="EMPLEADO" ToRole="VISITA" />
+        </EntityType>
+        <EntityType Name="ESTADO">
+          <Key>
+            <PropertyRef Name="id_estado" />
+          </Key>
+          <Property Name="id_estado" Type="Byte" Nullable="false" />
+          <Property Name="nombre_estado" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SOLICITUDs" Relationship="MARNModel.FK_SOLICITUD_ESTADO" FromRole="ESTADO" ToRole="SOLICITUD" />
+        </EntityType>
+        <EntityType Name="ESTADO_PROCESO">
+          <Key>
+            <PropertyRef Name="id_estado_proceso" />
+          </Key>
+          <Property Name="id_estado_proceso" Type="Byte" Nullable="false" />
+          <Property Name="nombre_estado_proceso" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SOLICITUDs" Relationship="MARNModel.FK_SOLICITUD_ESTADO_PROCESO" FromRole="ESTADO_PROCESO" ToRole="SOLICITUD" />
+        </EntityType>
+        <EntityType Name="EXISTENCIA_PRODUCTO">
+          <Key>
+            <PropertyRef Name="id_existencia_producto" />
+          </Key>
+          <Property Name="id_existencia_producto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_producto" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+          <Property Name="estado" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PRODUCTO" Relationship="MARNModel.FK_EXISTENCIA_PRODUCTO_PRODUCTO" FromRole="EXISTENCIA_PRODUCTO" ToRole="PRODUCTO" />
+          <NavigationProperty Name="SALIDA_EXISTENCIA" Relationship="MARNModel.FK_SALIDA_EXISTENCIA_EXISTENCIA_PRODUCTO" FromRole="EXISTENCIA_PRODUCTO" ToRole="SALIDA_EXISTENCIA" />
+        </EntityType>
+        <EntityType Name="EXISTENCIA_SOLUCION">
+          <Key>
+            <PropertyRef Name="id_existencia_solucion" />
+          </Key>
+          <Property Name="id_existencia_solucion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_empleado" Type="Byte" Nullable="false" />
+          <Property Name="id_solucion" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+          <Property Name="id_unidad" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="EMPLEADO" Relationship="MARNModel.FK_EXISTENCIA_SOLUCION_EMPLEADO" FromRole="EXISTENCIA_SOLUCION" ToRole="EMPLEADO" />
+          <NavigationProperty Name="SOLUCION" Relationship="MARNModel.FK_EXISTENCIA_SOLUCION_SOLUCION" FromRole="EXISTENCIA_SOLUCION" ToRole="SOLUCION" />
+          <NavigationProperty Name="SALIDA_SOLUCION" Relationship="MARNModel.FK_SALIDA_SOLUCION_EXISTENCIA_SOLUCION" FromRole="EXISTENCIA_SOLUCION" ToRole="SALIDA_SOLUCION" />
+        </EntityType>
+        <EntityType Name="INPUT">
+          <Key>
+            <PropertyRef Name="id_input" />
+          </Key>
+          <Property Name="id_input" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_variable" Type="Int32" Nullable="false" />
+          <Property Name="id_calculo" Type="Int32" Nullable="false" />
+          <Property Name="valor" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+          <Property Name="lectura" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CALCULO" Relationship="MARNModel.FK_INPUT_CALCULO" FromRole="INPUT" ToRole="CALCULO" />
+          <NavigationProperty Name="VARIABLE" Relationship="MARNModel.FK_INPUT_VARIABLE" FromRole="INPUT" ToRole="VARIABLE" />
+        </EntityType>
+        <EntityType Name="LOTE">
+          <Key>
+            <PropertyRef Name="id_lote" />
+          </Key>
+          <Property Name="id_lote" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PRODUCTOes" Relationship="MARNModel.FK_PRODUCTO_LOTE" FromRole="LOTE" ToRole="PRODUCTO" />
+        </EntityType>
+        <EntityType Name="MARCA">
+          <Key>
+            <PropertyRef Name="id_marca" />
+          </Key>
+          <Property Name="id_marca" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="PRODUCTOes" Relationship="MARNModel.FK_PRODUCTO_MARCA" FromRole="MARCA" ToRole="PRODUCTO" />
+        </EntityType>
+        <EntityType Name="MUESTRA">
+          <Key>
+            <PropertyRef Name="id_muestra" />
+          </Key>
+          <Property Name="id_muestra" Type="Int32" Nullable="false" />
+          <Property Name="nombre_muestra" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="expresado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="DETALLE_VISITA" Relationship="MARNModel.FK_DETALLE_VISITA_MUESTRA" FromRole="MUESTRA" ToRole="DETALLE_VISITA" />
+          <NavigationProperty Name="VARIABLEs" Relationship="MARNModel.FK_VARIABLE_MUESTRA" FromRole="MUESTRA" ToRole="VARIABLE" />
+        </EntityType>
+        <EntityType Name="PROCEDENCIA">
+          <Key>
+            <PropertyRef Name="id_procedencia" />
+          </Key>
+          <Property Name="id_procedencia" Type="Byte" Nullable="false" />
+          <Property Name="nombre_procedencia" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="VISITAs" Relationship="MARNModel.FK_VISITA_PROCEDENCIA" FromRole="PROCEDENCIA" ToRole="VISITA" />
+        </EntityType>
+        <EntityType Name="PROCESO_ANALISTA">
+          <Key>
+            <PropertyRef Name="id_proceso_analista" />
+          </Key>
+          <Property Name="id_proceso_analista" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fecha_asignacion" Type="DateTime" Precision="3" />
+          <Property Name="fecha_inicio" Type="DateTime" Precision="3" />
+          <Property Name="fecha_fin" Type="DateTime" Precision="3" />
+          <Property Name="solicitud_id" Type="Int32" Nullable="false" />
+          <Property Name="empleado_id" Type="Byte" Nullable="false" />
+          <Property Name="cantidad_analisis" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="EMPLEADO" Relationship="MARNModel.FK_PROCESO_ANALISTA_EMPLEADO" FromRole="PROCESO_ANALISTA" ToRole="EMPLEADO" />
+          <NavigationProperty Name="SOLICITUD" Relationship="MARNModel.FK_PROCESO_ANALISTA_SOLICITUD" FromRole="PROCESO_ANALISTA" ToRole="SOLICITUD" />
+          <Property Name="id_analisis" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="id_estado_proceso_analista" Type="Byte" />
+          <NavigationProperty Name="ESTADO_PROCESO_ANALISTA" Relationship="MARNModel.FK_PROCESO_ANALISTA_ESTADO_PROCESO_ANALISTA" FromRole="PROCESO_ANALISTA" ToRole="ESTADO_PROCESO_ANALISTA" />
+        </EntityType>
+        <EntityType Name="PRODUCTO">
+          <Key>
+            <PropertyRef Name="id_producto" />
+          </Key>
+          <Property Name="id_producto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_almacen" Type="Byte" Nullable="false" />
+          <Property Name="id_marca" Type="Byte" Nullable="false" />
+          <Property Name="id_catalogo" Type="Byte" Nullable="false" />
+          <Property Name="id_lote" Type="Int32" Nullable="false" />
+          <Property Name="id_reactivo" Type="Int32" Nullable="false" />
+          <Property Name="fecha_ingreso" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="fecha_vencimiento" Type="DateTime" Precision="3" />
+          <Property Name="presentacion_cantidad" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+          <Property Name="id_unidad" Type="Byte" Nullable="false" />
+          <Property Name="minimo_porcentaje" Type="Byte" Nullable="false" />
+          <Property Name="estado" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="ALMACEN" Relationship="MARNModel.FK_PRODUCTO_ALMACEN" FromRole="PRODUCTO" ToRole="ALMACEN" />
+          <NavigationProperty Name="CATALOGO" Relationship="MARNModel.FK_PRODUCTO_CATALOGO" FromRole="PRODUCTO" ToRole="CATALOGO" />
+          <NavigationProperty Name="EXISTENCIA_PRODUCTO" Relationship="MARNModel.FK_EXISTENCIA_PRODUCTO_PRODUCTO" FromRole="PRODUCTO" ToRole="EXISTENCIA_PRODUCTO" />
+          <NavigationProperty Name="LOTE" Relationship="MARNModel.FK_PRODUCTO_LOTE" FromRole="PRODUCTO" ToRole="LOTE" />
+          <NavigationProperty Name="MARCA" Relationship="MARNModel.FK_PRODUCTO_MARCA" FromRole="PRODUCTO" ToRole="MARCA" />
+          <NavigationProperty Name="REACTIVO" Relationship="MARNModel.FK_PRODUCTO_REACTIVO" FromRole="PRODUCTO" ToRole="REACTIVO" />
+          <NavigationProperty Name="UNIDAD" Relationship="MARNModel.FK_PRODUCTO_UNIDAD" FromRole="PRODUCTO" ToRole="UNIDAD" />
+        </EntityType>
+        <EntityType Name="REACTIVO">
+          <Key>
+            <PropertyRef Name="id_reactivo" />
+          </Key>
+          <Property Name="id_reactivo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PRODUCTOes" Relationship="MARNModel.FK_PRODUCTO_REACTIVO" FromRole="REACTIVO" ToRole="PRODUCTO" />
+          <NavigationProperty Name="REACTIVO_SOLUCION" Relationship="MARNModel.FK_REACTIVO_SOLUCION_REACTIVO" FromRole="REACTIVO" ToRole="REACTIVO_SOLUCION" />
+          <NavigationProperty Name="ANALISIS_REACTIVO" Relationship="MARNModel.FK_ANALISIS_REACTIVO_REACTIVO" FromRole="REACTIVO" ToRole="ANALISIS_REACTIVO" />
+          <NavigationProperty Name="SALIDA_EXISTENCIA" Relationship="MARNModel.FK_SALIDA_EXISTENCIA_REACITVO" FromRole="REACTIVO" ToRole="SALIDA_EXISTENCIA" />
+        </EntityType>
+        <EntityType Name="REACTIVO_SOLUCION">
+          <Key>
+            <PropertyRef Name="id_reactivo_solucion" />
+          </Key>
+          <Property Name="id_reactivo_solucion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_solucion" Type="Int32" Nullable="false" />
+          <Property Name="id_reactivo" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="id_unidad" Type="Byte" />
+          <NavigationProperty Name="REACTIVO" Relationship="MARNModel.FK_REACTIVO_SOLUCION_REACTIVO" FromRole="REACTIVO_SOLUCION" ToRole="REACTIVO" />
+          <NavigationProperty Name="SOLUCION" Relationship="MARNModel.FK_REACTIVO_SOLUCION_SOLUCION" FromRole="REACTIVO_SOLUCION" ToRole="SOLUCION" />
+          <NavigationProperty Name="UNIDAD" Relationship="MARNModel.FK_REACTIVO_SOLUCION_UNIDAD" FromRole="REACTIVO_SOLUCION" ToRole="UNIDAD" />
+        </EntityType>
+        <EntityType Name="REPORTE">
+          <Key>
+            <PropertyRef Name="id_reporte" />
+          </Key>
+          <Property Name="id_reporte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_analisis_empleado" Type="Int32" Nullable="false" />
+          <Property Name="resultado" Type="Decimal" Nullable="false" Precision="10" Scale="3" />
+          <Property Name="incerteza" Type="Decimal" Nullable="false" Precision="6" Scale="4" />
+          <Property Name="unidades" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="limite_deteccion" Type="Decimal" Nullable="false" Precision="6" Scale="5" />
+          <Property Name="metodo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="ANALISIS_EMPLEADO" Relationship="MARNModel.FK_REPORTE_ANALISIS_EMPLEADO" FromRole="REPORTE" ToRole="ANALISIS_EMPLEADO" />
+        </EntityType>
+        <EntityType Name="RESULTADO">
+          <Key>
+            <PropertyRef Name="id_resultado" />
+          </Key>
+          <Property Name="id_resultado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="promedio" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+          <Property Name="incertidumbre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CALCULOes" Relationship="MARNModel.FK_CALCULO_RESULTADO" FromRole="RESULTADO" ToRole="CALCULO" />
+        </EntityType>
+        <EntityType Name="SALIDA_EXISTENCIA">
+          <Key>
+            <PropertyRef Name="id_salida_existencia" />
+          </Key>
+          <Property Name="id_salida_existencia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_existencia_producto" Type="Int32" Nullable="false" />
+          <Property Name="id_empleado" Type="Byte" />
+          <Property Name="cantidad_salida" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+          <Property Name="cantidad_existencia" Type="Decimal" Precision="6" Scale="2" Nullable="false" />
+          <Property Name="fecha_salida" Type="DateTime" Precision="3" />
+          <Property Name="id_unidad" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="EMPLEADO" Relationship="MARNModel.FK_SALIDA_EXISTENCIA_EMPLEADO" FromRole="SALIDA_EXISTENCIA" ToRole="EMPLEADO" />
+          <NavigationProperty Name="EXISTENCIA_PRODUCTO" Relationship="MARNModel.FK_SALIDA_EXISTENCIA_EXISTENCIA_PRODUCTO" FromRole="SALIDA_EXISTENCIA" ToRole="EXISTENCIA_PRODUCTO" />
+          <NavigationProperty Name="UNIDAD" Relationship="MARNModel.FK_SALIDA_EXISTENCIA_UNIDAD" FromRole="SALIDA_EXISTENCIA" ToRole="UNIDAD" />
+          <NavigationProperty Name="SALIDA_SOLUCION" Relationship="MARNModel.FK_SALIDA_SOLUCION_SALIDA_EXISTENCIA" FromRole="SALIDA_EXISTENCIA" ToRole="SALIDA_SOLUCION" />
+          <Property Name="id_reactivo" Type="Int32" />
+          <NavigationProperty Name="REACTIVO" Relationship="MARNModel.FK_SALIDA_EXISTENCIA_REACITVO" FromRole="SALIDA_EXISTENCIA" ToRole="REACTIVO" />
+        </EntityType>
+        <EntityType Name="SALIDA_SOLUCION">
+          <Key>
+            <PropertyRef Name="id_salida_solucion" />
+          </Key>
+          <Property Name="id_salida_solucion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_salida_existencia" Type="Int32" Nullable="false" />
+          <Property Name="id_existencia_solucion" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+          <NavigationProperty Name="EXISTENCIA_SOLUCION" Relationship="MARNModel.FK_SALIDA_SOLUCION_EXISTENCIA_SOLUCION" FromRole="SALIDA_SOLUCION" ToRole="EXISTENCIA_SOLUCION" />
+          <NavigationProperty Name="SALIDA_EXISTENCIA" Relationship="MARNModel.FK_SALIDA_SOLUCION_SALIDA_EXISTENCIA" FromRole="SALIDA_SOLUCION" ToRole="SALIDA_EXISTENCIA" />
+        </EntityType>
+        <EntityType Name="SOLICITANTE">
+          <Key>
+            <PropertyRef Name="id_solicitante" />
+          </Key>
+          <Property Name="id_solicitante" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_solicitante" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="direccion_solicitante" Type="String" Nullable="false" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="contacto_solicitante" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="correo_solicitante" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="telefono_1_solicitante" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="telefono_2_solicitante" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="SOLICITUDs" Relationship="MARNModel.FK_SOLICITUD_SOLICITANTE" FromRole="SOLICITANTE" ToRole="SOLICITUD" />
+          <Property Name="preset_analisis" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="GRUPO_SOLICITUD" Relationship="MARNModel.fk_GROUPO_SOLICITANTE" FromRole="SOLICITANTE" ToRole="GRUPO_SOLICITUD" />
+        </EntityType>
+        <EntityType Name="SOLICITUD">
+          <Key>
+            <PropertyRef Name="id_solicitud" />
+          </Key>
+          <Property Name="id_solicitud" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="no_referencia" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="id_empleado" Type="Byte" Nullable="false" />
+          <Property Name="id_estado" Type="Byte" Nullable="false" />
+          <Property Name="id_solicitante" Type="Int32" />
+          <Property Name="id_estado_proceso" Type="Byte" Nullable="false" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <Property Name="fecha_inicio" Type="DateTime" Precision="3" />
+          <Property Name="fecha_finalizacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DETALLE_SOLICITUD" Relationship="MARNModel.FK_DETALLE_SOLICITUD_SOLICITUD" FromRole="SOLICITUD" ToRole="DETALLE_SOLICITUD" />
+          <NavigationProperty Name="EMPLEADO" Relationship="MARNModel.FK_SOLICITUD_EMPLEADO" FromRole="SOLICITUD" ToRole="EMPLEADO" />
+          <NavigationProperty Name="ESTADO" Relationship="MARNModel.FK_SOLICITUD_ESTADO" FromRole="SOLICITUD" ToRole="ESTADO" />
+          <NavigationProperty Name="ESTADO_PROCESO" Relationship="MARNModel.FK_SOLICITUD_ESTADO_PROCESO" FromRole="SOLICITUD" ToRole="ESTADO_PROCESO" />
+          <NavigationProperty Name="PROCESO_ANALISTA" Relationship="MARNModel.FK_PROCESO_ANALISTA_SOLICITUD" FromRole="SOLICITUD" ToRole="PROCESO_ANALISTA" />
+          <NavigationProperty Name="SOLICITANTE" Relationship="MARNModel.FK_SOLICITUD_SOLICITANTE" FromRole="SOLICITUD" ToRole="SOLICITANTE" />
+          <NavigationProperty Name="VISITAs" Relationship="MARNModel.FK_VISITA_SOLICITUD" FromRole="SOLICITUD" ToRole="VISITA" />
+          <NavigationProperty Name="INFORMES" Relationship="MARNModel.FK_INFORMES_SOLICITUD" FromRole="SOLICITUD" ToRole="INFORME" />
+          <Property Name="informe_generado" Type="Byte" />
+        </EntityType>
+        <EntityType Name="SOLUCION">
+          <Key>
+            <PropertyRef Name="id_solucion" />
+          </Key>
+          <Property Name="id_solucion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="cantidad" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="unidad" Type="Byte" />
+          <NavigationProperty Name="EXISTENCIA_SOLUCION" Relationship="MARNModel.FK_EXISTENCIA_SOLUCION_SOLUCION" FromRole="SOLUCION" ToRole="EXISTENCIA_SOLUCION" />
+          <NavigationProperty Name="REACTIVO_SOLUCION" Relationship="MARNModel.FK_REACTIVO_SOLUCION_SOLUCION" FromRole="SOLUCION" ToRole="REACTIVO_SOLUCION" />
+          <NavigationProperty Name="VARIABLEs" Relationship="MARNModel.FK_VARIABLE_SOLUCION" FromRole="SOLUCION" ToRole="VARIABLE" />
+        </EntityType>
+        <EntityType Name="TIPO_EMPLEADO">
+          <Key>
+            <PropertyRef Name="id_tipo_empleado" />
+          </Key>
+          <Property Name="id_tipo_empleado" Type="Byte" Nullable="false" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EMPLEADOes" Relationship="MARNModel.FK_EMPLEADO_TIPO_EMPLEADO" FromRole="TIPO_EMPLEADO" ToRole="EMPLEADO" />
+        </EntityType>
+        <EntityType Name="TIPO_MUESTRA">
+          <Key>
+            <PropertyRef Name="id_tipo_muestra" />
+          </Key>
+          <Property Name="id_tipo_muestra" Type="Byte" Nullable="false" />
+          <Property Name="nombre_tipo_muestra" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="VISITAs" Relationship="MARNModel.FK_VISITA_VISITA" FromRole="TIPO_MUESTRA" ToRole="VISITA" />
+        </EntityType>
+        <EntityType Name="TIPO_VARIABLE">
+          <Key>
+            <PropertyRef Name="id_tipovariable" />
+          </Key>
+          <Property Name="id_tipovariable" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="VARIABLEs" Relationship="MARNModel.FK_VARIABLE_TIPO_VARIABLE" FromRole="TIPO_VARIABLE" ToRole="VARIABLE" />
+        </EntityType>
+        <EntityType Name="UNIDAD">
+          <Key>
+            <PropertyRef Name="id_unidad" />
+          </Key>
+          <Property Name="id_unidad" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="unidad1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="equivalencia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PRODUCTOes" Relationship="MARNModel.FK_PRODUCTO_UNIDAD" FromRole="UNIDAD" ToRole="PRODUCTO" />
+          <NavigationProperty Name="REACTIVO_SOLUCION" Relationship="MARNModel.FK_REACTIVO_SOLUCION_UNIDAD" FromRole="UNIDAD" ToRole="REACTIVO_SOLUCION" />
+          <NavigationProperty Name="SALIDA_EXISTENCIA" Relationship="MARNModel.FK_SALIDA_EXISTENCIA_UNIDAD" FromRole="UNIDAD" ToRole="SALIDA_EXISTENCIA" />
+          <NavigationProperty Name="ANALISIS_REACTIVO" Relationship="MARNModel.FK_ANALISIS_REACTIVO_UNIDAD" FromRole="UNIDAD" ToRole="ANALISIS_REACTIVO" />
+        </EntityType>
+        <EntityType Name="VARIABLE">
+          <Key>
+            <PropertyRef Name="id_variable" />
+          </Key>
+          <Property Name="id_variable" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_analisis" Type="Int32" Nullable="false" />
+          <Property Name="id_tipovariable" Type="Byte" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="id_solucion" Type="Int32" />
+          <Property Name="id_muestra" Type="Int32" />
+          <NavigationProperty Name="ANALISI" Relationship="MARNModel.FK_VARIABLE_ANALISIS" FromRole="VARIABLE" ToRole="ANALISI" />
+          <NavigationProperty Name="INPUTs" Relationship="MARNModel.FK_INPUT_VARIABLE" FromRole="VARIABLE" ToRole="INPUT" />
+          <NavigationProperty Name="MUESTRA" Relationship="MARNModel.FK_VARIABLE_MUESTRA" FromRole="VARIABLE" ToRole="MUESTRA" />
+          <NavigationProperty Name="SOLUCION" Relationship="MARNModel.FK_VARIABLE_SOLUCION" FromRole="VARIABLE" ToRole="SOLUCION" />
+          <NavigationProperty Name="TIPO_VARIABLE" Relationship="MARNModel.FK_VARIABLE_TIPO_VARIABLE" FromRole="VARIABLE" ToRole="TIPO_VARIABLE" />
+        </EntityType>
+        <EntityType Name="VISITA">
+          <Key>
+            <PropertyRef Name="id_visita" />
+          </Key>
+          <Property Name="id_visita" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_solicitud" Type="Int32" Nullable="false" />
+          <Property Name="id_empleado" Type="Byte" Nullable="false" />
+          <Property Name="fecha_visita" Type="DateTime" Precision="3" />
+          <Property Name="fecha_entrega" Type="DateTime" Precision="3" />
+          <Property Name="id_procedencia" Type="Byte" Nullable="false" />
+          <Property Name="id_tipo_muestra" Type="Byte" Nullable="false" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="DETALLE_VISITA" Relationship="MARNModel.FK_DETALLE_VISITA_VISITA" FromRole="VISITA" ToRole="DETALLE_VISITA" />
+          <NavigationProperty Name="EMPLEADO" Relationship="MARNModel.FK_VISITA_EMPLEADO" FromRole="VISITA" ToRole="EMPLEADO" />
+          <NavigationProperty Name="PROCEDENCIA" Relationship="MARNModel.FK_VISITA_PROCEDENCIA" FromRole="VISITA" ToRole="PROCEDENCIA" />
+          <NavigationProperty Name="SOLICITUD" Relationship="MARNModel.FK_VISITA_SOLICITUD" FromRole="VISITA" ToRole="SOLICITUD" />
+          <NavigationProperty Name="TIPO_MUESTRA" Relationship="MARNModel.FK_VISITA_VISITA" FromRole="VISITA" ToRole="TIPO_MUESTRA" />
+          <Property Name="id_sitio_muestreo" Type="Int32" />
+          <NavigationProperty Name="SITIO_MUESTREO" Relationship="MARNModel.FK_VISITA_SITIO_MUESTREO" FromRole="VISITA" ToRole="SITIO_MUESTREO" />
+          <Property Name="id_empleado_entrega" Type="Byte" />
+          <Property Name="identificador" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="no_frascos" Type="Byte" />
+          <Property Name="lat" Type="Decimal" Precision="18" Scale="10" />
+          <Property Name="lng" Type="Decimal" Precision="18" Scale="10" />
+          <Property Name="id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="id_grupo_solicitud" Type="Int32" />
+          <NavigationProperty Name="GRUPO_SOLICITUD" Relationship="MARNModel.FK_VISITA_GRUPO_SOLICITUD" FromRole="VISITA" ToRole="GRUPO_SOLICITUD" />
+          <NavigationProperty Name="EMPLEADO1" Relationship="MARNModel.FK_VISITA_EMPLEADO2" FromRole="VISITA" ToRole="EMPLEADO" />
+        </EntityType>
+        <Association Name="FK_PRODUCTO_ALMACEN">
+          <End Type="MARNModel.ALMACEN" Role="ALMACEN" Multiplicity="1" />
+          <End Type="MARNModel.PRODUCTO" Role="PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ALMACEN">
+              <PropertyRef Name="id_almacen" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="id_almacen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ANALISIS_AREA">
+          <End Type="MARNModel.AREA" Role="AREA" Multiplicity="1" />
+          <End Type="MARNModel.ANALISI" Role="ANALISI" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AREA">
+              <PropertyRef Name="id_area" />
+            </Principal>
+            <Dependent Role="ANALISI">
+              <PropertyRef Name="id_area" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DETALLE_SOLICITUD_ANALISIS">
+          <End Type="MARNModel.ANALISI" Role="ANALISI" Multiplicity="1" />
+          <End Type="MARNModel.DETALLE_SOLICITUD" Role="DETALLE_SOLICITUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ANALISI">
+              <PropertyRef Name="id_analisis" />
+            </Principal>
+            <Dependent Role="DETALLE_SOLICITUD">
+              <PropertyRef Name="id_analisis" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VARIABLE_ANALISIS">
+          <End Type="MARNModel.ANALISI" Role="ANALISI" Multiplicity="1" />
+          <End Type="MARNModel.VARIABLE" Role="VARIABLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ANALISI">
+              <PropertyRef Name="id_analisis" />
+            </Principal>
+            <Dependent Role="VARIABLE">
+              <PropertyRef Name="id_analisis" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ANALISIS_EMPLEADO_DETALLE_SOLICITUD">
+          <End Type="MARNModel.DETALLE_SOLICITUD" Role="DETALLE_SOLICITUD" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MARNModel.ANALISIS_EMPLEADO" Role="ANALISIS_EMPLEADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DETALLE_SOLICITUD">
+              <PropertyRef Name="id_detalle_solicitud" />
+            </Principal>
+            <Dependent Role="ANALISIS_EMPLEADO">
+              <PropertyRef Name="id_detalle_solicitud" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ANALISIS_EMPLEADO_EMPLEADO">
+          <End Type="MARNModel.EMPLEADO" Role="EMPLEADO" Multiplicity="1" />
+          <End Type="MARNModel.ANALISIS_EMPLEADO" Role="ANALISIS_EMPLEADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="ANALISIS_EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CALCULO_CALCULO">
+          <End Type="MARNModel.ANALISIS_EMPLEADO" Role="ANALISIS_EMPLEADO" Multiplicity="1" />
+          <End Type="MARNModel.CALCULO" Role="CALCULO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ANALISIS_EMPLEADO">
+              <PropertyRef Name="id_analisis_empleado" />
+            </Principal>
+            <Dependent Role="CALCULO">
+              <PropertyRef Name="id_analisis_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REPORTE_ANALISIS_EMPLEADO">
+          <End Type="MARNModel.ANALISIS_EMPLEADO" Role="ANALISIS_EMPLEADO" Multiplicity="1" />
+          <End Type="MARNModel.REPORTE" Role="REPORTE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ANALISIS_EMPLEADO">
+              <PropertyRef Name="id_analisis_empleado" />
+            </Principal>
+            <Dependent Role="REPORTE">
+              <PropertyRef Name="id_analisis_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLEADO_AREA">
+          <End Type="MARNModel.AREA" Role="AREA" Multiplicity="0..1" />
+          <End Type="MARNModel.EMPLEADO" Role="EMPLEADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AREA">
+              <PropertyRef Name="id_area" />
+            </Principal>
+            <Dependent Role="EMPLEADO">
+              <PropertyRef Name="id_area" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CALCULO_RESULTADO">
+          <End Type="MARNModel.RESULTADO" Role="RESULTADO" Multiplicity="1" />
+          <End Type="MARNModel.CALCULO" Role="CALCULO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RESULTADO">
+              <PropertyRef Name="id_resultado" />
+            </Principal>
+            <Dependent Role="CALCULO">
+              <PropertyRef Name="id_resultado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INPUT_CALCULO">
+          <End Type="MARNModel.CALCULO" Role="CALCULO" Multiplicity="1" />
+          <End Type="MARNModel.INPUT" Role="INPUT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CALCULO">
+              <PropertyRef Name="id_calculo" />
+            </Principal>
+            <Dependent Role="INPUT">
+              <PropertyRef Name="id_calculo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTO_CATALOGO">
+          <End Type="MARNModel.CATALOGO" Role="CATALOGO" Multiplicity="1" />
+          <End Type="MARNModel.PRODUCTO" Role="PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CATALOGO">
+              <PropertyRef Name="id_catalogo" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="id_catalogo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DETALLE_SOLICITUD_SOLICITUD">
+          <End Type="MARNModel.SOLICITUD" Role="SOLICITUD" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MARNModel.DETALLE_SOLICITUD" Role="DETALLE_SOLICITUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOLICITUD">
+              <PropertyRef Name="id_solicitud" />
+            </Principal>
+            <Dependent Role="DETALLE_SOLICITUD">
+              <PropertyRef Name="id_solicitud" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DETALLE_VISITA_MUESTRA">
+          <End Type="MARNModel.MUESTRA" Role="MUESTRA" Multiplicity="1" />
+          <End Type="MARNModel.DETALLE_VISITA" Role="DETALLE_VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MUESTRA">
+              <PropertyRef Name="id_muestra" />
+            </Principal>
+            <Dependent Role="DETALLE_VISITA">
+              <PropertyRef Name="id_muestra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DETALLE_VISITA_VISITA">
+          <End Type="MARNModel.VISITA" Role="VISITA" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MARNModel.DETALLE_VISITA" Role="DETALLE_VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VISITA">
+              <PropertyRef Name="id_visita" />
+            </Principal>
+            <Dependent Role="DETALLE_VISITA">
+              <PropertyRef Name="id_visita" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EMPLEADO_TIPO_EMPLEADO">
+          <End Type="MARNModel.TIPO_EMPLEADO" Role="TIPO_EMPLEADO" Multiplicity="1" />
+          <End Type="MARNModel.EMPLEADO" Role="EMPLEADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_EMPLEADO">
+              <PropertyRef Name="id_tipo_empleado" />
+            </Principal>
+            <Dependent Role="EMPLEADO">
+              <PropertyRef Name="id_tipo_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EXISTENCIA_SOLUCION_EMPLEADO">
+          <End Type="MARNModel.EMPLEADO" Role="EMPLEADO" Multiplicity="1" />
+          <End Type="MARNModel.EXISTENCIA_SOLUCION" Role="EXISTENCIA_SOLUCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="EXISTENCIA_SOLUCION">
+              <PropertyRef Name="id_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROCESO_ANALISTA_EMPLEADO">
+          <End Type="MARNModel.EMPLEADO" Role="EMPLEADO" Multiplicity="1" />
+          <End Type="MARNModel.PROCESO_ANALISTA" Role="PROCESO_ANALISTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="PROCESO_ANALISTA">
+              <PropertyRef Name="empleado_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SALIDA_EXISTENCIA_EMPLEADO">
+          <End Type="MARNModel.EMPLEADO" Role="EMPLEADO" Multiplicity="0..1" />
+          <End Type="MARNModel.SALIDA_EXISTENCIA" Role="SALIDA_EXISTENCIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="SALIDA_EXISTENCIA">
+              <PropertyRef Name="id_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SOLICITUD_EMPLEADO">
+          <End Type="MARNModel.EMPLEADO" Role="EMPLEADO" Multiplicity="1" />
+          <End Type="MARNModel.SOLICITUD" Role="SOLICITUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="SOLICITUD">
+              <PropertyRef Name="id_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VISITA_EMPLEADO">
+          <End Type="MARNModel.EMPLEADO" Role="EMPLEADO" Multiplicity="1" />
+          <End Type="MARNModel.VISITA" Role="VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="VISITA">
+              <PropertyRef Name="id_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SOLICITUD_ESTADO">
+          <End Type="MARNModel.ESTADO" Role="ESTADO" Multiplicity="1" />
+          <End Type="MARNModel.SOLICITUD" Role="SOLICITUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ESTADO">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="SOLICITUD">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SOLICITUD_ESTADO_PROCESO">
+          <End Type="MARNModel.ESTADO_PROCESO" Role="ESTADO_PROCESO" Multiplicity="1" />
+          <End Type="MARNModel.SOLICITUD" Role="SOLICITUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ESTADO_PROCESO">
+              <PropertyRef Name="id_estado_proceso" />
+            </Principal>
+            <Dependent Role="SOLICITUD">
+              <PropertyRef Name="id_estado_proceso" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EXISTENCIA_PRODUCTO_PRODUCTO">
+          <End Type="MARNModel.PRODUCTO" Role="PRODUCTO" Multiplicity="1" />
+          <End Type="MARNModel.EXISTENCIA_PRODUCTO" Role="EXISTENCIA_PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PRODUCTO">
+              <PropertyRef Name="id_producto" />
+            </Principal>
+            <Dependent Role="EXISTENCIA_PRODUCTO">
+              <PropertyRef Name="id_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SALIDA_EXISTENCIA_EXISTENCIA_PRODUCTO">
+          <End Type="MARNModel.EXISTENCIA_PRODUCTO" Role="EXISTENCIA_PRODUCTO" Multiplicity="1" />
+          <End Type="MARNModel.SALIDA_EXISTENCIA" Role="SALIDA_EXISTENCIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EXISTENCIA_PRODUCTO">
+              <PropertyRef Name="id_existencia_producto" />
+            </Principal>
+            <Dependent Role="SALIDA_EXISTENCIA">
+              <PropertyRef Name="id_existencia_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EXISTENCIA_SOLUCION_SOLUCION">
+          <End Type="MARNModel.SOLUCION" Role="SOLUCION" Multiplicity="1" />
+          <End Type="MARNModel.EXISTENCIA_SOLUCION" Role="EXISTENCIA_SOLUCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOLUCION">
+              <PropertyRef Name="id_solucion" />
+            </Principal>
+            <Dependent Role="EXISTENCIA_SOLUCION">
+              <PropertyRef Name="id_solucion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SALIDA_SOLUCION_EXISTENCIA_SOLUCION">
+          <End Type="MARNModel.EXISTENCIA_SOLUCION" Role="EXISTENCIA_SOLUCION" Multiplicity="1" />
+          <End Type="MARNModel.SALIDA_SOLUCION" Role="SALIDA_SOLUCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EXISTENCIA_SOLUCION">
+              <PropertyRef Name="id_existencia_solucion" />
+            </Principal>
+            <Dependent Role="SALIDA_SOLUCION">
+              <PropertyRef Name="id_existencia_solucion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INPUT_VARIABLE">
+          <End Type="MARNModel.VARIABLE" Role="VARIABLE" Multiplicity="1" />
+          <End Type="MARNModel.INPUT" Role="INPUT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VARIABLE">
+              <PropertyRef Name="id_variable" />
+            </Principal>
+            <Dependent Role="INPUT">
+              <PropertyRef Name="id_variable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTO_LOTE">
+          <End Type="MARNModel.LOTE" Role="LOTE" Multiplicity="1" />
+          <End Type="MARNModel.PRODUCTO" Role="PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LOTE">
+              <PropertyRef Name="id_lote" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="id_lote" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTO_MARCA">
+          <End Type="MARNModel.MARCA" Role="MARCA" Multiplicity="1" />
+          <End Type="MARNModel.PRODUCTO" Role="PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MARCA">
+              <PropertyRef Name="id_marca" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="id_marca" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VARIABLE_MUESTRA">
+          <End Type="MARNModel.MUESTRA" Role="MUESTRA" Multiplicity="0..1" />
+          <End Type="MARNModel.VARIABLE" Role="VARIABLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="MUESTRA">
+              <PropertyRef Name="id_muestra" />
+            </Principal>
+            <Dependent Role="VARIABLE">
+              <PropertyRef Name="id_muestra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VISITA_PROCEDENCIA">
+          <End Type="MARNModel.PROCEDENCIA" Role="PROCEDENCIA" Multiplicity="1" />
+          <End Type="MARNModel.VISITA" Role="VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PROCEDENCIA">
+              <PropertyRef Name="id_procedencia" />
+            </Principal>
+            <Dependent Role="VISITA">
+              <PropertyRef Name="id_procedencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PROCESO_ANALISTA_SOLICITUD">
+          <End Type="MARNModel.SOLICITUD" Role="SOLICITUD" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MARNModel.PROCESO_ANALISTA" Role="PROCESO_ANALISTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOLICITUD">
+              <PropertyRef Name="id_solicitud" />
+            </Principal>
+            <Dependent Role="PROCESO_ANALISTA">
+              <PropertyRef Name="solicitud_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTO_REACTIVO">
+          <End Type="MARNModel.REACTIVO" Role="REACTIVO" Multiplicity="1" />
+          <End Type="MARNModel.PRODUCTO" Role="PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REACTIVO">
+              <PropertyRef Name="id_reactivo" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="id_reactivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PRODUCTO_UNIDAD">
+          <End Type="MARNModel.UNIDAD" Role="UNIDAD" Multiplicity="1" />
+          <End Type="MARNModel.PRODUCTO" Role="PRODUCTO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UNIDAD">
+              <PropertyRef Name="id_unidad" />
+            </Principal>
+            <Dependent Role="PRODUCTO">
+              <PropertyRef Name="id_unidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REACTIVO_SOLUCION_REACTIVO">
+          <End Type="MARNModel.REACTIVO" Role="REACTIVO" Multiplicity="1" />
+          <End Type="MARNModel.REACTIVO_SOLUCION" Role="REACTIVO_SOLUCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REACTIVO">
+              <PropertyRef Name="id_reactivo" />
+            </Principal>
+            <Dependent Role="REACTIVO_SOLUCION">
+              <PropertyRef Name="id_reactivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REACTIVO_SOLUCION_SOLUCION">
+          <End Type="MARNModel.SOLUCION" Role="SOLUCION" Multiplicity="1" />
+          <End Type="MARNModel.REACTIVO_SOLUCION" Role="REACTIVO_SOLUCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOLUCION">
+              <PropertyRef Name="id_solucion" />
+            </Principal>
+            <Dependent Role="REACTIVO_SOLUCION">
+              <PropertyRef Name="id_solucion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_REACTIVO_SOLUCION_UNIDAD">
+          <End Type="MARNModel.UNIDAD" Role="UNIDAD" Multiplicity="0..1" />
+          <End Type="MARNModel.REACTIVO_SOLUCION" Role="REACTIVO_SOLUCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UNIDAD">
+              <PropertyRef Name="id_unidad" />
+            </Principal>
+            <Dependent Role="REACTIVO_SOLUCION">
+              <PropertyRef Name="id_unidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SALIDA_EXISTENCIA_UNIDAD">
+          <End Type="MARNModel.UNIDAD" Role="UNIDAD" Multiplicity="1" />
+          <End Type="MARNModel.SALIDA_EXISTENCIA" Role="SALIDA_EXISTENCIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UNIDAD">
+              <PropertyRef Name="id_unidad" />
+            </Principal>
+            <Dependent Role="SALIDA_EXISTENCIA">
+              <PropertyRef Name="id_unidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SALIDA_SOLUCION_SALIDA_EXISTENCIA">
+          <End Type="MARNModel.SALIDA_EXISTENCIA" Role="SALIDA_EXISTENCIA" Multiplicity="1" />
+          <End Type="MARNModel.SALIDA_SOLUCION" Role="SALIDA_SOLUCION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SALIDA_EXISTENCIA">
+              <PropertyRef Name="id_salida_existencia" />
+            </Principal>
+            <Dependent Role="SALIDA_SOLUCION">
+              <PropertyRef Name="id_salida_existencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SOLICITUD_SOLICITANTE">
+          <End Type="MARNModel.SOLICITANTE" Role="SOLICITANTE" Multiplicity="0..1" />
+          <End Type="MARNModel.SOLICITUD" Role="SOLICITUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOLICITANTE">
+              <PropertyRef Name="id_solicitante" />
+            </Principal>
+            <Dependent Role="SOLICITUD">
+              <PropertyRef Name="id_solicitante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VISITA_SOLICITUD">
+          <End Type="MARNModel.SOLICITUD" Role="SOLICITUD" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MARNModel.VISITA" Role="VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOLICITUD">
+              <PropertyRef Name="id_solicitud" />
+            </Principal>
+            <Dependent Role="VISITA">
+              <PropertyRef Name="id_solicitud" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VARIABLE_SOLUCION">
+          <End Type="MARNModel.SOLUCION" Role="SOLUCION" Multiplicity="0..1" />
+          <End Type="MARNModel.VARIABLE" Role="VARIABLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOLUCION">
+              <PropertyRef Name="id_solucion" />
+            </Principal>
+            <Dependent Role="VARIABLE">
+              <PropertyRef Name="id_solucion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VISITA_VISITA">
+          <End Type="MARNModel.TIPO_MUESTRA" Role="TIPO_MUESTRA" Multiplicity="1" />
+          <End Type="MARNModel.VISITA" Role="VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_MUESTRA">
+              <PropertyRef Name="id_tipo_muestra" />
+            </Principal>
+            <Dependent Role="VISITA">
+              <PropertyRef Name="id_tipo_muestra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VARIABLE_TIPO_VARIABLE">
+          <End Type="MARNModel.TIPO_VARIABLE" Role="TIPO_VARIABLE" Multiplicity="1" />
+          <End Type="MARNModel.VARIABLE" Role="VARIABLE" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TIPO_VARIABLE">
+              <PropertyRef Name="id_tipovariable" />
+            </Principal>
+            <Dependent Role="VARIABLE">
+              <PropertyRef Name="id_tipovariable" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ESTADO_PROCESO_ANALISTA">
+          <Key>
+            <PropertyRef Name="id_estado_proceso_analista" />
+          </Key>
+          <Property Name="id_estado_proceso_analista" Type="Byte" Nullable="false" />
+          <Property Name="nombre" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="PROCESO_ANALISTA" Relationship="MARNModel.FK_PROCESO_ANALISTA_ESTADO_PROCESO_ANALISTA" FromRole="ESTADO_PROCESO_ANALISTA" ToRole="PROCESO_ANALISTA" />
+        </EntityType>
+        <EntityType Name="INFORME">
+          <Key>
+            <PropertyRef Name="id_informe" />
+          </Key>
+          <Property Name="id_informe" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_solicitud" Type="Int32" Nullable="false" />
+          <Property Name="tipo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="fecha_creacion" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="SOLICITUD" Relationship="MARNModel.FK_INFORMES_SOLICITUD" FromRole="INFORME" ToRole="SOLICITUD" />
+          <Property Name="data" Type="String" Nullable="false" MaxLength="1500" FixedLength="false" Unicode="false" />
+          <Property Name="activo" Type="Byte" Nullable="false" />
+          <Property Name="areas" Type="String" MaxLength="4" FixedLength="true" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_PROCESO_ANALISTA_ESTADO_PROCESO_ANALISTA">
+          <End Type="MARNModel.ESTADO_PROCESO_ANALISTA" Role="ESTADO_PROCESO_ANALISTA" Multiplicity="0..1" />
+          <End Type="MARNModel.PROCESO_ANALISTA" Role="PROCESO_ANALISTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ESTADO_PROCESO_ANALISTA">
+              <PropertyRef Name="id_estado_proceso_analista" />
+            </Principal>
+            <Dependent Role="PROCESO_ANALISTA">
+              <PropertyRef Name="id_estado_proceso_analista" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_INFORMES_SOLICITUD">
+          <End Type="MARNModel.SOLICITUD" Role="SOLICITUD" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MARNModel.INFORME" Role="INFORME" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOLICITUD">
+              <PropertyRef Name="id_solicitud" />
+            </Principal>
+            <Dependent Role="INFORME">
+              <PropertyRef Name="id_solicitud" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="NOTIFICACION">
+          <Key>
+            <PropertyRef Name="id_notificacion" />
+          </Key>
+          <Property Name="id_notificacion" Type="Int32" Nullable="false" />
+          <Property Name="empleado_remitente" Type="Byte" Nullable="false" />
+          <Property Name="titulo" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="mensaje" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+          <Property Name="fecha_notificacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="empleado_receptor" Type="Byte" Nullable="false" />
+          <Property Name="leido" Type="Byte" Nullable="false" />
+          <Property Name="fecha_lectura" Type="DateTime" Precision="3" />
+          <Property Name="redireccion" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="EMPLEADO" Relationship="MARNModel.FK_NOTIFICACION_EMPLEADO" FromRole="NOTIFICACION" ToRole="EMPLEADO" />
+          <NavigationProperty Name="EMPLEADO1" Relationship="MARNModel.FK_NOTIFICACION_EMPLEADO_R" FromRole="NOTIFICACION" ToRole="EMPLEADO" />
+          <Property Name="eliminado" Type="Byte" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_NOTIFICACION_EMPLEADO">
+          <End Type="MARNModel.EMPLEADO" Role="EMPLEADO" Multiplicity="1" />
+          <End Type="MARNModel.NOTIFICACION" Role="NOTIFICACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="NOTIFICACION">
+              <PropertyRef Name="empleado_remitente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_NOTIFICACION_EMPLEADO_R">
+          <End Type="MARNModel.EMPLEADO" Role="EMPLEADO" Multiplicity="1" />
+          <End Type="MARNModel.NOTIFICACION" Role="NOTIFICACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="NOTIFICACION">
+              <PropertyRef Name="empleado_receptor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ANALISIS_REACTIVO">
+          <Key>
+            <PropertyRef Name="id_analisis_reactivo" />
+          </Key>
+          <Property Name="id_analisis_reactivo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_reactivo" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+          <Property Name="id_unidad" Type="Byte" Nullable="false" />
+          <Property Name="id_analisis_empleado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ANALISIS_EMPLEADO" Relationship="MARNModel.FK_ANALISIS_REACTIVO_ANALISIS_EMPLEADO" FromRole="ANALISIS_REACTIVO" ToRole="ANALISIS_EMPLEADO" />
+          <NavigationProperty Name="REACTIVO" Relationship="MARNModel.FK_ANALISIS_REACTIVO_REACTIVO" FromRole="ANALISIS_REACTIVO" ToRole="REACTIVO" />
+          <NavigationProperty Name="UNIDAD" Relationship="MARNModel.FK_ANALISIS_REACTIVO_UNIDAD" FromRole="ANALISIS_REACTIVO" ToRole="UNIDAD" />
+          <Property Name="fecha" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
+        <EntityType Name="SITIO_MUESTREO">
+          <Key>
+            <PropertyRef Name="id_sitio_muestreo" />
+          </Key>
+          <Property Name="id_sitio_muestreo" Type="Int32" Nullable="false" />
+          <Property Name="nombre_sitio" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="direccion_sitio" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="observacione" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="VISITAs" Relationship="MARNModel.FK_VISITA_SITIO_MUESTREO" FromRole="SITIO_MUESTREO" ToRole="VISITA" />
+          <Property Name="lat" Type="Decimal" Precision="18" Scale="15" />
+          <Property Name="lng" Type="Decimal" Precision="18" Scale="15" />
+        </EntityType>
+        <Association Name="FK_ANALISIS_REACTIVO_ANALISIS_EMPLEADO">
+          <End Type="MARNModel.ANALISIS_EMPLEADO" Role="ANALISIS_EMPLEADO" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MARNModel.ANALISIS_REACTIVO" Role="ANALISIS_REACTIVO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ANALISIS_EMPLEADO">
+              <PropertyRef Name="id_analisis_empleado" />
+            </Principal>
+            <Dependent Role="ANALISIS_REACTIVO">
+              <PropertyRef Name="id_analisis_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ANALISIS_REACTIVO_REACTIVO">
+          <End Type="MARNModel.REACTIVO" Role="REACTIVO" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MARNModel.ANALISIS_REACTIVO" Role="ANALISIS_REACTIVO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REACTIVO">
+              <PropertyRef Name="id_reactivo" />
+            </Principal>
+            <Dependent Role="ANALISIS_REACTIVO">
+              <PropertyRef Name="id_reactivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ANALISIS_REACTIVO_UNIDAD">
+          <End Type="MARNModel.UNIDAD" Role="UNIDAD" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="MARNModel.ANALISIS_REACTIVO" Role="ANALISIS_REACTIVO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="UNIDAD">
+              <PropertyRef Name="id_unidad" />
+            </Principal>
+            <Dependent Role="ANALISIS_REACTIVO">
+              <PropertyRef Name="id_unidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SALIDA_EXISTENCIA_REACITVO">
+          <End Type="MARNModel.REACTIVO" Role="REACTIVO" Multiplicity="0..1" />
+          <End Type="MARNModel.SALIDA_EXISTENCIA" Role="SALIDA_EXISTENCIA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="REACTIVO">
+              <PropertyRef Name="id_reactivo" />
+            </Principal>
+            <Dependent Role="SALIDA_EXISTENCIA">
+              <PropertyRef Name="id_reactivo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VISITA_SITIO_MUESTREO">
+          <End Type="MARNModel.SITIO_MUESTREO" Role="SITIO_MUESTREO" Multiplicity="0..1" />
+          <End Type="MARNModel.VISITA" Role="VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SITIO_MUESTREO">
+              <PropertyRef Name="id_sitio_muestreo" />
+            </Principal>
+            <Dependent Role="VISITA">
+              <PropertyRef Name="id_sitio_muestreo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="GRUPO_SOLICITUD">
+          <Key>
+            <PropertyRef Name="id_grupo_solicitud" />
+          </Key>
+          <Property Name="id_grupo_solicitud" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_solicitante" Type="Int32" Nullable="false" />
+          <Property Name="fecha_solicitud" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="fecha_creacion" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="SOLICITANTE" Relationship="MARNModel.fk_GROUPO_SOLICITANTE" FromRole="GRUPO_SOLICITUD" ToRole="SOLICITANTE" />
+          <Property Name="preset" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="VISITAs" Relationship="MARNModel.FK_VISITA_GRUPO_SOLICITUD" FromRole="GRUPO_SOLICITUD" ToRole="VISITA" />
+          <Property Name="identificador" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="fk_GROUPO_SOLICITANTE">
+          <End Type="MARNModel.SOLICITANTE" Role="SOLICITANTE" Multiplicity="1" />
+          <End Type="MARNModel.GRUPO_SOLICITUD" Role="GRUPO_SOLICITUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SOLICITANTE">
+              <PropertyRef Name="id_solicitante" />
+            </Principal>
+            <Dependent Role="GRUPO_SOLICITUD">
+              <PropertyRef Name="id_solicitante" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VISITA_GRUPO_SOLICITUD">
+          <End Type="MARNModel.GRUPO_SOLICITUD" Role="GRUPO_SOLICITUD" Multiplicity="0..1" />
+          <End Type="MARNModel.VISITA" Role="VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GRUPO_SOLICITUD">
+              <PropertyRef Name="id_grupo_solicitud" />
+            </Principal>
+            <Dependent Role="VISITA">
+              <PropertyRef Name="id_grupo_solicitud" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_VISITA_EMPLEADO2">
+          <End Type="MARNModel.EMPLEADO" Role="EMPLEADO" Multiplicity="0..1" />
+          <End Type="MARNModel.VISITA" Role="VISITA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="VISITA">
+              <PropertyRef Name="id_empleado_entrega" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MARNModelStoreContainer" CdmEntityContainer="MARNEntities">
+          <EntitySetMapping Name="ALMACENs">
+            <EntityTypeMapping TypeName="MARNModel.ALMACEN">
+              <MappingFragment StoreEntitySet="ALMACEN">
+                <ScalarProperty Name="nivel" ColumnName="nivel" />
+                <ScalarProperty Name="estante" ColumnName="estante" />
+                <ScalarProperty Name="id_almacen" ColumnName="id_almacen" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ANALISIS">
+            <EntityTypeMapping TypeName="MARNModel.ANALISI">
+              <MappingFragment StoreEntitySet="ANALISIS">
+                <ScalarProperty Name="costo_iva" ColumnName="costo_iva" />
+                <ScalarProperty Name="costo" ColumnName="costo" />
+                <ScalarProperty Name="incertezas" ColumnName="incertezas" />
+                <ScalarProperty Name="unidades" ColumnName="unidades" />
+                <ScalarProperty Name="formula" ColumnName="formula" />
+                <ScalarProperty Name="metodo" ColumnName="metodo" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_area" ColumnName="id_area" />
+                <ScalarProperty Name="id_analisis" ColumnName="id_analisis" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ANALISIS_EMPLEADO">
+            <EntityTypeMapping TypeName="MARNModel.ANALISIS_EMPLEADO">
+              <MappingFragment StoreEntitySet="ANALISIS_EMPLEADO">
+                <ScalarProperty Name="id_detalle_solicitud" ColumnName="id_detalle_solicitud" />
+                <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+                <ScalarProperty Name="id_analisis_empleado" ColumnName="id_analisis_empleado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AREAs">
+            <EntityTypeMapping TypeName="MARNModel.AREA">
+              <MappingFragment StoreEntitySet="AREA">
+                <ScalarProperty Name="nombre_area" ColumnName="nombre_area" />
+                <ScalarProperty Name="id_area" ColumnName="id_area" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CALCULOes">
+            <EntityTypeMapping TypeName="MARNModel.CALCULO">
+              <MappingFragment StoreEntitySet="CALCULO">
+                <ScalarProperty Name="resultado_calculo" ColumnName="resultado_calculo" />
+                <ScalarProperty Name="id_resultado" ColumnName="id_resultado" />
+                <ScalarProperty Name="id_analisis_empleado" ColumnName="id_analisis_empleado" />
+                <ScalarProperty Name="id_calculo" ColumnName="id_calculo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CATALOGOes">
+            <EntityTypeMapping TypeName="MARNModel.CATALOGO">
+              <MappingFragment StoreEntitySet="CATALOGO">
+                <ScalarProperty Name="nombre_catalogo" ColumnName="nombre_catalogo" />
+                <ScalarProperty Name="id_catalogo" ColumnName="id_catalogo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DETALLE_SOLICITUD">
+            <EntityTypeMapping TypeName="MARNModel.DETALLE_SOLICITUD">
+              <MappingFragment StoreEntitySet="DETALLE_SOLICITUD">
+                <ScalarProperty Name="id_analisis" ColumnName="id_analisis" />
+                <ScalarProperty Name="id_solicitud" ColumnName="id_solicitud" />
+                <ScalarProperty Name="id_detalle_solicitud" ColumnName="id_detalle_solicitud" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DETALLE_VISITA">
+            <EntityTypeMapping TypeName="MARNModel.DETALLE_VISITA">
+              <MappingFragment StoreEntitySet="DETALLE_VISITA">
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="id_muestra" ColumnName="id_muestra" />
+                <ScalarProperty Name="id_visita" ColumnName="id_visita" />
+                <ScalarProperty Name="id_detalle_visita" ColumnName="id_detalle_visita" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EMPLEADOes">
+            <EntityTypeMapping TypeName="MARNModel.EMPLEADO">
+              <MappingFragment StoreEntitySet="EMPLEADO">
+                <ScalarProperty Name="avatar" ColumnName="avatar" />
+                <ScalarProperty Name="id_aspnet_user" ColumnName="id_aspnet_user" />
+                <ScalarProperty Name="telefono_empleado" ColumnName="telefono_empleado" />
+                <ScalarProperty Name="nombre_empleado" ColumnName="nombre_empleado" />
+                <ScalarProperty Name="id_tipo_empleado" ColumnName="id_tipo_empleado" />
+                <ScalarProperty Name="id_area" ColumnName="id_area" />
+                <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ESTADOes">
+            <EntityTypeMapping TypeName="MARNModel.ESTADO">
+              <MappingFragment StoreEntitySet="ESTADO">
+                <ScalarProperty Name="nombre_estado" ColumnName="nombre_estado" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ESTADO_PROCESO">
+            <EntityTypeMapping TypeName="MARNModel.ESTADO_PROCESO">
+              <MappingFragment StoreEntitySet="ESTADO_PROCESO">
+                <ScalarProperty Name="nombre_estado_proceso" ColumnName="nombre_estado_proceso" />
+                <ScalarProperty Name="id_estado_proceso" ColumnName="id_estado_proceso" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EXISTENCIA_PRODUCTO">
+            <EntityTypeMapping TypeName="MARNModel.EXISTENCIA_PRODUCTO">
+              <MappingFragment StoreEntitySet="EXISTENCIA_PRODUCTO">
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="id_producto" ColumnName="id_producto" />
+                <ScalarProperty Name="id_existencia_producto" ColumnName="id_existencia_producto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="EXISTENCIA_SOLUCION">
+            <EntityTypeMapping TypeName="MARNModel.EXISTENCIA_SOLUCION">
+              <MappingFragment StoreEntitySet="EXISTENCIA_SOLUCION">
+                <ScalarProperty Name="id_unidad" ColumnName="id_unidad" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="id_solucion" ColumnName="id_solucion" />
+                <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+                <ScalarProperty Name="id_existencia_solucion" ColumnName="id_existencia_solucion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INPUTs">
+            <EntityTypeMapping TypeName="MARNModel.INPUT">
+              <MappingFragment StoreEntitySet="INPUT">
+                <ScalarProperty Name="lectura" ColumnName="lectura" />
+                <ScalarProperty Name="valor" ColumnName="valor" />
+                <ScalarProperty Name="id_calculo" ColumnName="id_calculo" />
+                <ScalarProperty Name="id_variable" ColumnName="id_variable" />
+                <ScalarProperty Name="id_input" ColumnName="id_input" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LOTEs">
+            <EntityTypeMapping TypeName="MARNModel.LOTE">
+              <MappingFragment StoreEntitySet="LOTE">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_lote" ColumnName="id_lote" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MARCAs">
+            <EntityTypeMapping TypeName="MARNModel.MARCA">
+              <MappingFragment StoreEntitySet="MARCA">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_marca" ColumnName="id_marca" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MUESTRAs">
+            <EntityTypeMapping TypeName="MARNModel.MUESTRA">
+              <MappingFragment StoreEntitySet="MUESTRA">
+                <ScalarProperty Name="expresado" ColumnName="expresado" />
+                <ScalarProperty Name="nombre_muestra" ColumnName="nombre_muestra" />
+                <ScalarProperty Name="id_muestra" ColumnName="id_muestra" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PROCEDENCIAs">
+            <EntityTypeMapping TypeName="MARNModel.PROCEDENCIA">
+              <MappingFragment StoreEntitySet="PROCEDENCIA">
+                <ScalarProperty Name="nombre_procedencia" ColumnName="nombre_procedencia" />
+                <ScalarProperty Name="id_procedencia" ColumnName="id_procedencia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PROCESO_ANALISTA">
+            <EntityTypeMapping TypeName="MARNModel.PROCESO_ANALISTA">
+              <MappingFragment StoreEntitySet="PROCESO_ANALISTA">
+                <ScalarProperty Name="id_estado_proceso_analista" ColumnName="id_estado_proceso_analista" />
+                <ScalarProperty Name="id_analisis" ColumnName="id_analisis" />
+                <ScalarProperty Name="cantidad_analisis" ColumnName="cantidad_analisis" />
+                <ScalarProperty Name="empleado_id" ColumnName="empleado_id" />
+                <ScalarProperty Name="solicitud_id" ColumnName="solicitud_id" />
+                <ScalarProperty Name="fecha_fin" ColumnName="fecha_fin" />
+                <ScalarProperty Name="fecha_inicio" ColumnName="fecha_inicio" />
+                <ScalarProperty Name="fecha_asignacion" ColumnName="fecha_asignacion" />
+                <ScalarProperty Name="id_proceso_analista" ColumnName="id_proceso_analista" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PRODUCTOes">
+            <EntityTypeMapping TypeName="MARNModel.PRODUCTO">
+              <MappingFragment StoreEntitySet="PRODUCTO">
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="minimo_porcentaje" ColumnName="minimo_porcentaje" />
+                <ScalarProperty Name="id_unidad" ColumnName="id_unidad" />
+                <ScalarProperty Name="presentacion_cantidad" ColumnName="presentacion_cantidad" />
+                <ScalarProperty Name="fecha_vencimiento" ColumnName="fecha_vencimiento" />
+                <ScalarProperty Name="fecha_ingreso" ColumnName="fecha_ingreso" />
+                <ScalarProperty Name="id_reactivo" ColumnName="id_reactivo" />
+                <ScalarProperty Name="id_lote" ColumnName="id_lote" />
+                <ScalarProperty Name="id_catalogo" ColumnName="id_catalogo" />
+                <ScalarProperty Name="id_marca" ColumnName="id_marca" />
+                <ScalarProperty Name="id_almacen" ColumnName="id_almacen" />
+                <ScalarProperty Name="id_producto" ColumnName="id_producto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REACTIVOes">
+            <EntityTypeMapping TypeName="MARNModel.REACTIVO">
+              <MappingFragment StoreEntitySet="REACTIVO">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_reactivo" ColumnName="id_reactivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REACTIVO_SOLUCION">
+            <EntityTypeMapping TypeName="MARNModel.REACTIVO_SOLUCION">
+              <MappingFragment StoreEntitySet="REACTIVO_SOLUCION">
+                <ScalarProperty Name="id_unidad" ColumnName="id_unidad" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="id_reactivo" ColumnName="id_reactivo" />
+                <ScalarProperty Name="id_solucion" ColumnName="id_solucion" />
+                <ScalarProperty Name="id_reactivo_solucion" ColumnName="id_reactivo_solucion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="REPORTEs">
+            <EntityTypeMapping TypeName="MARNModel.REPORTE">
+              <MappingFragment StoreEntitySet="REPORTE">
+                <ScalarProperty Name="metodo" ColumnName="metodo" />
+                <ScalarProperty Name="limite_deteccion" ColumnName="limite_deteccion" />
+                <ScalarProperty Name="unidades" ColumnName="unidades" />
+                <ScalarProperty Name="incerteza" ColumnName="incerteza" />
+                <ScalarProperty Name="resultado" ColumnName="resultado" />
+                <ScalarProperty Name="id_analisis_empleado" ColumnName="id_analisis_empleado" />
+                <ScalarProperty Name="id_reporte" ColumnName="id_reporte" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RESULTADOes">
+            <EntityTypeMapping TypeName="MARNModel.RESULTADO">
+              <MappingFragment StoreEntitySet="RESULTADO">
+                <ScalarProperty Name="incertidumbre" ColumnName="incertidumbre" />
+                <ScalarProperty Name="promedio" ColumnName="promedio" />
+                <ScalarProperty Name="id_resultado" ColumnName="id_resultado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SALIDA_EXISTENCIA">
+            <EntityTypeMapping TypeName="MARNModel.SALIDA_EXISTENCIA">
+              <MappingFragment StoreEntitySet="SALIDA_EXISTENCIA">
+                <ScalarProperty Name="id_reactivo" ColumnName="id_reactivo" />
+                <ScalarProperty Name="id_unidad" ColumnName="id_unidad" />
+                <ScalarProperty Name="fecha_salida" ColumnName="fecha_salida" />
+                <ScalarProperty Name="cantidad_existencia" ColumnName="cantidad_existencia" />
+                <ScalarProperty Name="cantidad_salida" ColumnName="cantidad_salida" />
+                <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+                <ScalarProperty Name="id_existencia_producto" ColumnName="id_existencia_producto" />
+                <ScalarProperty Name="id_salida_existencia" ColumnName="id_salida_existencia" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SALIDA_SOLUCION">
+            <EntityTypeMapping TypeName="MARNModel.SALIDA_SOLUCION">
+              <MappingFragment StoreEntitySet="SALIDA_SOLUCION">
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="id_existencia_solucion" ColumnName="id_existencia_solucion" />
+                <ScalarProperty Name="id_salida_existencia" ColumnName="id_salida_existencia" />
+                <ScalarProperty Name="id_salida_solucion" ColumnName="id_salida_solucion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SOLICITANTEs">
+            <EntityTypeMapping TypeName="MARNModel.SOLICITANTE">
+              <MappingFragment StoreEntitySet="SOLICITANTE">
+                <ScalarProperty Name="preset_analisis" ColumnName="preset_analisis" />
+                <ScalarProperty Name="telefono_2_solicitante" ColumnName="telefono_2_solicitante" />
+                <ScalarProperty Name="telefono_1_solicitante" ColumnName="telefono_1_solicitante" />
+                <ScalarProperty Name="correo_solicitante" ColumnName="correo_solicitante" />
+                <ScalarProperty Name="contacto_solicitante" ColumnName="contacto_solicitante" />
+                <ScalarProperty Name="direccion_solicitante" ColumnName="direccion_solicitante" />
+                <ScalarProperty Name="nombre_solicitante" ColumnName="nombre_solicitante" />
+                <ScalarProperty Name="id_solicitante" ColumnName="id_solicitante" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SOLICITUDs">
+            <EntityTypeMapping TypeName="MARNModel.SOLICITUD">
+              <MappingFragment StoreEntitySet="SOLICITUD">
+                <ScalarProperty Name="informe_generado" ColumnName="informe_generado" />
+                <ScalarProperty Name="fecha_finalizacion" ColumnName="fecha_finalizacion" />
+                <ScalarProperty Name="fecha_inicio" ColumnName="fecha_inicio" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="id_estado_proceso" ColumnName="id_estado_proceso" />
+                <ScalarProperty Name="id_solicitante" ColumnName="id_solicitante" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+                <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+                <ScalarProperty Name="no_referencia" ColumnName="no_referencia" />
+                <ScalarProperty Name="id_solicitud" ColumnName="id_solicitud" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SOLUCIONs">
+            <EntityTypeMapping TypeName="MARNModel.SOLUCION">
+              <MappingFragment StoreEntitySet="SOLUCION">
+                <ScalarProperty Name="unidad" ColumnName="unidad" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_solucion" ColumnName="id_solucion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TIPO_EMPLEADO">
+            <EntityTypeMapping TypeName="MARNModel.TIPO_EMPLEADO">
+              <MappingFragment StoreEntitySet="TIPO_EMPLEADO">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_tipo_empleado" ColumnName="id_tipo_empleado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TIPO_MUESTRA">
+            <EntityTypeMapping TypeName="MARNModel.TIPO_MUESTRA">
+              <MappingFragment StoreEntitySet="TIPO_MUESTRA">
+                <ScalarProperty Name="nombre_tipo_muestra" ColumnName="nombre_tipo_muestra" />
+                <ScalarProperty Name="id_tipo_muestra" ColumnName="id_tipo_muestra" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TIPO_VARIABLE">
+            <EntityTypeMapping TypeName="MARNModel.TIPO_VARIABLE">
+              <MappingFragment StoreEntitySet="TIPO_VARIABLE">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_tipovariable" ColumnName="id_tipovariable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UNIDADs">
+            <EntityTypeMapping TypeName="MARNModel.UNIDAD">
+              <MappingFragment StoreEntitySet="UNIDAD">
+                <ScalarProperty Name="equivalencia" ColumnName="equivalencia" />
+                <ScalarProperty Name="unidad1" ColumnName="unidad" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_unidad" ColumnName="id_unidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VARIABLEs">
+            <EntityTypeMapping TypeName="MARNModel.VARIABLE">
+              <MappingFragment StoreEntitySet="VARIABLE">
+                <ScalarProperty Name="id_muestra" ColumnName="id_muestra" />
+                <ScalarProperty Name="id_solucion" ColumnName="id_solucion" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_tipovariable" ColumnName="id_tipovariable" />
+                <ScalarProperty Name="id_analisis" ColumnName="id_analisis" />
+                <ScalarProperty Name="id_variable" ColumnName="id_variable" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VISITAs">
+            <EntityTypeMapping TypeName="MARNModel.VISITA">
+              <MappingFragment StoreEntitySet="VISITA">
+                <ScalarProperty Name="id_grupo_solicitud" ColumnName="id_grupo_solicitud" />
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="lng" ColumnName="lng" />
+                <ScalarProperty Name="lat" ColumnName="lat" />
+                <ScalarProperty Name="no_frascos" ColumnName="no_frascos" />
+                <ScalarProperty Name="identificador" ColumnName="identificador" />
+                <ScalarProperty Name="id_empleado_entrega" ColumnName="id_empleado_entrega" />
+                <ScalarProperty Name="id_sitio_muestreo" ColumnName="id_sitio_muestreo" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="id_tipo_muestra" ColumnName="id_tipo_muestra" />
+                <ScalarProperty Name="id_procedencia" ColumnName="id_procedencia" />
+                <ScalarProperty Name="fecha_entrega" ColumnName="fecha_entrega" />
+                <ScalarProperty Name="fecha_visita" ColumnName="fecha_visita" />
+                <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+                <ScalarProperty Name="id_solicitud" ColumnName="id_solicitud" />
+                <ScalarProperty Name="id_visita" ColumnName="id_visita" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ESTADO_PROCESO_ANALISTA">
+            <EntityTypeMapping TypeName="MARNModel.ESTADO_PROCESO_ANALISTA">
+              <MappingFragment StoreEntitySet="ESTADO_PROCESO_ANALISTA">
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="id_estado_proceso_analista" ColumnName="id_estado_proceso_analista" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="INFORMES">
+            <EntityTypeMapping TypeName="MARNModel.INFORME">
+              <MappingFragment StoreEntitySet="INFORMES">
+                <ScalarProperty Name="areas" ColumnName="areas" />
+                <ScalarProperty Name="activo" ColumnName="activo" />
+                <ScalarProperty Name="data" ColumnName="data" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="tipo" ColumnName="tipo" />
+                <ScalarProperty Name="id_solicitud" ColumnName="id_solicitud" />
+                <ScalarProperty Name="id_informe" ColumnName="id_informe" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NOTIFICACIONs">
+            <EntityTypeMapping TypeName="MARNModel.NOTIFICACION">
+              <MappingFragment StoreEntitySet="NOTIFICACION">
+                <ScalarProperty Name="eliminado" ColumnName="eliminado" />
+                <ScalarProperty Name="redireccion" ColumnName="redireccion" />
+                <ScalarProperty Name="fecha_lectura" ColumnName="fecha_lectura" />
+                <ScalarProperty Name="leido" ColumnName="leido" />
+                <ScalarProperty Name="empleado_receptor" ColumnName="empleado_receptor" />
+                <ScalarProperty Name="fecha_notificacion" ColumnName="fecha_notificacion" />
+                <ScalarProperty Name="mensaje" ColumnName="mensaje" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="empleado_remitente" ColumnName="empleado_remitente" />
+                <ScalarProperty Name="id_notificacion" ColumnName="id_notificacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ANALISIS_REACTIVO">
+            <EntityTypeMapping TypeName="MARNModel.ANALISIS_REACTIVO">
+              <MappingFragment StoreEntitySet="ANALISIS_REACTIVO">
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="id_analisis_empleado" ColumnName="id_analisis_empleado" />
+                <ScalarProperty Name="id_unidad" ColumnName="id_unidad" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="id_reactivo" ColumnName="id_reactivo" />
+                <ScalarProperty Name="id_analisis_reactivo" ColumnName="id_analisis_reactivo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SITIO_MUESTREO">
+            <EntityTypeMapping TypeName="MARNModel.SITIO_MUESTREO">
+              <MappingFragment StoreEntitySet="SITIO_MUESTREO">
+                <ScalarProperty Name="lng" ColumnName="lng" />
+                <ScalarProperty Name="lat" ColumnName="lat" />
+                <ScalarProperty Name="observacione" ColumnName="observacione" />
+                <ScalarProperty Name="direccion_sitio" ColumnName="direccion_sitio" />
+                <ScalarProperty Name="nombre_sitio" ColumnName="nombre_sitio" />
+                <ScalarProperty Name="id_sitio_muestreo" ColumnName="id_sitio_muestreo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="GRUPO_SOLICITUD">
+            <EntityTypeMapping TypeName="MARNModel.GRUPO_SOLICITUD">
+              <MappingFragment StoreEntitySet="GRUPO_SOLICITUD">
+                <ScalarProperty Name="identificador" ColumnName="identificador" />
+                <ScalarProperty Name="preset" ColumnName="preset" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+                <ScalarProperty Name="fecha_solicitud" ColumnName="fecha_solicitud" />
+                <ScalarProperty Name="id_solicitante" ColumnName="id_solicitante" />
+                <ScalarProperty Name="id_grupo_solicitud" ColumnName="id_grupo_solicitud" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

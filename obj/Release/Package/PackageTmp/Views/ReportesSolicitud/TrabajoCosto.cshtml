@@ -1,0 +1,138 @@
+﻿@{
+   // var solicitantesReport = ViewBag.SolicitantesReport;
+
+    List<SOLICITANTE> solicitantesReport = ViewBag.SolicitantesReport;
+    List<SITIO_MUESTREO> sitiosMuestreo = ViewBag.SitiosMuestreo;
+}
+
+<div class="row">
+    <div class="col-sm-12">
+        <h1 class="page-header">Trabajo y Costos</h1>
+    </div>
+</div>
+
+<div class="row">
+    <form action="" method="post">
+        <div class="form-horizontal">
+            <div class="col-md-10 col-md-offset-1">
+                <label class="control-label col-md-2">Mes inicio</label>
+                <div class="col-md-2">
+                    <div class='input-group date' id='inicio'>
+                        <input id="fechaInicio" type="text" name="inicio" class="form-control fechaInicio" value="@ViewBag.inicio" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+                <label class="control-label col-md-2">Mes fin</label>
+                <div class="col-md-2">
+                    <div class='input-group date' id='fin'>
+                        <input id="fechaFin" type="text" name="fin" class="form-control fechaFin" value="@ViewBag.fin" />
+                        <span class="input-group-addon">
+                            <span class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+
+                <label class="control-label col-md-1">Área</label>
+                <div class="col-md-2">
+                    @Html.DropDownList("area", (IEnumerable<SelectListItem>)ViewBag.AreasSelection, "Todas las áreas", new { @class = "form-control" })
+                </div>
+
+                <input id="enviar" type="submit" value="Generar" class="btn btn-primary pull-right enviar" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<br /><br />
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Solicitudes, Análisis y Costos por Solicitante</div>
+            <div class="panel-body">
+                <table class="table table-condensed table-striped">
+                    <tr>
+                        <th>Solicitante</th>
+                        <th>Solicitudes</th>
+                        <th>Análisis</th>
+                        <th>Costos</th>
+                    </tr>
+                    @foreach (SOLICITANTE item in solicitantesReport)
+                    {
+                        IEnumerable<SOLICITUD> solicitudes = item.SOLICITUDs.Where(s => s.fecha_inicio >= ViewBag.inicio_datetime && s.fecha_inicio <= ViewBag.fin_datetime && s.fecha_finalizacion != null);
+                        //IEnumerable<SOLICITUD> solicitudes = item.SOLICITUDs;
+
+                        <tr>
+                            <td>@item.nombre_solicitante</td>
+                            <td>@solicitudes.Count()</td>
+
+                            @if (ViewBag.area == "")
+                            {
+                                <td>@solicitudes.Sum(s => s.DETALLE_SOLICITUD.Count())</td>
+                                <td>@solicitudes.Sum(s => s.DETALLE_SOLICITUD.Sum(de => de.ANALISI.costo))</td>
+                            }
+                            else
+                            {
+                                <td>@solicitudes.Sum(s => s.DETALLE_SOLICITUD.Where(ds => ds.ANALISIS_EMPLEADO.First().EMPLEADO.AREA.id_area == byte.Parse(ViewBag.area)).Count())</td>
+                                <td>@solicitudes.Sum(s => s.DETALLE_SOLICITUD.Where(ds => ds.ANALISIS_EMPLEADO.First().EMPLEADO.AREA.id_area == byte.Parse(ViewBag.area)).Sum(de => de.ANALISI.costo))</td>
+                            }
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>            
+    </div>
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">Solicitudes, Análisis y Costos por Sitio de muestreo</div>
+            <div class="panel-body">
+                <table class="table table-condensed table-striped">
+                    <tr>
+                        <th>Sitio</th>
+                        <th>Solicitudes</th>
+                        <th>Análisis</th>
+                        <th>Costos</th>
+                    </tr>
+                    @foreach (SITIO_MUESTREO item in sitiosMuestreo)
+                    {
+                        IEnumerable<VISITA> visitas = item.VISITAs.Where(s => s.SOLICITUD.fecha_inicio >= ViewBag.inicio_datetime && s.SOLICITUD.fecha_inicio <= ViewBag.fin_datetime && s.SOLICITUD.fecha_finalizacion != null);
+                        //IEnumerable<SOLICITUD> solicitudes = item.SOLICITUDs;
+
+                        <tr>
+                            <td>@item.nombre_sitio</td>
+                            <td>@visitas.Count()</td>
+                            @if (ViewBag.area == "")
+                            {
+                                <td>@visitas.Sum(s => s.SOLICITUD.DETALLE_SOLICITUD.Count())</td>
+                                <td>@visitas.Sum(s => s.SOLICITUD.DETALLE_SOLICITUD.Sum(de => de.ANALISI.costo))</td>
+                            }
+                            else {
+                                <td>@visitas.Sum(s => s.SOLICITUD.DETALLE_SOLICITUD.Where(ds => ds.ANALISIS_EMPLEADO.First().EMPLEADO.AREA.id_area == byte.Parse(ViewBag.area)).Count())</td>
+                                <td>@visitas.Sum(s => s.SOLICITUD.DETALLE_SOLICITUD.Where(ds => ds.ANALISIS_EMPLEADO.First().EMPLEADO.AREA.id_area == byte.Parse(ViewBag.area)).Sum(de => de.ANALISI.costo))</td>
+                            }
+                            
+                            
+                        </tr>
+                    }
+                    
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        $(function () {
+            $("#inicio, #fin").datepicker({
+                format: "mm-yyyy",
+                viewMode: "months",
+                minViewMode: "months"
+            });
+        });
+    </script>    
+}

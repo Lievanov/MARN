@@ -1,0 +1,149 @@
+﻿@model LaboratorioMarn.SOLICITANTE
+
+@{
+    ViewBag.Title = "Crear";
+    MARNEntities db = new MARNEntities();
+    List<ANALISI> analisis =  db.ANALISIS.ToList();
+    List<AREA> areas = db.AREAs.ToList();
+}
+
+
+<h2>Nuevo Solicitante</h2>
+
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @*<div class="form-group">
+                @Html.LabelFor(model => model.id_solicitante, htmlAttributes: new { @class = "control-label col-sm-4" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.id_solicitante, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.id_solicitante, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+
+        <div class="form-group">
+            @Html.Label("Nombre Solicitante", htmlAttributes: new { @class = "control-label col-sm-4" })
+            <div class="col-sm-4">
+                @Html.EditorFor(model => model.nombre_solicitante, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.nombre_solicitante, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Direccion Solicitante", htmlAttributes: new { @class = "control-label col-sm-4" })
+            <div class="col-sm-4">
+                @Html.EditorFor(model => model.direccion_solicitante, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.direccion_solicitante, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Contacto Solicitante", htmlAttributes: new { @class = "control-label col-sm-4" })
+            <div class="col-sm-4">
+                @Html.EditorFor(model => model.contacto_solicitante, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.contacto_solicitante, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Correo Electronico", htmlAttributes: new { @class = "control-label col-sm-4" })
+            <div class="col-sm-4">
+                @Html.EditorFor(model => model.correo_solicitante, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.correo_solicitante, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Número Telefónico", htmlAttributes: new { @class = "control-label col-sm-4" })
+            <div class="col-sm-4">
+                @Html.EditorFor(model => model.telefono_1_solicitante, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.telefono_1_solicitante, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Otro número telefónico", htmlAttributes: new { @class = "control-label col-sm-4" })
+            <div class="col-sm-4">
+                @Html.EditorFor(model => model.telefono_2_solicitante, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.telefono_2_solicitante, "", new { @class = "text-danger" })
+            </div>
+        </div>
+       
+        <br />
+
+
+        <div class="row">
+            <div class="col-sm-10 col-sm-offset-1">
+                <h3 class="page-header">Análisis por Defecto </h3>
+                @foreach (AREA area in areas)
+                {
+                    if (area.ANALISIS.Count() > 0)
+                    {
+                        <h4>
+                            <a href="#" class="toggleShowAnalisis" data-value="@area.id_area">@area.nombre_area <span class="caret"></span></a>
+                            &nbsp;&nbsp;&nbsp;<small><input type="checkbox" class="checkall" value="@area.id_area" /> Seleccionar todo</small>
+                        </h4>
+                        <div class="row" style="display: none" id="analisis-@area.id_area">
+                            @foreach (ANALISI item in area.ANALISIS.ToList())
+                            {
+                                <div class="col-md-4">
+                                    <input type="checkbox" name="preset[]" value="@item.id_analisis" class="analisis area-@area.id_area" />
+
+                                    @Html.DisplayFor(modelItem => item.nombre)
+                                </div>
+                            }
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-6 hide" id="alertSolicitante">
+                <div class="alert alert-success" role="alert" id="alertSolicitanteMsg"></div>
+            </div>
+            <div class="col-md-offset-8 col-md-3">
+                <br/>
+                @*<input type="submit" value="Create" class="btn btn-default" id="crearSolicitanteBtn" />*@
+                <button type="submit" class="btn btn-primary btn-block">Crear</button>
+            </div>
+        </div>
+    </div>
+ 
+}
+
+@Html.ActionLink("Volver a Lista", "Index")
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        $(function () {
+            $(".checkall").change(function () {
+                var element = $(this);
+                var area = element.val();
+
+                if (element.is(":checked")) {
+                    $(".area-" + area).prop('checked', true);
+                }
+                else {
+                    $(".area-" + area).prop('checked', false);
+                }
+            });
+
+            $(".toggleShowAnalisis").click(function (e) {
+                e.preventDefault();
+                var element = $(this);
+                var value = element.data('value');
+
+                $("#analisis-" + value).toggle();
+            });
+        });
+    </script>
+}

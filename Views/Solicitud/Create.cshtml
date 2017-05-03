@@ -1,0 +1,403 @@
+﻿@model   IEnumerable<LaboratorioMarn.SOLICITANTE>
+
+@{
+    ViewBag.Title = "Solicitud";
+}
+
+<h1 class="page-header">Nueva Solicitud</h1>
+
+<div id="seleccionSolicitante" class="show">@{Html.RenderPartial("~/Views/Solicitud/SeleccionSolicitante.cshtml");}   </div>
+
+<div id="seleccionAnalisis"></div>
+
+<div id="asignarAnalisis"></div>
+
+@section Scripts {
+    <script type="text/javascript" src="https://cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js"></script>
+    <script type="text/javascript">
+    var tablaSolicitante;
+    var solicitante = null;
+    var analisis = new Array();
+    var empleadosSeleccion = new Array();
+    var analisisSeleccion = new Array();
+
+    function inArray(needle, haystack) {
+        var length = haystack.length;
+        for (var i = 0; i < length; i++) {
+            if (haystack[i] == needle) return true;
+        }
+        return false;
+    }
+
+    function checkAllAnalisisSelected()
+    {
+        todosAnalisis = new Array();
+
+        for (var i = 1; i < analisis.length; i++)
+        {
+            todosAnalisis = todosAnalisis.concat(analisis[i]);
+        }
+
+        todosAnalisis.sort();
+        analisisSeleccion.sort();
+
+        var is_same = (todosAnalisis.length == analisisSeleccion.length) && todosAnalisis.every(function (element, index) {
+            return element === analisisSeleccion[index];
+        });
+
+        return is_same;
+    }
+
+    $(function () {
+        tablaSolicitante = $("#tablaSolicitante").DataTable({
+            columnDefs: [
+                {
+                    orderable: false,
+                    className: 'select-checkbox',
+                    targets: 0
+                },
+                {
+                    targets: [1],
+                    visible: false,
+                    searchable: false
+                }
+            ],
+            select: {
+                style: 'os',
+                selector: 'td:first-child'
+            },
+            language: {
+                url: 'Scripts/spanish.json'
+            }
+        });
+
+        tablaSolicitante
+            .on('select', function (e, dt, type, indexes) {
+                var data = tablaSolicitante.rows('.selected').data();
+                solicitante = data[0][1];
+
+                $("#siguiente1").removeAttr("disabled")
+            })
+            .on('deselect', function (e, dt, type, indexes) {
+                solicitante = null;
+                $("#siguiente1").attr("disabled","disabled")
+            });
+
+        $("#nuevoSolicitante").click(function () {
+            $.ajax({
+                url: "@Url.Action("Create", "Solicitante")",
+                data: { bandera: 1 },
+                type: 'GET',
+                success: function (html) {
+                    $("#solicitanteModal").modal("show");
+                    $("#solicitanteModalBody").html(html);
+
+                    $("#crearSolicitanteBtn").click(function (e) {
+                        e.preventDefault();
+                        $.ajax({
+                            url: "@Url.Action("Create", "Solicitante")",
+                            data: $("#formularioSolicitante").serialize() + "&bandera=1",
+                            type: 'POST',
+                            dataType: 'JSON',
+                            success: function (json) {
+                                $("#alertSolicitante").removeClass("hide").show();
+                                if (json.valid) {
+                                    $("#alertSolicitanteMsg")
+                                        .removeAttr("class")
+                                        .addClass("alert")
+                                        .addClass("alert-success")
+                                        .html("El Solicitante se creó exitosamente");
+
+                                    setTimeout(function () { window.location = ''; }, 2000)
+                                }
+                                else
+                                {
+                                    $("#alertSolicitanteMsg")
+                                        .removeAttr("class")
+                                        .addClass("alert")
+                                        .addClass("alert-danger")
+                                        .html();
+
+                                    for (var i = 0; i < json.msgs.length; i++)
+                                    {
+                                        $("#alertSolicitanteMsg").append(json.msgs[i]);
+                                        $("#alertSolicitanteMsg").append($("<br>"));
+                                    }
+                                }
+                            }
+                        });
+                    });
+                }
+            });
+        });
+
+        $("#siguiente1").click(function () {
+            var element = $(this);
+            element.attr("disabled", "disabled");
+            $.ajax({
+                url: "@Url.Action("FormSolicitud", "Solicitud")",
+                data: { idSolicitante: solicitante },
+                type: 'POST',
+                success: function (html) {
+                    element.removeAttr("disabled");
+
+                    // ocultar vista solicitante
+                    $("#seleccionSolicitante")
+                       .removeClass("show")
+                       .addClass("hidden");
+
+                    // mostrar vista selecciion analisis
+                    $("#seleccionAnalisis")
+                        .removeClass("hidden")
+                        .addClass("show")
+                        .html(html); // popular
+
+
+                    $("#atras1").click(function (e) {
+                        e.preventDefault();
+                        $("#seleccionSolicitante")
+                           .removeClass("hidden")
+                           .addClass("show");
+
+                        $("#seleccionAnalisis")
+                            .removeClass("show")
+                            .addClass("hidden");
+                    });
+
+                    $(".checkall").change(function () {
+                        var element = $(this);
+                        var area = element.val();
+
+                        if (element.is(":checked")) {
+                            $(".area-" + area).prop('checked', true);
+                        }
+                        else {
+                            $(".area-" + area).prop('checked', false);
+                        }
+                    });
+
+                    $(".toggleShowAnalisis").click(function (e) {
+                        e.preventDefault();
+                        var element = $(this);
+                        var value = element.data('value');
+
+                        $("#analisis-" + value).toggle();
+                    });
+
+                    $("#siguiente2").click(function (e) {
+                        e.preventDefault();
+                        var element = $(this);
+                        element.attr("disabled", "disabled");
+                        $.ajax({
+                            url: "@Url.Action("AsignarAnalisis", "Solicitud")",
+                            data: $("#formularioSeleccionAnalisis").serialize(),
+                            type: 'POST',
+                            success: function (html) {
+                                element.removeAttr("disabled");
+                                // ocultar seleccion analisis
+                                $("#seleccionAnalisis")
+                                   .removeClass("show")
+                                   .addClass("hidden");
+
+                                // mostrar vista selecciion analisis
+                                $("#asignarAnalisis")
+                                    .removeClass("hidden")
+                                    .addClass("show")
+                                    .html(html); // popular
+
+
+                                $("#atras2").click(function (e) {
+                                    $("#seleccionAnalisis")
+                                       .removeClass("hidden")
+                                       .addClass("show");
+
+                                    $("#asignarAnalisis")
+                                        .removeClass("show")
+                                        .addClass("hidden");
+                                });
+
+                                $(".areas").click(function (e) {
+                                    e.preventDefault()
+                                    var area = $(this).data("value");
+
+                                    $.ajax({
+                                        url: "@Url.Action("Asignacion", "Solicitud")",
+                                    method: "POST",
+                                    data: { idArea: area, analisis: analisis[area] },
+                                    success: function (html) {
+                                        $("#asignarModal").modal("show");
+                                        $("#asignarContent").html(html);
+
+                                        $("#selectAllVisible").click(function (e) {
+                                            e.preventDefault();
+                                            checkBoxes = $(".analisisSeleccionEmpleado:visible");
+                                            checkBoxes.prop("checked", !checkBoxes.prop("checked"));
+                                        });
+
+                                        $("#analisisSeleccionEmpleado").click(function (e) {
+                                            e.preventDefault();
+                                            if ($(this).is(":checked"))
+                                            {
+                                                analisisSeleccion.push($(this).val());
+                                            }
+                                        })
+
+                                        $("#empleadoArea").change(function () {
+                                            var empleado = parseInt($(this).val());
+
+                                            $.each(empleadosSeleccion, function (index, empleadoObj) {
+                                                if (empleadoObj.empleado.id == empleado)
+                                                {
+                                                    var checkboxes = $(".analisisSeleccionEmpleado");
+
+                                                    checkboxes.each(function (index) {
+                                                        if (inArray(parseInt($(this).val()), analisisSeleccion) &&
+                                                            !inArray(parseInt($(this).val()), empleadoObj.analisis))
+                                                        {
+                                                            $(this).hide();
+                                                            $(this).prop('checked', false);
+                                                        }
+                                                        else
+                                                        {
+                                                            $(this).show();
+
+                                                            if (inArray(parseInt($(this).val()), empleadoObj.analisis))
+                                                            {
+                                                                $(this).prop("checked", true);
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                            });
+                                        });
+
+                                        $("#asignarAnalisisModal").click(function (e) {
+                                            e.preventDefault();
+                                            var checkboxes = $(".analisisSeleccionEmpleado:checked");
+
+                                            var prevSeleccion = new Array();
+
+                                            $.each(empleadosSeleccion, function (index, empleadoObj) {
+                                                if (empleadoObj.empleado.id == parseInt($("#empleadoArea").val())) {
+                                                    prevSeleccion = empleadoObj.analisis;
+                                                    empleadoObj.analisis = new Array();
+
+                                                    for (var i = 0; i < prevSeleccion.length; i++) {
+                                                        $(".empleado#" + prevSeleccion[i]).html("");
+                                                    }
+                                                }
+                                            });
+
+                                            checkboxes.each(function (index) {
+                                                var checkbox = parseInt($(this).val());
+
+                                                $.each(empleadosSeleccion, function (index, empleadoObj) {
+                                                    if (empleadoObj.empleado.id == parseInt($("#empleadoArea").val())) {
+                                                        if (inArray(checkbox, prevSeleccion)) {
+                                                            for (var i = 0; i < prevSeleccion.length; i++) {
+                                                                if (prevSeleccion[i] == checkbox) {
+                                                                    prevSeleccion.splice(i, 1);
+                                                                    break;
+                                                                }
+                                                            }
+                                                        }
+                                                        else {
+                                                            analisisSeleccion.push(checkbox);
+                                                        }
+
+                                                        empleadoObj.analisis.push(checkbox);
+                                                        $(".empleado#" + checkbox).html(empleadoObj.empleado.nombre);
+                                                    }
+                                                });
+                                            });
+
+                                            for (var i = 0; i < prevSeleccion.length; i++)
+                                            {
+                                                for (var j = 0; j < analisisSeleccion.length; j++)
+                                                {
+                                                    if (prevSeleccion[i] == analisisSeleccion[j])
+                                                    {
+                                                        analisisSeleccion.splice(j, 1);
+                                                        break;
+                                                    }
+                                                }
+                                            }
+
+                                            alert("Se asigno correctamente");
+
+                                        });
+                                    }
+                                });
+                            });
+
+                            $("#guardarSolicitud").click(function (e) {
+                                e.preventDefault();
+                                var element = $(this);
+                                element.attr("disabled", "disabled");
+
+                                if (!checkAllAnalisisSelected()) {
+                                    alert("Debe asignar todos los analisis");
+                                    return;
+                                }
+                                else {
+                                    //alert("son iguales");
+                                    //return;
+                                }
+
+                                jsonObject = { idSolicitante: $("#idSolicitante").val(), empleados: empleadosSeleccion }
+
+                                $.ajax({
+                                    url: "@Url.Action("GuardarSolicitud", "Solicitud")",
+                                    method: "POST",
+                                    data: JSON.stringify(jsonObject),
+                                    contentType: "application/json; charset=utf-8",
+                                    dataType: "JSON",
+                                    success: function (result) {
+                                        element.removeAttr("disabled");
+                                        if (result.isValid) {
+                                            alert("La solicitud se creo exitosamente");
+
+                                            setTimeout(function () { window.location = "@Url.Action("Detalle", "Solicitud")" + "/" + result.id }, 500);
+                                        }
+                                        else {
+                                            alert(result.msg);
+                                        }
+                                    }
+                                });
+                            });
+                    }
+                    });
+        });
+    }
+    });
+    });
+    })
+
+    </script>
+}
+
+@section Styles {
+    <link href="https://cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css" rel="stylesheet" />
+
+    <style type="text/css">
+        table.dataTable thead {
+            font-size: 0.85em;
+        }
+
+        table.dataTable tbody {
+            font-size: 0.85em;
+        }
+
+        .titulo-area, .titulo-analisis, .titulo-empleado {
+            text-align: center;
+        }
+
+        .titulo-area {
+            padding: 20px;
+        }
+
+        .analisis, .empleado {
+            margin-top: 5px;
+        }
+    </style>
+}

@@ -1,0 +1,71 @@
+﻿@model IEnumerable<LaboratorioMarn.REACTIVO>
+
+@{
+    ViewBag.Title = "Index";
+    
+}
+
+<h2>Reactivos</h2>
+
+<p>
+    @Html.ActionLink("Ingresar Nuevo Reactivo", "Create")
+</p>
+
+<div class="row">
+
+    <div class="col-sm-7 col-sm-offset-2">
+        <table class="table table-striped" id="detalleReactivo">
+            <thead>
+
+                <tr>
+                    <th>
+                        @*@Html.DisplayNameFor(model => model.nombre)*@
+                        Nombre Reactivo
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nombre)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Editar", "Edit", new { id = item.id_reactivo }) |
+                            @Html.ActionLink("Detalles", "Details", new { id = item.id_reactivo })|
+                            @Html.ActionLink("Eliminar", "Delete", new { id = item.id_reactivo })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="//cdn.datatables.net/u/dt/dt-1.10.12/datatables.min.js"></script>
+    <script type="text/javascript">
+    $(function () {
+        $('#detalleReactivo').DataTable({
+            language: {
+                url: 'Scripts/spanish.json'
+            }
+        });
+    });
+    </script>
+}
+@section Styles {
+    <link href="https://cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css" rel="stylesheet" />
+    <style type="text/css">
+        table.dataTable thead {
+            font-size: 0.85em;
+        }
+
+        table.dataTable tbody {
+            font-size: 0.85em;
+        }
+    </style>
+
+}

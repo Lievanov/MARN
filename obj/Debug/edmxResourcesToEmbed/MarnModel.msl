@@ -1,0 +1,456 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MARNModelStoreContainer" CdmEntityContainer="MARNEntities">
+    <EntitySetMapping Name="ALMACENs">
+      <EntityTypeMapping TypeName="MARNModel.ALMACEN">
+        <MappingFragment StoreEntitySet="ALMACEN">
+          <ScalarProperty Name="nivel" ColumnName="nivel" />
+          <ScalarProperty Name="estante" ColumnName="estante" />
+          <ScalarProperty Name="id_almacen" ColumnName="id_almacen" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ANALISIS">
+      <EntityTypeMapping TypeName="MARNModel.ANALISI">
+        <MappingFragment StoreEntitySet="ANALISIS">
+          <ScalarProperty Name="costo_iva" ColumnName="costo_iva" />
+          <ScalarProperty Name="costo" ColumnName="costo" />
+          <ScalarProperty Name="incertezas" ColumnName="incertezas" />
+          <ScalarProperty Name="unidades" ColumnName="unidades" />
+          <ScalarProperty Name="formula" ColumnName="formula" />
+          <ScalarProperty Name="metodo" ColumnName="metodo" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id_area" ColumnName="id_area" />
+          <ScalarProperty Name="id_analisis" ColumnName="id_analisis" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ANALISIS_EMPLEADO">
+      <EntityTypeMapping TypeName="MARNModel.ANALISIS_EMPLEADO">
+        <MappingFragment StoreEntitySet="ANALISIS_EMPLEADO">
+          <ScalarProperty Name="id_detalle_solicitud" ColumnName="id_detalle_solicitud" />
+          <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+          <ScalarProperty Name="id_analisis_empleado" ColumnName="id_analisis_empleado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AREAs">
+      <EntityTypeMapping TypeName="MARNModel.AREA">
+        <MappingFragment StoreEntitySet="AREA">
+          <ScalarProperty Name="nombre_area" ColumnName="nombre_area" />
+          <ScalarProperty Name="id_area" ColumnName="id_area" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CALCULOes">
+      <EntityTypeMapping TypeName="MARNModel.CALCULO">
+        <MappingFragment StoreEntitySet="CALCULO">
+          <ScalarProperty Name="resultado_calculo" ColumnName="resultado_calculo" />
+          <ScalarProperty Name="id_resultado" ColumnName="id_resultado" />
+          <ScalarProperty Name="id_analisis_empleado" ColumnName="id_analisis_empleado" />
+          <ScalarProperty Name="id_calculo" ColumnName="id_calculo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CATALOGOes">
+      <EntityTypeMapping TypeName="MARNModel.CATALOGO">
+        <MappingFragment StoreEntitySet="CATALOGO">
+          <ScalarProperty Name="nombre_catalogo" ColumnName="nombre_catalogo" />
+          <ScalarProperty Name="id_catalogo" ColumnName="id_catalogo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DETALLE_SOLICITUD">
+      <EntityTypeMapping TypeName="MARNModel.DETALLE_SOLICITUD">
+        <MappingFragment StoreEntitySet="DETALLE_SOLICITUD">
+          <ScalarProperty Name="id_analisis" ColumnName="id_analisis" />
+          <ScalarProperty Name="id_solicitud" ColumnName="id_solicitud" />
+          <ScalarProperty Name="id_detalle_solicitud" ColumnName="id_detalle_solicitud" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="DETALLE_VISITA">
+      <EntityTypeMapping TypeName="MARNModel.DETALLE_VISITA">
+        <MappingFragment StoreEntitySet="DETALLE_VISITA">
+          <ScalarProperty Name="value" ColumnName="value" />
+          <ScalarProperty Name="id_muestra" ColumnName="id_muestra" />
+          <ScalarProperty Name="id_visita" ColumnName="id_visita" />
+          <ScalarProperty Name="id_detalle_visita" ColumnName="id_detalle_visita" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EMPLEADOes">
+      <EntityTypeMapping TypeName="MARNModel.EMPLEADO">
+        <MappingFragment StoreEntitySet="EMPLEADO">
+          <ScalarProperty Name="avatar" ColumnName="avatar" />
+          <ScalarProperty Name="id_aspnet_user" ColumnName="id_aspnet_user" />
+          <ScalarProperty Name="telefono_empleado" ColumnName="telefono_empleado" />
+          <ScalarProperty Name="nombre_empleado" ColumnName="nombre_empleado" />
+          <ScalarProperty Name="id_tipo_empleado" ColumnName="id_tipo_empleado" />
+          <ScalarProperty Name="id_area" ColumnName="id_area" />
+          <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ESTADOes">
+      <EntityTypeMapping TypeName="MARNModel.ESTADO">
+        <MappingFragment StoreEntitySet="ESTADO">
+          <ScalarProperty Name="nombre_estado" ColumnName="nombre_estado" />
+          <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ESTADO_PROCESO">
+      <EntityTypeMapping TypeName="MARNModel.ESTADO_PROCESO">
+        <MappingFragment StoreEntitySet="ESTADO_PROCESO">
+          <ScalarProperty Name="nombre_estado_proceso" ColumnName="nombre_estado_proceso" />
+          <ScalarProperty Name="id_estado_proceso" ColumnName="id_estado_proceso" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EXISTENCIA_PRODUCTO">
+      <EntityTypeMapping TypeName="MARNModel.EXISTENCIA_PRODUCTO">
+        <MappingFragment StoreEntitySet="EXISTENCIA_PRODUCTO">
+          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="id_producto" ColumnName="id_producto" />
+          <ScalarProperty Name="id_existencia_producto" ColumnName="id_existencia_producto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EXISTENCIA_SOLUCION">
+      <EntityTypeMapping TypeName="MARNModel.EXISTENCIA_SOLUCION">
+        <MappingFragment StoreEntitySet="EXISTENCIA_SOLUCION">
+          <ScalarProperty Name="id_unidad" ColumnName="id_unidad" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="id_solucion" ColumnName="id_solucion" />
+          <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+          <ScalarProperty Name="id_existencia_solucion" ColumnName="id_existencia_solucion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="INPUTs">
+      <EntityTypeMapping TypeName="MARNModel.INPUT">
+        <MappingFragment StoreEntitySet="INPUT">
+          <ScalarProperty Name="lectura" ColumnName="lectura" />
+          <ScalarProperty Name="valor" ColumnName="valor" />
+          <ScalarProperty Name="id_calculo" ColumnName="id_calculo" />
+          <ScalarProperty Name="id_variable" ColumnName="id_variable" />
+          <ScalarProperty Name="id_input" ColumnName="id_input" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LOTEs">
+      <EntityTypeMapping TypeName="MARNModel.LOTE">
+        <MappingFragment StoreEntitySet="LOTE">
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id_lote" ColumnName="id_lote" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MARCAs">
+      <EntityTypeMapping TypeName="MARNModel.MARCA">
+        <MappingFragment StoreEntitySet="MARCA">
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id_marca" ColumnName="id_marca" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MUESTRAs">
+      <EntityTypeMapping TypeName="MARNModel.MUESTRA">
+        <MappingFragment StoreEntitySet="MUESTRA">
+          <ScalarProperty Name="expresado" ColumnName="expresado" />
+          <ScalarProperty Name="nombre_muestra" ColumnName="nombre_muestra" />
+          <ScalarProperty Name="id_muestra" ColumnName="id_muestra" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PROCEDENCIAs">
+      <EntityTypeMapping TypeName="MARNModel.PROCEDENCIA">
+        <MappingFragment StoreEntitySet="PROCEDENCIA">
+          <ScalarProperty Name="nombre_procedencia" ColumnName="nombre_procedencia" />
+          <ScalarProperty Name="id_procedencia" ColumnName="id_procedencia" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PROCESO_ANALISTA">
+      <EntityTypeMapping TypeName="MARNModel.PROCESO_ANALISTA">
+        <MappingFragment StoreEntitySet="PROCESO_ANALISTA">
+          <ScalarProperty Name="id_estado_proceso_analista" ColumnName="id_estado_proceso_analista" />
+          <ScalarProperty Name="id_analisis" ColumnName="id_analisis" />
+          <ScalarProperty Name="cantidad_analisis" ColumnName="cantidad_analisis" />
+          <ScalarProperty Name="empleado_id" ColumnName="empleado_id" />
+          <ScalarProperty Name="solicitud_id" ColumnName="solicitud_id" />
+          <ScalarProperty Name="fecha_fin" ColumnName="fecha_fin" />
+          <ScalarProperty Name="fecha_inicio" ColumnName="fecha_inicio" />
+          <ScalarProperty Name="fecha_asignacion" ColumnName="fecha_asignacion" />
+          <ScalarProperty Name="id_proceso_analista" ColumnName="id_proceso_analista" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PRODUCTOes">
+      <EntityTypeMapping TypeName="MARNModel.PRODUCTO">
+        <MappingFragment StoreEntitySet="PRODUCTO">
+          <ScalarProperty Name="estado" ColumnName="estado" />
+          <ScalarProperty Name="minimo_porcentaje" ColumnName="minimo_porcentaje" />
+          <ScalarProperty Name="id_unidad" ColumnName="id_unidad" />
+          <ScalarProperty Name="presentacion_cantidad" ColumnName="presentacion_cantidad" />
+          <ScalarProperty Name="fecha_vencimiento" ColumnName="fecha_vencimiento" />
+          <ScalarProperty Name="fecha_ingreso" ColumnName="fecha_ingreso" />
+          <ScalarProperty Name="id_reactivo" ColumnName="id_reactivo" />
+          <ScalarProperty Name="id_lote" ColumnName="id_lote" />
+          <ScalarProperty Name="id_catalogo" ColumnName="id_catalogo" />
+          <ScalarProperty Name="id_marca" ColumnName="id_marca" />
+          <ScalarProperty Name="id_almacen" ColumnName="id_almacen" />
+          <ScalarProperty Name="id_producto" ColumnName="id_producto" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="REACTIVOes">
+      <EntityTypeMapping TypeName="MARNModel.REACTIVO">
+        <MappingFragment StoreEntitySet="REACTIVO">
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id_reactivo" ColumnName="id_reactivo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="REACTIVO_SOLUCION">
+      <EntityTypeMapping TypeName="MARNModel.REACTIVO_SOLUCION">
+        <MappingFragment StoreEntitySet="REACTIVO_SOLUCION">
+          <ScalarProperty Name="id_unidad" ColumnName="id_unidad" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="id_reactivo" ColumnName="id_reactivo" />
+          <ScalarProperty Name="id_solucion" ColumnName="id_solucion" />
+          <ScalarProperty Name="id_reactivo_solucion" ColumnName="id_reactivo_solucion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="REPORTEs">
+      <EntityTypeMapping TypeName="MARNModel.REPORTE">
+        <MappingFragment StoreEntitySet="REPORTE">
+          <ScalarProperty Name="metodo" ColumnName="metodo" />
+          <ScalarProperty Name="limite_deteccion" ColumnName="limite_deteccion" />
+          <ScalarProperty Name="unidades" ColumnName="unidades" />
+          <ScalarProperty Name="incerteza" ColumnName="incerteza" />
+          <ScalarProperty Name="resultado" ColumnName="resultado" />
+          <ScalarProperty Name="id_analisis_empleado" ColumnName="id_analisis_empleado" />
+          <ScalarProperty Name="id_reporte" ColumnName="id_reporte" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="RESULTADOes">
+      <EntityTypeMapping TypeName="MARNModel.RESULTADO">
+        <MappingFragment StoreEntitySet="RESULTADO">
+          <ScalarProperty Name="incertidumbre" ColumnName="incertidumbre" />
+          <ScalarProperty Name="promedio" ColumnName="promedio" />
+          <ScalarProperty Name="id_resultado" ColumnName="id_resultado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SALIDA_EXISTENCIA">
+      <EntityTypeMapping TypeName="MARNModel.SALIDA_EXISTENCIA">
+        <MappingFragment StoreEntitySet="SALIDA_EXISTENCIA">
+          <ScalarProperty Name="id_reactivo" ColumnName="id_reactivo" />
+          <ScalarProperty Name="id_unidad" ColumnName="id_unidad" />
+          <ScalarProperty Name="fecha_salida" ColumnName="fecha_salida" />
+          <ScalarProperty Name="cantidad_existencia" ColumnName="cantidad_existencia" />
+          <ScalarProperty Name="cantidad_salida" ColumnName="cantidad_salida" />
+          <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+          <ScalarProperty Name="id_existencia_producto" ColumnName="id_existencia_producto" />
+          <ScalarProperty Name="id_salida_existencia" ColumnName="id_salida_existencia" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SALIDA_SOLUCION">
+      <EntityTypeMapping TypeName="MARNModel.SALIDA_SOLUCION">
+        <MappingFragment StoreEntitySet="SALIDA_SOLUCION">
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="id_existencia_solucion" ColumnName="id_existencia_solucion" />
+          <ScalarProperty Name="id_salida_existencia" ColumnName="id_salida_existencia" />
+          <ScalarProperty Name="id_salida_solucion" ColumnName="id_salida_solucion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SOLICITANTEs">
+      <EntityTypeMapping TypeName="MARNModel.SOLICITANTE">
+        <MappingFragment StoreEntitySet="SOLICITANTE">
+          <ScalarProperty Name="preset_analisis" ColumnName="preset_analisis" />
+          <ScalarProperty Name="telefono_2_solicitante" ColumnName="telefono_2_solicitante" />
+          <ScalarProperty Name="telefono_1_solicitante" ColumnName="telefono_1_solicitante" />
+          <ScalarProperty Name="correo_solicitante" ColumnName="correo_solicitante" />
+          <ScalarProperty Name="contacto_solicitante" ColumnName="contacto_solicitante" />
+          <ScalarProperty Name="direccion_solicitante" ColumnName="direccion_solicitante" />
+          <ScalarProperty Name="nombre_solicitante" ColumnName="nombre_solicitante" />
+          <ScalarProperty Name="id_solicitante" ColumnName="id_solicitante" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SOLICITUDs">
+      <EntityTypeMapping TypeName="MARNModel.SOLICITUD">
+        <MappingFragment StoreEntitySet="SOLICITUD">
+          <ScalarProperty Name="informe_generado" ColumnName="informe_generado" />
+          <ScalarProperty Name="fecha_finalizacion" ColumnName="fecha_finalizacion" />
+          <ScalarProperty Name="fecha_inicio" ColumnName="fecha_inicio" />
+          <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+          <ScalarProperty Name="id_estado_proceso" ColumnName="id_estado_proceso" />
+          <ScalarProperty Name="id_solicitante" ColumnName="id_solicitante" />
+          <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+          <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+          <ScalarProperty Name="no_referencia" ColumnName="no_referencia" />
+          <ScalarProperty Name="id_solicitud" ColumnName="id_solicitud" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SOLUCIONs">
+      <EntityTypeMapping TypeName="MARNModel.SOLUCION">
+        <MappingFragment StoreEntitySet="SOLUCION">
+          <ScalarProperty Name="unidad" ColumnName="unidad" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id_solucion" ColumnName="id_solucion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TIPO_EMPLEADO">
+      <EntityTypeMapping TypeName="MARNModel.TIPO_EMPLEADO">
+        <MappingFragment StoreEntitySet="TIPO_EMPLEADO">
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id_tipo_empleado" ColumnName="id_tipo_empleado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TIPO_MUESTRA">
+      <EntityTypeMapping TypeName="MARNModel.TIPO_MUESTRA">
+        <MappingFragment StoreEntitySet="TIPO_MUESTRA">
+          <ScalarProperty Name="nombre_tipo_muestra" ColumnName="nombre_tipo_muestra" />
+          <ScalarProperty Name="id_tipo_muestra" ColumnName="id_tipo_muestra" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TIPO_VARIABLE">
+      <EntityTypeMapping TypeName="MARNModel.TIPO_VARIABLE">
+        <MappingFragment StoreEntitySet="TIPO_VARIABLE">
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id_tipovariable" ColumnName="id_tipovariable" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="UNIDADs">
+      <EntityTypeMapping TypeName="MARNModel.UNIDAD">
+        <MappingFragment StoreEntitySet="UNIDAD">
+          <ScalarProperty Name="equivalencia" ColumnName="equivalencia" />
+          <ScalarProperty Name="unidad1" ColumnName="unidad" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id_unidad" ColumnName="id_unidad" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VARIABLEs">
+      <EntityTypeMapping TypeName="MARNModel.VARIABLE">
+        <MappingFragment StoreEntitySet="VARIABLE">
+          <ScalarProperty Name="id_muestra" ColumnName="id_muestra" />
+          <ScalarProperty Name="id_solucion" ColumnName="id_solucion" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id_tipovariable" ColumnName="id_tipovariable" />
+          <ScalarProperty Name="id_analisis" ColumnName="id_analisis" />
+          <ScalarProperty Name="id_variable" ColumnName="id_variable" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="VISITAs">
+      <EntityTypeMapping TypeName="MARNModel.VISITA">
+        <MappingFragment StoreEntitySet="VISITA">
+          <ScalarProperty Name="id_grupo_solicitud" ColumnName="id_grupo_solicitud" />
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="lng" ColumnName="lng" />
+          <ScalarProperty Name="lat" ColumnName="lat" />
+          <ScalarProperty Name="no_frascos" ColumnName="no_frascos" />
+          <ScalarProperty Name="identificador" ColumnName="identificador" />
+          <ScalarProperty Name="id_empleado_entrega" ColumnName="id_empleado_entrega" />
+          <ScalarProperty Name="id_sitio_muestreo" ColumnName="id_sitio_muestreo" />
+          <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+          <ScalarProperty Name="id_tipo_muestra" ColumnName="id_tipo_muestra" />
+          <ScalarProperty Name="id_procedencia" ColumnName="id_procedencia" />
+          <ScalarProperty Name="fecha_entrega" ColumnName="fecha_entrega" />
+          <ScalarProperty Name="fecha_visita" ColumnName="fecha_visita" />
+          <ScalarProperty Name="id_empleado" ColumnName="id_empleado" />
+          <ScalarProperty Name="id_solicitud" ColumnName="id_solicitud" />
+          <ScalarProperty Name="id_visita" ColumnName="id_visita" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ESTADO_PROCESO_ANALISTA">
+      <EntityTypeMapping TypeName="MARNModel.ESTADO_PROCESO_ANALISTA">
+        <MappingFragment StoreEntitySet="ESTADO_PROCESO_ANALISTA">
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id_estado_proceso_analista" ColumnName="id_estado_proceso_analista" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="INFORMES">
+      <EntityTypeMapping TypeName="MARNModel.INFORME">
+        <MappingFragment StoreEntitySet="INFORMES">
+          <ScalarProperty Name="areas" ColumnName="areas" />
+          <ScalarProperty Name="activo" ColumnName="activo" />
+          <ScalarProperty Name="data" ColumnName="data" />
+          <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+          <ScalarProperty Name="tipo" ColumnName="tipo" />
+          <ScalarProperty Name="id_solicitud" ColumnName="id_solicitud" />
+          <ScalarProperty Name="id_informe" ColumnName="id_informe" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NOTIFICACIONs">
+      <EntityTypeMapping TypeName="MARNModel.NOTIFICACION">
+        <MappingFragment StoreEntitySet="NOTIFICACION">
+          <ScalarProperty Name="eliminado" ColumnName="eliminado" />
+          <ScalarProperty Name="redireccion" ColumnName="redireccion" />
+          <ScalarProperty Name="fecha_lectura" ColumnName="fecha_lectura" />
+          <ScalarProperty Name="leido" ColumnName="leido" />
+          <ScalarProperty Name="empleado_receptor" ColumnName="empleado_receptor" />
+          <ScalarProperty Name="fecha_notificacion" ColumnName="fecha_notificacion" />
+          <ScalarProperty Name="mensaje" ColumnName="mensaje" />
+          <ScalarProperty Name="titulo" ColumnName="titulo" />
+          <ScalarProperty Name="empleado_remitente" ColumnName="empleado_remitente" />
+          <ScalarProperty Name="id_notificacion" ColumnName="id_notificacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ANALISIS_REACTIVO">
+      <EntityTypeMapping TypeName="MARNModel.ANALISIS_REACTIVO">
+        <MappingFragment StoreEntitySet="ANALISIS_REACTIVO">
+          <ScalarProperty Name="fecha" ColumnName="fecha" />
+          <ScalarProperty Name="id_analisis_empleado" ColumnName="id_analisis_empleado" />
+          <ScalarProperty Name="id_unidad" ColumnName="id_unidad" />
+          <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+          <ScalarProperty Name="id_reactivo" ColumnName="id_reactivo" />
+          <ScalarProperty Name="id_analisis_reactivo" ColumnName="id_analisis_reactivo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SITIO_MUESTREO">
+      <EntityTypeMapping TypeName="MARNModel.SITIO_MUESTREO">
+        <MappingFragment StoreEntitySet="SITIO_MUESTREO">
+          <ScalarProperty Name="lng" ColumnName="lng" />
+          <ScalarProperty Name="lat" ColumnName="lat" />
+          <ScalarProperty Name="observacione" ColumnName="observacione" />
+          <ScalarProperty Name="direccion_sitio" ColumnName="direccion_sitio" />
+          <ScalarProperty Name="nombre_sitio" ColumnName="nombre_sitio" />
+          <ScalarProperty Name="id_sitio_muestreo" ColumnName="id_sitio_muestreo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GRUPO_SOLICITUD">
+      <EntityTypeMapping TypeName="MARNModel.GRUPO_SOLICITUD">
+        <MappingFragment StoreEntitySet="GRUPO_SOLICITUD">
+          <ScalarProperty Name="identificador" ColumnName="identificador" />
+          <ScalarProperty Name="preset" ColumnName="preset" />
+          <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+          <ScalarProperty Name="fecha_solicitud" ColumnName="fecha_solicitud" />
+          <ScalarProperty Name="id_solicitante" ColumnName="id_solicitante" />
+          <ScalarProperty Name="id_grupo_solicitud" ColumnName="id_grupo_solicitud" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

@@ -1,0 +1,272 @@
+﻿@model IEnumerable<LaboratorioMarn.PRODUCTO>
+
+@{
+    ViewBag.Title = "Inventario";
+    EMPLEADO empleado = ViewBag.Empleado;
+    
+    if (empleado.id_tipo_empleado == 2)
+    {
+        Layout = "~/Views/Shared/_LayoutAnalista.cshtml";
+    }
+
+}
+<h2 class="page-header">Inventario</h2>
+
+<div class="row">
+    <div class="col-sm-7">
+        @if (empleado.id_tipo_empleado == 1)
+        {
+            <a href="#" class="btn btn-primary" id="nuevoIngreso">Nuevo ingreso</a>
+
+            @Html.ActionLink("Almacenes", "Index", "Almacen", null, htmlAttributes: new { @class = "btn btn-default" })
+        }
+    </div>
+    
+    <div class="col-sm-5 ">
+        
+        <form action="" method="post">
+            <label class="col-sm-4">Buscar por reactivo</label>
+
+            <div class="col-sm-4">
+                @Html.DropDownList("reactivo", (IEnumerable<SelectListItem>)ViewBag.ReactivoSelection, htmlAttributes: new { @class = "form-control" })
+            </div>
+
+            <div class="col-sm-4">
+                <button type="submit" class="btn btn-info btn-block">Filtrar</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<br /><br />
+
+
+<table class="table" id="productTable">
+    <thead>
+        <tr>
+            <th>
+                Estante|Nivel
+            </th>
+            <th>
+                Reactivo
+            </th>
+            <th>
+                Catálogo
+            </th>
+            <th>
+                Lote
+            </th>
+            <th>
+                Marca
+            </th>
+            <th>
+                Fecha de ingreso
+            </th>
+            <th>
+                Fecha de vencimiento
+            </th>
+            <th>
+                Estado
+            </th>
+            <th>
+                Presentación
+            </th>         
+            <th>
+                Unidades
+            </th>
+
+            <th>
+                Existencia total
+            </th>
+            <th>
+                Existencia en frasco abierto
+            </th>
+            <th>
+                Frascos
+            </th>
+
+            <th>
+                Porcetaje de alerta
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.ALMACEN.estante | @item.ALMACEN.nivel
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.REACTIVO.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CATALOGO.nombre_catalogo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LOTE.nombre)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MARCA.nombre)
+                </td>
+                <td>
+                    @item.fecha_ingreso.ToShortDateString()
+                </td>
+                @if (item.fecha_vencimiento == null)
+                {
+                    <td>
+                        Sin fecha
+                    </td>
+                }
+                else {
+                    <td>
+                        @item.fecha_vencimiento.Value.ToShortDateString()
+                    </td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.estado)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.presentacion_cantidad)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UNIDAD.nombre)
+                </td>
+
+                @{ 
+                    var frascos = 0;
+                    var frascoAbierto = new Decimal();
+                    var total = new Decimal();
+                    }
+                @foreach (var existencia in item.EXISTENCIA_PRODUCTO)
+                { 
+                    if (!existencia.estado.Equals("terminado"))
+                    {
+                        frascos++;
+                        total += existencia.cantidad;
+                            
+                        if (existencia.estado.Equals("abierto"))
+                        {
+                            frascoAbierto = existencia.cantidad;
+                        }
+                    }
+                }
+                
+                <td>
+                    @Html.DisplayFor(modelItem => total)
+                </td>
+
+                
+                @if (frascoAbierto != 0)
+                {
+                    <td>@Html.DisplayFor(modelItem => frascoAbierto)</td>
+                }
+                else
+                {
+                    <td>cerrado</td>
+                }
+
+                <td>
+                    @Html.DisplayFor(modelItem => frascos)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.minimo_porcentaje) %
+                </td>
+
+                <td>
+                    @Html.ActionLink("Detalles", "Details", new { id = item.id_producto })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="nuevaEntradaModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Nueva entrada</h4>
+            </div>
+            <div class="modal-body" id="nuevaEntradaModalContent">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript">
+           $(function () {
+               $('#productTable').DataTable({
+                   language: {
+                    url: '/Scripts/spanish.json'
+                   }
+               });
+
+               $("#nuevoIngreso").click(function () {
+                   $.ajax({
+                       url: "@Url.Action("Create", "Producto")",
+                       success: function (html) {
+                           $("#nuevaEntradaModal").modal("show");
+                           $("#nuevaEntradaModalContent").html(html);
+
+                           $("#fecha_ingreso").datepicker({ format: "mm/dd/yyyy" });
+                           $("#fecha_vencimiento").datepicker({ format: "mm/dd/yyyy" });
+
+                           $("#guardar").click(function (e) {
+                               e.preventDefault();
+                               $.ajax({
+                                   url: "@Url.Action("Create", "Producto")",
+                                   data: $("#formularioNuevoIngreso").serialize(),
+                                   dataType: "JSON",
+                                   type: "POST",
+                                   success: function (json) {
+                                       $("#alert").removeClass("hide").show();
+
+                                       if (json.valid) {
+                                           $("#alertMsg")
+                                               .removeAttr("class")
+                                               .addClass("alert")
+                                               .addClass("alert-success")
+                                               .html("Ingreso registrado con éxito");
+
+                                           setTimeout(function () { window.location = ''; }, 2000)
+                                       }
+                                       else {
+                                           $("#alertMsg")
+                                               .removeAttr("class")
+                                               .addClass("alert")
+                                               .addClass("alert-danger")
+                                               .html(json.msg);
+                                       }
+                                   }
+                               });
+                           });
+                       }
+
+               })
+           });
+               });
+
+</script>
+
+}
+
+@section Styles {
+    <style type="text/css">
+        table.dataTable thead {
+            font-size: 0.85em;
+        }
+
+        table.dataTable tbody {
+            font-size: 0.85em;
+        }
+
+    </style>
+    
+}

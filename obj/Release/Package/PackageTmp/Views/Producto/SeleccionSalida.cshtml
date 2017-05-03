@@ -1,0 +1,186 @@
+﻿@model IEnumerable<LaboratorioMarn.PRODUCTO>
+
+@{
+    ViewBag.Title = "Salida inventario";
+    Layout = "~/Views/Shared/_LayoutAnalista.cshtml";
+}
+
+<h2 class="page-header">Salida inventario</h2>
+
+<div id="step1" class="show">
+    @{ Html.RenderPartial("~/Views/Producto/Salida/Seleccion.cshtml"); }
+</div>
+
+<div id="step2" class="hidden"></div>
+
+@section Scripts {
+    <script type="text/javascript" src="https://cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js"></script>
+    <script type="text/javascript">
+        var tablaSalida;
+        var tablaProducto;
+        var products = [];
+
+        var getProductoFromTable = function (data) {
+            var ids = [];
+            $.each(data, function (i, row) {
+                ids.push(row[1]);
+            });
+
+            return ids;
+        }
+
+        var initializeStep1 = function () {
+            tablaSalida = $('#tablaSalida').DataTable({
+                columnDefs: [
+                    {
+                        "targets": [0, 1],
+                        "visible": false,
+                        "searchable": false
+                    }
+                ],
+                language: {
+                    url: '/Scripts/spanish.json'
+                }
+            });
+
+            tablaProducto = $('#tablaProducto').DataTable({
+                columnDefs: [
+                    {
+                        orderable: false,
+                        className: 'select-checkbox',
+                        targets: 0
+                    },
+                    {
+                        targets: [1],
+                        visible: false,
+                        searchable: false
+                    }
+                ],
+                select: {
+                    style: 'multi',
+                    selector: 'td:first-child'
+                },
+                language: {
+                    url: '/Scripts/spanish.json'
+                }
+            });
+
+
+
+
+            tablaProducto
+                .on('select', function (e, dt, type, indexes) {
+                    var data = tablaProducto.rows('.selected').data();
+                    tablaSalida.clear().rows.add(data).draw();
+                })
+                .on('deselect', function (e, dt, type, indexes) {
+                    var data = tablaProducto.rows('.selected').data();
+                    tablaSalida.clear().rows.add(data).draw();
+                });
+
+            $("#nextStep1").click(function () {
+                if (tablaSalida.rows().count() > 0)
+                {
+                    var products = getProductoFromTable(tablaSalida.rows().data())
+
+                    $("#step1")
+                        .removeClass("show")
+                        .addClass("hidden");
+
+                    initializeStep2(products);
+
+                    return;
+                }
+
+                alert("Debe seleccionar al menos un producto para continuar");
+            });
+        }
+
+        var initializeStep2 = function (products) {
+
+            $.ajax({
+                url: "/Producto/FormularioSalida",
+                data: {'products': products},
+                type: 'POST',
+                success: function (html)
+                {
+                    $("#step2")
+                        .removeClass("hidden")
+                        .addClass("show")
+                        .html(html);
+
+                    $("#backStep1").click(function (e) {
+                        e.preventDefault();
+
+                        $("#step1")
+                            .removeClass("hidden")
+                            .addClass("show");
+
+                        $("#step2")
+                            .removeClass("show")
+                            .addClass("hidden");
+                    });
+
+                    $("#confirm").click(function (e) {
+                        e.preventDefault();
+
+                        var data = { productos: [] };
+
+                        $(".productoInput").each(function (index) {
+                            data.productos.push({ id: $(this).data("id") , salida: $(this).val() });
+                        });
+
+                        $.ajax({
+                            url: '@Url.Action("Salida", "Producto")',
+                            data: JSON.stringify(data),
+                            dataType: "JSON",
+                            contentType: "application/json",
+                            type: "POST",
+                            success: function (json)
+                            {
+                                $("#alert").removeClass("hide").show();
+
+                                if (json.isValid) {
+                                    $("#alertMsg")
+                                        .removeAttr("class")
+                                        .addClass("alert")
+                                        .addClass("alert-success")
+                                        .html(json.msg);
+
+                                    setTimeout(function () { window.location = ''; }, 3000)
+                                }
+                                else {
+                                    $("#alertMsg")
+                                        .removeAttr("class")
+                                        .addClass("alert")
+                                        .addClass("alert-danger")
+                                        .html(json.msg);
+                                }
+                            }
+                        });
+                    });
+                }
+            })
+        }
+
+        $(function () {
+            initializeStep1();
+        });
+
+    </script>
+
+}
+
+@section Styles {
+    <link href="https://cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css" rel="stylesheet" />
+
+    <style type="text/css">
+        table.dataTable thead {
+            font-size: 0.85em;
+        }
+
+        table.dataTable tbody {
+            font-size: 0.85em;
+        }
+    </style>
+}

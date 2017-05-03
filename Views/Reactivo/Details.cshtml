@@ -1,0 +1,223 @@
+﻿@model LaboratorioMarn.REACTIVO
+
+@{
+    ViewBag.Title = "Details";
+    //List<PRODUCTO> productos = ViewBag.ProductosXReactivo;
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <h4>REACTIVO</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @*@Html.DisplayNameFor(model => model.nombre)*@
+            @Html.DisplayName("Nombre Reactivo: ")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.id_reactivo }) |
+    @Html.ActionLink("Volver a Lista", "Index")
+</p>
+
+@*<table class="table table-hover table-condensed table-striped">
+        <tr>
+            <th>
+                Almacen
+            </th>
+            <th>
+                Marca
+            </th>
+            <th>
+                Catálogo
+            </th>
+            <th>
+                Lote
+            </th>
+            <th>
+                Fecha Ingreso
+            </th>
+            <th>
+                Fecha Vencimiento
+            </th>
+            <th>
+                Presentación (Cantidad)
+            </th>
+            <th>
+                Unidad
+            </th>
+            <th>
+                Porcentaje Mínimo
+            </th>
+            <th>
+                Estado
+            </th>
+        </tr>
+        @foreach (PRODUCTO producto in productos)
+        {
+        <tr>
+            <td>
+                @producto.ALMACEN.estante
+            </td>
+        </tr>
+        }
+
+    </table>*@
+
+<table class="table" id="productXreactivo">
+    <thead>
+        <tr>
+            <th>
+                Estante|Nivel
+            </th>
+            <th>
+                Reactivo
+            </th>
+            <th>
+                Catalogo
+            </th>
+            <th>
+                Lote
+            </th>
+            <th>
+                Marca
+            </th>
+            <th>
+                Fecha de ingreso
+            </th>
+            <th>
+                Fecha de vencimiento
+            </th>
+            <th>
+                Estado
+            </th>
+            <th>
+                Presentación
+            </th>
+            <th>
+                Unidades
+            </th>
+
+            <th>
+                Existencia total
+            </th>
+            <th>
+                Existencia en frasco abierto
+            </th>
+            <th>
+                Frascos
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (PRODUCTO item in Model.PRODUCTOes.ToList())
+        {
+            <tr>
+                <td>
+                    @item.ALMACEN.estante | @item.ALMACEN.nivel
+                </td>
+                <td>
+                    @item.REACTIVO.nombre
+                </td>
+                <td>
+                    @item.CATALOGO.nombre_catalogo
+                </td>
+                <td>
+                    @item.LOTE.nombre
+                </td>
+                <td>
+                    @item.MARCA.nombre
+                </td>
+                <td>
+                    @item.fecha_ingreso.ToShortDateString()
+                </td>
+                <td>
+                    @item.fecha_vencimiento.ToShortDateString()
+                </td>
+                <td>
+                    @item.estado
+                </td>
+                <td>
+                    @item.presentacion_cantidad
+                </td>
+                <td>
+                    @item.UNIDAD.nombre
+                </td>
+
+                @{
+                    var frascos = 0;
+                    var frascoAbierto = new Decimal();
+                    var total = new Decimal();
+                }
+                @foreach (var existencia in item.EXISTENCIA_PRODUCTO)
+                {
+                    if (!existencia.estado.Equals("terminado"))
+                    {
+                        frascos++;
+                        total += existencia.cantidad;
+
+                        if (existencia.estado.Equals("abierto"))
+                        {
+                            frascoAbierto = existencia.cantidad;
+                        }
+                    }
+                }
+
+                <td>
+                    @total
+                </td>
+
+
+                @if (frascoAbierto != 0)
+                {
+                    <td>frascoAbierto</td>
+                }
+                else
+                {
+                    <td>cerrado</td>
+                }
+
+                <td>
+                    @frascos
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+@section Scripts {
+ <script type="text/javascript" src="//cdn.datatables.net/u/dt/dt-1.10.12/datatables.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#productXreactivo').DataTable({
+            language: {
+                url: 'Scripts/spanish.json'
+            }
+        }); 
+    });
+</script>
+}
+@section Styles {
+   <link href="https://cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css" rel="stylesheet" />
+    <style type="text/css">
+        table.dataTable thead {
+            font-size: 0.85em;
+        }
+
+        table.dataTable tbody {
+            font-size: 0.85em;
+        }
+
+   </style>
+    
+}
+    
+               

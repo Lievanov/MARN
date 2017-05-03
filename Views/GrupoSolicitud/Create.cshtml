@@ -1,0 +1,203 @@
+﻿@model   IEnumerable<LaboratorioMarn.SOLICITANTE>
+
+@{
+    ViewBag.Title = "Solicitud";
+}
+
+<h1 class="page-header">Nueva Solicitud</h1>
+
+<div id="seleccionSolicitante" class="show">@{ Html.RenderPartial("~/Views/Solicitud/SeleccionSolicitante.cshtml"); }   </div>
+
+<div id="seleccionAnalisis"></div>
+
+@section Scripts {
+    <script type="text/javascript" src="https://cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js"></script>
+    <script type="text/javascript">
+    var tablaSolicitante;
+    var solicitante = null;
+    var analisis = new Array();
+    var empleadosSeleccion = new Array();
+    var analisisSeleccion = new Array();
+    var identificador;
+
+    function inArray(needle, haystack) {
+        var length = haystack.length;
+        for (var i = 0; i < length; i++) {
+            if (haystack[i] == needle) return true;
+        }
+        return false;
+    }
+
+    function checkAllAnalisisSelected()
+    {
+        todosAnalisis = new Array();
+
+        for (var i = 1; i < analisis.length; i++)
+        {
+            todosAnalisis = todosAnalisis.concat(analisis[i]);
+        }
+
+        todosAnalisis.sort();
+        analisisSeleccion.sort();
+
+        var is_same = (todosAnalisis.length == analisisSeleccion.length) && todosAnalisis.every(function (element, index) {
+            return element === analisisSeleccion[index];
+        });
+
+        return is_same;
+    }
+
+    $(function () {
+        tablaSolicitante = $("#tablaSolicitante").DataTable({
+            columnDefs: [
+                {
+                    orderable: false,
+                    className: 'select-checkbox',
+                    targets: 0
+                },
+                {
+                    targets: [1],
+                    visible: false,
+                    searchable: false
+                }
+            ],
+            select: {
+                style: 'os',
+                selector: 'td:first-child'
+            },
+            language: {
+                url: 'Scripts/spanish.json'
+            }
+        });
+
+        $("#fechaSolicitud").datepicker({ format: "yyyy-mm-dd" });
+
+        tablaSolicitante
+            .on('select', function (e, dt, type, indexes) {
+                var data = tablaSolicitante.rows('.selected').data();
+                solicitante = data[0][1];
+
+                $("#siguiente1").removeAttr("disabled")
+            })
+            .on('deselect', function (e, dt, type, indexes) {
+                solicitante = null;
+                $("#siguiente1").attr("disabled","disabled")
+            });
+
+        $("#siguiente1").click(function () {
+            var element = $(this);
+
+            identificador = $("#identificador").val();
+
+            if (identificador == "")
+            {
+                alert("El identificador de la solicitud es obligatorio");
+                return;
+            }
+
+            element.attr("disabled", "disabled");
+            $.ajax({
+                url: "@Url.Action("FormSolicitud", "GrupoSolicitud")",
+                data: { idSolicitante: solicitante },
+                type: 'POST',
+                success: function (html) {
+                    element.removeAttr("disabled");
+
+                    // ocultar vista solicitante
+                    $("#seleccionSolicitante")
+                       .removeClass("show")
+                       .addClass("hidden");
+
+                    // mostrar vista selecciion analisis
+                    $("#seleccionAnalisis")
+                        .removeClass("hidden")
+                        .addClass("show")
+                        .html(html); // popular
+
+
+                    $("#atras1").click(function (e) {
+                        e.preventDefault();
+                        $("#seleccionSolicitante")
+                           .removeClass("hidden")
+                           .addClass("show");
+
+                        $("#seleccionAnalisis")
+                            .removeClass("show")
+                            .addClass("hidden");
+                    });
+
+                    $(".checkall").change(function () {
+                        var element = $(this);
+                        var area = element.val();
+
+                        if (element.is(":checked")) {
+                            $(".area-" + area).prop('checked', true);
+                        }
+                        else {
+                            $(".area-" + area).prop('checked', false);
+                        }
+                    });
+
+                    $(".toggleShowAnalisis").click(function (e) {
+                        e.preventDefault();
+                        var element = $(this);
+                        var value = element.data('value');
+
+                        $("#analisis-" + value).toggle();
+                    }); $("#formularioSeleccionAnalisis").serialize()
+
+                    $("#guardar").click(function (e) {
+                        e.preventDefault();
+                        var element = $(this);
+                        element.attr("disabled", "disabled");
+                        $.ajax({
+                            url: "@Url.Action("Guardar", "GrupoSolicitud")",
+                            data: $("#formularioSeleccionAnalisis").serialize() + '&identificador=' + identificador + '&fecha_solicitud=' + $("#fechaSolicitud").val(),
+                            type: 'POST',
+                            success: function (result) {
+                                element.removeAttr("disabled");
+                                if (result.isValid) {
+                                    alert("La solicitud se creo exitosamente");
+
+                                    setTimeout(function () { window.location = "@Url.Action("Index", "GrupoSolicitud")" }, 500);
+                                }
+                                else {
+                                    alert(result.msg);
+                                }
+                                
+                            }
+                        });
+                    });
+                }
+            });
+        });
+    })
+
+    </script>
+}
+
+@section Styles {
+    <link href="https://cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css" rel="stylesheet" />
+
+    <style type="text/css">
+        table.dataTable thead {
+            font-size: 0.85em;
+        }
+
+        table.dataTable tbody {
+            font-size: 0.85em;
+        }
+
+        .titulo-area, .titulo-analisis, .titulo-empleado {
+            text-align: center;
+        }
+
+        .titulo-area {
+            padding: 20px;
+        }
+
+        .analisis, .empleado {
+            margin-top: 5px;
+        }
+    </style>
+}

@@ -1,0 +1,93 @@
+﻿@model IEnumerable<LaboratorioMarn.ANALISI>
+
+@{
+    ViewBag.Title = "Index";
+    
+}
+
+<h2 class="page-header">Análisis</h2>
+
+<p>
+    @Html.ActionLink("Ingresar Nuevo Análisis", "Create")
+</p>
+
+<div class="row">
+
+    <div class="col-sm-9">
+        <table class="table table-striped" id="detalle">
+            <thead>
+
+                <tr>
+                    <th>
+                        Área
+                    </th>
+                    <th>
+                        Nombre
+                    </th>
+                    <th>
+                        Metodo
+                    </th>
+                    <th>
+                        Unidades
+                    </th>
+                    <th>
+                        Costo
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AREA.nombre_area)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.metodo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.unidades)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.costo)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Editar", "Edit", new { id = item.id_analisis }) |
+                            @Html.ActionLink("Eliminar", "Delete", new { id = item.id_analisis })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="//cdn.datatables.net/u/dt/dt-1.10.12/datatables.min.js"></script>
+    <script type="text/javascript">
+    $(function () {
+        $('#detalle').DataTable({
+            language: {
+                url: 'Scripts/spanish.json'
+            }
+        });
+    });
+    </script>
+}
+@section Styles {
+    <link href="https://cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css" rel="stylesheet" />
+    <style type="text/css">
+        table.dataTable thead {
+            font-size: 0.85em;
+        }
+
+        table.dataTable tbody {
+            font-size: 0.85em;
+        }
+    </style>
+
+}

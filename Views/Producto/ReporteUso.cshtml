@@ -1,0 +1,90 @@
+﻿@model IEnumerable<LaboratorioMarn.ANALISIS_REACTIVO>
+
+@{
+    ViewBag.Title = "ReporteUso";
+}
+
+<form action="" method="post">
+    <div class="row page-header">
+        <h2 class="col-sm-12">Reporte de uso de reactivos</h2>
+
+        <div class="col-sm-2 col-sm-offset-2">
+            <input class="form-control" name="fecha_inicio" id="fecha_inicio" placeholder="Fecha de inicio" value="@ViewBag.fechaInicio">
+        </div>
+        <div class="col-sm-2">
+            <input class="form-control" name="fecha_fin" id="fecha_fin" placeholder="Fecha fin" value="@ViewBag.fechaFin">
+        </div>
+        <div class="col-sm-2">
+            @Html.DropDownList("solicitudP", (IEnumerable<SelectListItem>)ViewBag.SolicitudSelection, htmlAttributes: new { @class = "form-control" })
+        </div>
+        <div class="col-sm-2">
+            @Html.DropDownList("reactivoP", (IEnumerable<SelectListItem>)ViewBag.ReactivoSelection, htmlAttributes: new { @class = "form-control" })
+        </div>
+        <div class="col-sm-2">
+            <button type="submit" class="btn btn-info btn-block">Filtrar</button>
+        </div>
+    </div>
+</form>
+
+<div class="row">
+
+    <div class="col-sm-7 col-sm-offset-2">
+        <table class="table table-striped" id="tabla">
+            <thead>
+
+                <tr>
+                    
+                    <th>Muestra</th>
+                    <th>Analista</th>
+                    <th>Fecha</th>
+                    <th>Reactivo</th>
+                    <th>Cantidad</th>
+                    <th>Unidades</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (ANALISIS_REACTIVO item in Model)
+                {
+                    <tr>
+                        <td>@item.ANALISIS_EMPLEADO.DETALLE_SOLICITUD.SOLICITUD.no_referencia</td>
+                        <td>@item.ANALISIS_EMPLEADO.EMPLEADO.nombre_empleado</td>
+                        <td>@item.fecha.ToShortDateString()</td>
+                        <td>@item.REACTIVO.nombre</td>
+                        <td>@item.cantidad</td>
+                        <td>@item.UNIDAD.nombre</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="//cdn.datatables.net/u/dt/dt-1.10.12/datatables.min.js"></script>
+    <script type="text/javascript">
+    $(function () {
+        $('#tabla').DataTable({
+            language: {
+                url: 'Scripts/spanish.json'
+            }
+        });
+
+        $("#fecha_inicio").datepicker({ format: "yyyy-mm-dd" });
+        $("#fecha_fin").datepicker({ format: "yyyy-mm-dd" });
+    });
+    </script>
+}
+@section Styles {
+    <link href="https://cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css" rel="stylesheet" />
+    <style type="text/css">
+        table.dataTable thead {
+            font-size: 0.85em;
+        }
+
+        table.dataTable tbody {
+            font-size: 0.85em;
+        }
+    </style>
+
+}
+

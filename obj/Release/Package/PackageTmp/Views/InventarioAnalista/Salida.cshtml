@@ -1,0 +1,40 @@
+﻿<div class="form-horizontal">
+
+    <div class="form-group">
+        <label class="control-label col-sm-3">Reactivo</label>
+        <div class="col-sm-6">
+            <select class="form-control" id="reactivoSalida">
+                @foreach (SelectListItem item in ViewBag.InventarioList)
+                { 
+                    <option value="@item.Value">@item.Text</option>
+                }
+            </select>
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-3">Cantidad Existencia</label>
+        <div class="col-sm-6">
+            <input type="text" id="cantidadExistencia" class="form-control" readonly />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-3">Cantidad Uso</label>
+        <div class="col-sm-6">
+            <input type="text" id="cantidadUso" class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-7">
+            <div class="col-md-10 hide" id="alert">
+                <div class="alert alert-success" role="alert" id="alertMsg"></div>
+            </div>
+            <div class="col-md-1">
+                <input type="submit" value="Aceptar" class="btn btn-success" id="salida" />
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,104 @@
+﻿@model IEnumerable<LaboratorioMarn.AREA>
+
+
+@{
+    List<string> selectedItems = ViewBag.SelectedItems;   
+}
+
+@using (Html.BeginForm("", "Solicitud", FormMethod.Post, htmlAttributes: new { @id = "formularioSeleccionAnalisis" }))
+{
+    <h4 class="page-header">Datos del solicitante </h4><br />
+    <input type="hidden" name="idSolicitante" value="@ViewBag.Solicitante.id_solicitante" />
+    <div class="row">
+        <div class="col-xs-8">
+            <table class="table table-hover ">
+                <tr>
+                    <th>
+                        Nombre Solicitante
+                    </th>
+                    <th>
+                        Dirección
+                    </th>
+                    <th>
+                        Contacto
+                    </th>
+                    <th>
+                        Correo Electrónico
+                    </th>
+                    <th>
+                        Número Telefonico
+                    </th>
+                    <th>
+                        Número Celular
+                    </th>
+                </tr>
+
+                <tr>
+                    <td>
+                        @ViewBag.Solicitante.nombre_solicitante
+                    </td>
+                    <td>
+                        @ViewBag.Solicitante.direccion_solicitante
+                    </td>
+                    <td>
+                        @ViewBag.Solicitante.contacto_solicitante
+                    </td>
+                    <td>
+                        @ViewBag.Solicitante.correo_solicitante
+                    </td>
+                    <td>
+                        @ViewBag.Solicitante.telefono_1_solicitante
+                    </td>
+                    <td>
+                        @ViewBag.Solicitante.telefono_2_solicitante
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+<h4 class="text-center page-header">Análisis a realizar</h4>
+
+foreach (AREA area in Model)
+{
+    if (area.ANALISIS.Count() > 0)
+    {
+        <h4>
+            <a href="#" class="toggleShowAnalisis" data-value="@area.id_area">@area.nombre_area <span class="caret"></span></a> 
+            &nbsp;&nbsp;&nbsp;<small ><input type="checkbox" class="checkall" value="@area.id_area" /> Seleccionar todo</small>
+        </h4>
+        <div class="row" style="display: none" id="analisis-@area.id_area">
+            @foreach (ANALISI item in area.ANALISIS.ToList())
+            {
+                <div class="col-md-4">
+
+                    @if (selectedItems.Contains(item.id_analisis.ToString()))
+                    {
+                        <input type="checkbox" name="checkAnalisis[]" value="@item.id_analisis" class="analisis area-@area.id_area" checked/>
+                    }
+                    else
+                    {
+                        <input type="checkbox" name="checkAnalisis[]"  value="@item.id_analisis" class="analisis area-@area.id_area" />
+                    }
+
+                    @Html.DisplayFor(modelItem => item.nombre)
+                </div>
+            }
+        </div>
+    }
+}
+
+<br />
+<br />
+<div class="row">
+    <div class="col-md-offset-8 col-md-2">
+        <button class="btn btn-default btn-block" id="atras1">Atrás</button>
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-success btn-block" id="guardar">Guardar</button>
+    </div>
+</div>
+
+}
+
+

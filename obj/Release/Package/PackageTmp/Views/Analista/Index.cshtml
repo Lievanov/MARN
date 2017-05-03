@@ -1,0 +1,289 @@
+﻿@model IEnumerable<LaboratorioMarn.PROCESO_ANALISTA>
+@using LaboratorioMarn.Models;
+
+@{
+    ViewBag.Title = "Analista";
+    Layout = "~/Views/Shared/_LayoutAnalista.cshtml";
+
+    List<AnalisisSolicitud> analisisSolicitud = ViewBag.AnalisisSolicitud;
+    List<ANALISI> analisis = ViewBag.Analisis;
+}
+
+<form action="" method="post">
+    <h2 class="page-header">
+        Trabajos
+
+        <button type="submit" class="pull-right btn btn-info">Filtrar</button>
+
+        <div class="col-sm-2 pull-right">
+            <select class="form-control" name="estado">
+                <option value="">Todos</option>
+                <option value="">Finalizados</option>
+                <option value="">En proceso</option>
+                <option value="">No iniciados</option>
+            </select>
+        </div>
+
+        <div class="col-sm-2 pull-right">
+            <input class="form-control" name="fecha_fin" id="fecha_fin" placeholder="Fecha fin" value="">
+        </div>
+
+        <div class="col-sm-2 pull-right">
+            <input class="form-control" name="fecha_inicio" id="fecha_inicio" placeholder="Fecha de inicio" value="">
+        </div>
+        
+        <div class="col-sm-2 pull-right">
+            <select class="form-control" name="fechas">
+                <option value="asignacion">Fecha Asignacion</option>
+                <option value="inicio">Fecha Inicio</option>
+                <option value="fin">Fecha Fin</option>
+                <option value="muestreo">Fecha Muestreo</option>
+            </select>
+        </div>
+    </h2>
+</form >
+
+<div class="row">
+    <div class="col-md-3">
+        <table class="table table-condensed">
+            <tr class="noborder">
+                <td>No. Referencia</td>
+                <td></td>
+            </tr>
+            <tr class="noborder">
+                <td>Fecha muestreo</td>
+                <td></td>
+            </tr>
+            <tr class="noborder">
+                <td>Fecha asignación</td>
+                <td></td>
+            </tr>
+            <tr class="noborder">
+                <td>Fecha inicio análisis</td>
+                <td></td>
+            </tr>
+            <tr class="noborder">
+                <td>Fecha finalización análisis</td>
+                <td></td>
+            </tr>
+            <tr class="noborder">
+                <td colspan="2"><a href="#" id="toggleDetalles" data-value="0">Mostrar detalles</a></td>
+            </tr>
+            <tr class="detalles">
+                <th>Parámetro</th>
+                <th>Unidades</th>
+            </tr>
+
+            @foreach (ANALISI a in analisis)
+            {
+                <tr class="analisis detalles">
+                    <td>@a.nombre</td>
+                    <td>@a.unidades</td>
+                </tr>
+            }
+        </table>
+    </div>
+    
+    <div class="col-md-8">
+        <div class="table-responsive">
+            <table class="table table-condensed table-bordered" id="table-header">
+                <tr>
+                    @foreach (PROCESO_ANALISTA procesoAnalista in Model)
+                    {
+                        <td><a href="@Url.Action("Administrar", "Analisis", new { idSolicitud = procesoAnalista.SOLICITUD.id_solicitud })"><b>@procesoAnalista.SOLICITUD.no_referencia</b></a></td>
+                    }
+                </tr>
+
+                <tr class="dateTable">
+                    @foreach (PROCESO_ANALISTA procesoAnalista in Model)
+                    {
+                        <td>@Html.DisplayFor(model => procesoAnalista.SOLICITUD.VISITAs.First().fecha_visita)</td>
+                    }
+                </tr>
+
+                <tr>
+                    @foreach (PROCESO_ANALISTA procesoAnalista in Model)
+                    {
+                        <td class="dateTable">@Html.DisplayFor(model => procesoAnalista.fecha_asignacion)</td>
+                    }
+                </tr>
+
+                <tr >
+                    @foreach (PROCESO_ANALISTA procesoAnalista in Model)
+                    {
+                        if (procesoAnalista.fecha_inicio != null)
+                        {
+                            <td class="dateTable">@Html.DisplayFor(model => procesoAnalista.fecha_inicio)</td>
+                        }
+                        else
+                        {
+                            <td><a href="@Url.Action("IniciarProceso", "Analista", new { idSolicitud = procesoAnalista.SOLICITUD.id_solicitud })">Iniciar</a></td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    @foreach (PROCESO_ANALISTA procesoAnalista in Model)
+                    {
+                        if (procesoAnalista.fecha_fin != null)
+                        {
+                            <td class="dateTable">@Html.DisplayFor(model => procesoAnalista.fecha_fin)</td>
+                        }
+                        else
+                        {
+                            <td>&nbsp;</td>
+                        }
+                    }
+                </tr>
+
+                <tr>
+                    <td colspan="@Model.Count()">&nbsp;</td>
+                </tr>
+                <tr class="detalles">
+                    <td colspan="@Model.Count()">&nbsp;</td>
+                </tr>
+
+                @foreach (ANALISI a in analisis)
+                {
+                    List<AnalisisSolicitud> analisisSolicitudPorAnalisis = analisisSolicitud.Where(anas => anas.analisis.id_analisis == a.id_analisis).ToList();
+
+                    <tr class="analisis detalles">
+                        @foreach (AnalisisSolicitud analisisS in analisisSolicitudPorAnalisis)
+                        {
+                            if (analisisS.asignado)
+                            {
+                                <td class="text-center" style="background-color: #eeeeee"><span class="glyphicon glyphicon-ok"></span></td>
+                            }
+                            else
+                            {
+                                <td>&nbsp;</td>
+                            }
+                        }
+                    </tr>
+                }
+
+            </table>
+        </div>
+    </div>
+    <div class="col-md-1">
+        <table class="table table-condensed">
+            <tr class="noborder"><td>&nbsp;</td></tr>
+            <tr class="noborder"><td>&nbsp;</td></tr>
+            <tr class="noborder"><td>&nbsp;</td></tr>
+            <tr class="noborder"><td>&nbsp;</td></tr>
+            <tr class="noborder"><td>&nbsp;</td></tr>
+            <tr class="noborder detalles"><th>Total</th></tr>
+
+            @foreach (ANALISI a in analisis)
+            {
+                var analisisSolicitudPorAnalisisCount = analisisSolicitud.Where(anas => anas.analisis.id_analisis == a.id_analisis && anas.asignado == true).Count();
+
+                <tr class="analisis detalles">
+                    <td>@analisisSolicitudPorAnalisisCount</td>
+                </tr>
+            }
+        </table>
+    </div>
+
+ </div>
+<br /><br />
+<div class="row">
+    <div class="col-md-4">
+        <table class="table">
+            <tr>
+                <th></th>
+                <th>Pendientes</th>
+                <th>Completado</th>
+                <th>Total</th>
+            </tr>
+            <tr>
+                <td>Número de muestras analizadas</td>
+                <td class="text-center">@Model.Count(pe => pe.fecha_fin == null)</td>
+                <td class="text-center">@Model.Count(pe => pe.fecha_fin != null)</td>
+                <td class="text-center">@Model.Count()</td>
+            </tr>
+            <tr>
+                <td>Número de análisis realizados</td>
+                @if (Model.Where(pe => pe.fecha_fin == null).Count() > 0)
+                {
+                    <td class="text-center">@Model.Where(pe => pe.fecha_fin == null).GroupBy(pe => pe.empleado_id).Select(p => p.Sum(w => w.cantidad_analisis)).First()</td>
+                }
+                else
+                { 
+                    <td class="text-center">0</td>
+                }
+                    
+                @if (Model.Where(pe => pe.fecha_fin != null).Count() > 0)
+                { 
+                    <td class="text-center">@Model.Where(pe => pe.fecha_fin != null).GroupBy(pe => pe.empleado_id).Select(p => p.Sum(w => w.cantidad_analisis)).First()</td>
+                }
+                else
+                { 
+                    <td class="text-center">0</td>
+                }
+                
+                @if (Model.Count() > 0)
+                {
+                    <td class="text-center">@Model.GroupBy(pe => pe.empleado_id).Select(p => p.Sum(w => w.cantidad_analisis)).First()</td>
+                }
+                else
+                {
+                    <td class="text-center">0</td>
+                }
+                
+            </tr>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+        $(function () {
+            $(".detalles").hide();
+
+            $("#toggleDetalles").click(function () {
+                var value = $(this).data("value");
+
+                if (value == 0) {
+                    $(this).html("Ocultar detalles");
+                    $(".detalles").show();
+                    $(this).data("value", 1);
+                }
+                else {
+                    $(this).html("Mostrar detalles");
+                    $(".detalles").hide();
+                    $(this).data("value", 0);
+                }
+            });
+
+            $("#fecha_inicio").datepicker({ format: "yyyy-mm-dd" });
+            $("#fecha_fin").datepicker({ format: "yyyy-mm-dd" });
+        });
+    </script>    
+}
+
+@section Styles {
+
+    <style type="text/css">
+        .noborder > td {
+            border-top: 1px solid #fff !important;
+        }
+
+        .dateTable {
+            min-width: 75px !important;
+            font-size: 0.9em;
+        }
+
+        table {
+            font-size: 0.9em;
+        }
+
+        .analisis {
+            font-size: 0.7em;
+        }
+
+
+    </style>
+
+}
+

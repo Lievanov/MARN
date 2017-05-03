@@ -1,0 +1,144 @@
+﻿@model IEnumerable<LaboratorioMarn.SALIDA_EXISTENCIA >
+
+@{
+    ViewBag.Title = "Salidas del Inventario";
+
+    EMPLEADO empleado = ViewBag.Empleado;
+    if (empleado.id_tipo_empleado == 2)
+    {
+        Layout = "~/Views/Shared/_LayoutAnalista.cshtml";
+    }
+}
+
+<form action="" method="post">
+    <div class="row page-header">
+            <h2 class="col-sm-4">Salidas del Inventario</h2>
+
+            <div class="col-sm-2">
+                <input class="form-control" name="fecha_inicio" id="fecha_inicio" placeholder="Fecha de inicio" value="">
+            </div>
+            <div class="col-sm-2">
+                <input class="form-control" name="fecha_fin" id="fecha_fin" placeholder="Fecha fin" value="">
+            </div>
+            <div class="col-sm-2">
+                @Html.DropDownList("reactivo", (IEnumerable<SelectListItem>)ViewBag.ReactivoSelection, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="col-sm-2">
+                <button type="submit" class="btn btn-info btn-block">Filtrar</button>
+            </div>
+    </div>
+</form>
+
+
+
+
+
+<table class="table" id="tablar1">
+    <thead>
+        <tr>
+            
+            <th>
+                Nombre Empleado
+            </th>
+            <th>
+                Fecha de Salida
+            </th>
+            <th>
+                Reactivo
+            </th>
+            <th>
+                Estante | Nivel
+            </th>
+            <th>
+                Lote
+            </th>
+            <th>
+                Catálogo
+            </th>
+            <th>
+                Marca
+            </th>
+            <th>
+                Cantidad de Salida
+            </th>
+            <th>
+                Unidad
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var result = Model.GroupBy(s => new { s.EMPLEADO ,s.EXISTENCIA_PRODUCTO.PRODUCTO, s.fecha_salida  })
+                        .Select(a => new { empleado = a.Key.EMPLEADO, producto = a.Key.PRODUCTO, sum = a.Sum(s => s.cantidad_salida), fecha_salida = a.Key.fecha_salida  });
+        }
+
+        @foreach (var item in result)
+        {
+            PRODUCTO producto = item.producto;
+            EMPLEADO empleadoR = item.empleado;
+            
+            <tr>
+                <td>@empleadoR.nombre_empleado</td>
+                <td>@item.fecha_salida</td>
+                <td>@producto.REACTIVO.nombre</td>
+                <td>@producto.ALMACEN.estante | @producto.ALMACEN.nivel </td>
+                <td>@producto.LOTE.nombre</td>
+                <td>@producto.CATALOGO.nombre_catalogo</td>
+                <td>@producto.MARCA.nombre</td>
+                <td>@item.sum</td>
+                <td>@producto.UNIDAD.nombre</td>     
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+
+   
+   
+    <script type="text/javascript" src="//cdn.datatables.net/u/dt/dt-1.10.12/datatables.min.js"></script>
+    <link href="//cdn.datatables.net/buttons/1.2.1/css/buttons.dataTables.min.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.1/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/buttons/1.2.1/js/buttons.flash.min.js"></script>
+
+    <script type="text/javascript">
+      
+
+        var tablaSolicitante;
+       
+        $(function () {
+            tablaSolicitante = $("#tablar1").DataTable({
+                language: {
+                    url: 'Scripts/spanish.json'
+                }
+            });
+
+            $("#fecha_inicio").datepicker({ format: "yyyy-mm-dd" });
+            $("#fecha_fin").datepicker({ format: "yyyy-mm-dd" });
+        });
+  </script>
+   }
+
+
+@section Styles {
+    <link href="https://cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css" rel="stylesheet" />
+
+    <style type="text/css">
+        table.dataTable thead {
+            font-size: 0.85em;
+        }
+
+        table.dataTable tbody {
+            font-size: 0.85em;
+        }
+
+        table.dataTable tfoot {
+            font-size: 0.85em;
+        }
+
+            table.dataTable tfoot td {
+                padding: 8px 10px 8px 10px;
+            }
+    </style>
+
+}

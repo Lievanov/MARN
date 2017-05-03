@@ -1,0 +1,66 @@
+﻿@model IEnumerable<LaboratorioMarn.PRODUCTO>
+
+<h3 class="page-header">Productos seleccionados para salida</h3>
+
+<table class="table table-condensed table-striped" >
+    <tr>
+        <th>Reactivo</th>
+        <th>Catálogo</th>
+        <th>Lote</th>
+        <th>Marca</th>
+        <th>Presentación</th>
+        <th>Existencia total</th>
+        <th>Unidades</th>
+        <th>Frascos</th>
+        <th>Salida</th>
+    </tr>
+
+    @foreach (PRODUCTO producto in Model)
+    { 
+        <tr>
+            <td>@producto.REACTIVO.nombre</td>
+            <td>@producto.CATALOGO.nombre_catalogo</td>
+            <td>@producto.LOTE.nombre</td>
+            <td>@producto.MARCA.nombre</td>
+            <td>@producto.presentacion_cantidad</td>
+            @{
+                var frascos = 0;
+                var frascoAbierto = new Decimal();
+                var total = new Decimal();
+            }
+            @foreach (var existencia in producto.EXISTENCIA_PRODUCTO)
+            {
+                if (!existencia.estado.Equals("terminado"))
+                {
+                    frascos++;
+                    total += existencia.cantidad;
+
+                    if (existencia.estado.Equals("abierto"))
+                    {
+                        frascoAbierto = existencia.cantidad;
+                    }
+                }
+            }
+            <td>@total</td>
+            <td>@producto.UNIDAD.nombre</td>
+            <td>@frascos</td>
+            <td>
+                <input type="text" name="producto_@producto.id_producto" placeholder="####" style="max-width: 100px" class="form-control productoInput" data-id="@producto.id_producto" />
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="row margin-top20">
+    <div class="col-sm-4 col-sm-offset-4">
+        <div class="col-md-12 hide" id="alert">
+            <div class="alert alert-success" role="alert" id="alertMsg"></div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <a href="#" class="btn btn-default btn-block" id="backStep1">Atrás</a>
+    </div>
+    <div class="col-md-2">
+        <a href="#" class="btn btn-success btn-block" id="confirm">Confirmar</a>
+    </div>
+</div>

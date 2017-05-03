@@ -1,0 +1,105 @@
+﻿@model IEnumerable<LaboratorioMarn.SOLICITANTE>
+
+<div class="row">
+    <div class="col-sm-3">
+        <label class="control-label">Indentificador de Solicitud</label>
+    </div>
+    <div class="col-sm-4 form-group">
+        <input type="text" id="identificador" class="form-control" />
+    </div>
+</div>
+<br /><br />
+
+<table id="tablaSolicitante" class="table">
+    <thead>
+        <tr>
+            <th>Seleccionar</th>
+            <th>id</th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.nombre_solicitante)*@
+                Nombre Solicitante
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.direccion_solicitante)*@
+                Dirección Solicitante
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.contacto_solicitante)*@
+                Contacto Solicitante
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.correo_solicitante)*@
+                Correo Electrónico
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.telefono_1_solicitante)*@
+                Número Telefónico 
+            </th>
+            <th>
+                @*@Html.DisplayNameFor(model => model.telefono_2_solicitante)*@
+                Otro Número Telefónico
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td></td>
+                <td>@item.id_solicitante</td>
+                <td>
+                    @Html.DisplayFor(m => item.nombre_solicitante)
+                </td>
+                <td>
+
+                    @Html.DisplayFor(m => item.direccion_solicitante)
+
+                </td>
+                <td>
+
+                    @Html.DisplayFor(m => item.contacto_solicitante)
+
+                </td>
+                <td>
+
+                    @Html.DisplayFor(m => item.correo_solicitante)
+
+                </td>
+                <td>
+
+                    @Html.DisplayFor(m => item.telefono_1_solicitante)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(m => item.telefono_2_solicitante)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<br />
+<br />
+<div class="row">
+    <div class="col-md-offset-8 col-md-2">
+        <a class="btn btn-default btn-block" href="/Solicitud">Cancelar</a>
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-success btn-block" disabled="disabled" id="siguiente1">Siguiente</button>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="solicitanteModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Solicitante</h4>
+            </div>
+            <div class="modal-body" id="solicitanteModalBody">
+
+            </div>
+        </div>
+    </div>
+</div>
+

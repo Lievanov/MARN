@@ -1,0 +1,26 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutAnalista.cshtml";
+
+    Dictionary<string, decimal> inventario = ViewBag.Inventario;
+}
+
+<h2 class="page-header">Reactivos disponibles</h2>
+
+<div class="row">
+    <div class="col-sm-6">
+        <table class="table table-condensed">
+            <tr>
+                <th>Reactivo</th>
+                <th>Cantidad</th>
+            </tr>
+
+            @foreach (var reactivo in inventario)
+            {
+                <tr>
+                    <td>@reactivo.Key</td>
+                    <td>@reactivo.Value</td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

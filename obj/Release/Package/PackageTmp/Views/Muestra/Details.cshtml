@@ -1,0 +1,36 @@
+﻿@model LaboratorioMarn.MUESTRA
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Detalles</h2>
+
+<div>
+    <h4>MUESTRA</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @*@Html.DisplayNameFor(model => model.nombre_muestra)*@
+            Nombre Muestra:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre_muestra)
+        </dd>
+
+        <dt>
+            @*@Html.DisplayNameFor(model => model.expresado)*@
+            Expresado:
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.expresado)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.id_muestra }) |
+    @Html.ActionLink("Regresar a la lista", "Index")
+</p>

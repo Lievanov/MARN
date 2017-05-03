@@ -1,0 +1,108 @@
+﻿@model LaboratorioMarn.PRODUCTO
+
+@using (Html.BeginForm("Create", "Producto", FormMethod.Post, htmlAttributes: new { @id = "formularioNuevoIngreso" })) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @* @Html.LabelFor(model => model.id_almacen, htmlAttributes: new { @class = "control-label col-md-4" }) *@
+            
+            <label class="control-label col-md-4" for="id_almacen">Almacen</label>
+            <div class="col-md-7">
+                @Html.DropDownListFor(model => model.id_almacen, (IEnumerable<SelectListItem>) ViewBag.AlmacenSelection, htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.id_reactivo, htmlAttributes: new { @class = "control-label col-md-4" })*@
+            <label class="control-label col-md-4" for="reactivo">Reactivo</label>
+            <div class="col-md-7">
+                @Html.DropDownListFor(model => model.id_reactivo, (IEnumerable<SelectListItem>)ViewBag.ReactivoSelection, htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.id_marca, htmlAttributes: new { @class = "control-label col-md-4" })*@
+            <label class="control-label col-md-4" for="marca">Marca</label>
+            <div class="col-md-7">
+                <input type="text" name="marca" class="form-control" required/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.id_catalogo, htmlAttributes: new { @class = "control-label col-md-4" })*@
+            <label class="control-label col-md-4" for="catalogo">Catálogo</label>
+            <div class="col-md-7">
+                <input type="text" name="catalogo" class="form-control" required/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.id_lote, htmlAttributes: new { @class = "control-label col-md-4" })*@
+            <label class="control-label col-md-4" for="lote">Lote</label>
+            <div class="col-md-7">
+                <input type="text" name="lote" class="form-control" required/>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.fecha_ingreso, htmlAttributes: new { @class = "control-label col-md-4" })*@
+            <label class="control-label col-md-4" for="fecha_ingreso">Fecha ingreso</label>
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.fecha_ingreso, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.fecha_ingreso, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.fecha_vencimiento, htmlAttributes: new { @class = "control-label col-md-4" })*@
+            <label class="control-label col-md-4" for="fecha_vencimiento">Fecha vencimiento</label>
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.fecha_vencimiento, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.fecha_vencimiento, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.presentacion_cantidad, htmlAttributes: new { @class = "control-label col-md-4" })*@
+            <label class="control-label col-md-4" for="presentacion">Presentación</label>
+            <div class="col-md-4">
+                @Html.EditorFor(model => model.presentacion_cantidad, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.presentacion_cantidad, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3">
+                @Html.DropDownListFor(model => model.id_unidad, (IEnumerable<SelectListItem>)ViewBag.UnidadSelection, htmlAttributes: new { @class = "form-control" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @*@Html.LabelFor(model => model.minimo_porcentaje, htmlAttributes: new { @class = "control-label col-md-4" })*@
+            <label class="control-label col-md-4" for="minimo porcentaje">Porcetaje de alerta</label>
+            <div class="col-md-7">
+                @Html.EditorFor(model => model.minimo_porcentaje, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.minimo_porcentaje, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">            
+            <label class="control-label col-md-4" for="existencia">Cantidad</label>
+            <div class="col-md-7">
+                <input type="text" name="existencia" class="form-control" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12">
+                <div class="col-md-6 hide" id="alert">
+                    <div class="alert alert-success" role="alert" id="alertMsg"></div>
+                </div>
+                <div class="col-md-5 pull-right">
+                    <button type="submit" class="btn btn-success" id="guardar">Guardar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

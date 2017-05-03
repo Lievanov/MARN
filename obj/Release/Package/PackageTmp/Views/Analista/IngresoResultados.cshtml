@@ -1,0 +1,274 @@
+﻿@model IEnumerable<LaboratorioMarn.DETALLE_SOLICITUD>
+
+@{
+    ViewBag.Title = "IngresoResultados";
+    Layout = "~/Views/Shared/_LayoutAnalista.cshtml";
+    int idDetSolVar = Model.First().id_detalle_solicitud;
+    //int idDetSolVar2 = Model.First().id_detalle_solicitud;
+    List<int> cont = ViewBag.conteos;
+    int idEstProceso = Model.First().SOLICITUD.id_estado_proceso;
+    }
+
+@if (idEstProceso != 4)
+{
+    <h2 class="page-header">
+        Ingreso de Resultados
+        @if (cont[0] == cont[1])
+        {
+           <a href="#" class="btn btn-success pull-right finalizar" data-value="@idDetSolVar">Enviar resultados</a>
+        }
+    </h2>
+}
+else
+{
+    <h2 class="page-header">Resultados Enviados</h2>
+}
+
+<div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+        <table class="table table-hover table-condensed table-striped">
+            <tr>
+                <th>
+                    Análisis
+                </th>
+                <th>
+                    Resultado
+                </th>
+                <th>
+                    Incertezas
+                </th>
+                <th>
+                    Unidades
+                </th>
+                <th>
+                    Límite de Detección
+                </th>
+                <th>
+                    Método
+                </th>
+                <th>
+
+                </th>
+            </tr>
+
+            @foreach (DETALLE_SOLICITUD detalle in Model)
+            {
+
+                REPORTE reporte = detalle.ANALISIS_EMPLEADO.First().REPORTEs.FirstOrDefault();
+
+                <tr>
+                    <td>
+                        @detalle.ANALISI.nombre
+                    </td>
+                    @if (reporte != null)
+                    {
+                        <td>
+                            @reporte.resultado
+                        </td>
+                        <td>
+                            @reporte.incerteza
+                        </td>
+                        <td>
+                            @reporte.unidades
+                        </td>
+                        <td>
+                            @reporte.limite_deteccion
+                        </td>
+                        <td>
+                            @reporte.metodo
+                        </td>
+                    }
+                    else
+                    {
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    }
+                    <td>
+                        @if (reporte == null)
+                        {
+                            <a href="#" class="btn btn-primary add" id="@detalle.id_detalle_solicitud">Nuevo</a>
+                        }
+                        else 
+                        {
+                            if (idEstProceso != 4) { 
+                            <a href="#" class="btn btn-primary editt" idr="@reporte.id_reporte">Editar</a>
+                            }
+                        }
+                    </td>
+
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>
+
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="nuevoIngreso">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Nueva Ingreso Resultado</h4>
+            </div>
+            <div class="modal-body" id="nuevoIngresoModalContent">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="Editar">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Editar Resultado</h4>
+            </div>
+            <div class="modal-body" id="nuevoEditarModalContent">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+
+<script type="text/javascript">
+
+
+    $(function () {
+        $(".add").click(function () {
+            var element = $(this);
+            var id = element.attr("id");
+            $.ajax({
+                url: "/Reporte/Create",
+                data: { idDetalleSolicitud: id },
+                success: function (html) {
+                    $("#nuevoIngreso").modal("show");
+                    $("#nuevoIngresoModalContent").html(html);
+                    $("#guardar").click(function (e) {
+                        e.preventDefault();
+                        $.ajax(
+                            {
+                                url: "/Reporte/Create",
+                                data: $("#formularioIngresoReporte").serialize(),
+                                dataType: "JSON",
+                                type: "POST",
+                                success: function (json) {
+                                    $("#alert").removeClass("hide").show();
+
+                                    if (json.valid) {
+                                        $("#alertMsg")
+                                            .removeAttr("class")
+                                            .addClass("alert")
+                                            .addClass("alert-success")
+                                            .html("Ingreso registrado con éxito");
+
+                                        setTimeout(function () { window.location = ''; }, 2000)
+                                    }
+                                    else {
+                                        $("#alertMsg")
+                                            .removeAttr("class")
+                                            .addClass("alert")
+                                            .addClass("alert-danger")
+                                            .html();
+                                    }
+                                }
+                            }
+                            );
+                    });
+                }
+            });
+        });
+    })
+
+
+
+    $(function () {
+        $(".editt").click(function () {
+            var element = $(this);
+            var idr = element.attr("idr");
+            $.ajax({
+                url: "/Reporte/Editar",
+                data: { idReporte: idr },
+                success: function (html) {
+                    $("#Editar").modal("show");
+                    $("#nuevoEditarModalContent").html(html);
+                    $("#guardar").click(function (e) {
+                        e.preventDefault();
+                        $.ajax(
+                            {
+                                url: "/Reporte/Editar",
+                                data: $("#formularioEditarReporte").serialize(),
+                                dataType: "JSON",
+                                type: "POST",
+                                success: function (json) {
+                                    $("#alert").removeClass("hide").show();
+
+                                    if (json.valid) {
+                                        $("#alertMsg")
+                                            .removeAttr("class")
+                                            .addClass("alert")
+                                            .addClass("alert-success")
+                                            .html("Registro editado con éxito");
+
+                                        setTimeout(function () { window.location = ''; }, 2000)
+                                    }
+                                    else {
+                                        $("#alertMsg")
+                                            .removeAttr("class")
+                                            .addClass("alert")
+                                            .addClass("alert-danger")
+                                            .html();
+                                    }
+                                }
+                            }
+                            );
+                    });
+                }
+            });
+        });
+    })
+
+     
+    $(function () {
+        $(".finalizar").click(function (e) {
+            e.preventDefault();
+            var element = $(this);
+            var detalleSolicitud = element.data("value");
+            $.ajax({
+                url: '@Url.Action("EnviarResultado", "Reporte")',
+                dataType: "JSON",
+                type: 'POST',
+                data: { idDetalleSolicitud: detalleSolicitud },
+                success: function (json) {
+                    if (json.valid) {
+                        $("#alertMsg")
+                        .removeAttr("class")
+                        .addClass("alert")
+                        .addClass("alert-success")
+                        .html("Resultados Enviados");
+
+                        setTimeout(function () { window.location = ''; }, 2000)
+                    } else {
+                        $("#alertMsg")
+                          .removeAttr("class")
+                          .addClass("alert")
+                          .addClass("alert-danger")
+                          .html();
+                    }
+                }
+            });
+        });
+    })
+    </script>
+}
+
+

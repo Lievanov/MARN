@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="84a4bda2b81c4967a28dda2c050fe01a" Name="Diagram1" ZoomLevel="67">
+        <EntityTypeShape EntityType="MARNModel.ALMACEN" Width="1.5" PointX="1.5" PointY="37.125" />
+        <EntityTypeShape EntityType="MARNModel.ANALISI" Width="1.5" PointX="3" PointY="18.625" />
+        <EntityTypeShape EntityType="MARNModel.ANALISIS_EMPLEADO" Width="1.5" PointX="10.5" PointY="16.375" />
+        <EntityTypeShape EntityType="MARNModel.AREA" Width="1.5" PointX="0.75" PointY="14.75" />
+        <EntityTypeShape EntityType="MARNModel.CALCULO" Width="1.5" PointX="15.75" PointY="16.375" />
+        <EntityTypeShape EntityType="MARNModel.CATALOGO" Width="1.5" PointX="1.5" PointY="34.75" />
+        <EntityTypeShape EntityType="MARNModel.DETALLE_SOLICITUD" Width="1.5" PointX="8.25" PointY="19" />
+        <EntityTypeShape EntityType="MARNModel.DETALLE_VISITA" Width="1.5" PointX="12.75" PointY="9" />
+        <EntityTypeShape EntityType="MARNModel.EMPLEADO" Width="1.5" PointX="3" PointY="13.875" />
+        <EntityTypeShape EntityType="MARNModel.ESTADO" Width="1.5" PointX="6" PointY="4.375" />
+        <EntityTypeShape EntityType="MARNModel.ESTADO_PROCESO" Width="1.5" PointX="6" PointY="7" />
+        <EntityTypeShape EntityType="MARNModel.EXISTENCIA_PRODUCTO" Width="1.5" PointX="6" PointY="30.625" />
+        <EntityTypeShape EntityType="MARNModel.EXISTENCIA_SOLUCION" Width="1.5" PointX="5.25" PointY="14.375" />
+        <EntityTypeShape EntityType="MARNModel.INPUT" Width="1.5" PointX="18" PointY="17.875" />
+        <EntityTypeShape EntityType="MARNModel.LOTE" Width="1.5" PointX="1.5" PointY="32.5" />
+        <EntityTypeShape EntityType="MARNModel.MARCA" Width="1.5" PointX="1.5" PointY="24.5" />
+        <EntityTypeShape EntityType="MARNModel.MUESTRA" Width="1.5" PointX="10.5" PointY="8" />
+        <EntityTypeShape EntityType="MARNModel.PROCEDENCIA" Width="1.5" PointX="8.25" PointY="6.125" />
+        <EntityTypeShape EntityType="MARNModel.PROCESO_ANALISTA" Width="1.5" PointX="5.25" PointY="10.25" />
+        <EntityTypeShape EntityType="MARNModel.PRODUCTO" Width="1.5" PointX="3.75" PointY="29.375" />
+        <EntityTypeShape EntityType="MARNModel.REACTIVO" Width="1.5" PointX="1.5" PointY="29.875" />
+        <EntityTypeShape EntityType="MARNModel.REACTIVO_SOLUCION" Width="1.5" PointX="5.25" PointY="22.875" />
+        <EntityTypeShape EntityType="MARNModel.REPORTE" Width="1.5" PointX="12.75" PointY="16.25" />
+        <EntityTypeShape EntityType="MARNModel.RESULTADO" Width="1.5" PointX="13.5" PointY="19.625" />
+        <EntityTypeShape EntityType="MARNModel.SALIDA_EXISTENCIA" Width="1.5" PointX="8.25" PointY="14.125" />
+        <EntityTypeShape EntityType="MARNModel.SALIDA_SOLUCION" Width="1.5" PointX="13.5" PointY="12.625" />
+        <EntityTypeShape EntityType="MARNModel.SOLICITANTE" Width="1.5" PointX="6" PointY="0.75" />
+        <EntityTypeShape EntityType="MARNModel.SOLICITUD" Width="1.5" PointX="8.25" PointY="8.5" />
+        <EntityTypeShape EntityType="MARNModel.SOLUCION" Width="1.5" PointX="3" PointY="10.5" />
+        <EntityTypeShape EntityType="MARNModel.TIPO_EMPLEADO" Width="1.5" PointX="0.75" PointY="11.875" />
+        <EntityTypeShape EntityType="MARNModel.TIPO_MUESTRA" Width="1.5" PointX="8.25" PointY="22.375" />
+        <EntityTypeShape EntityType="MARNModel.TIPO_VARIABLE" Width="1.5" PointX="3" PointY="7.375" />
+        <EntityTypeShape EntityType="MARNModel.UNIDAD" Width="1.5" PointX="1.5" PointY="26.75" />
+        <EntityTypeShape EntityType="MARNModel.VARIABLE" Width="1.5" PointX="5.25" PointY="18.625" />
+        <EntityTypeShape EntityType="MARNModel.VISITA" Width="1.5" PointX="10.5" PointY="11.125" />
+        <AssociationConnector Association="MARNModel.FK_PRODUCTO_ALMACEN" />
+        <AssociationConnector Association="MARNModel.FK_ANALISIS_AREA" />
+        <AssociationConnector Association="MARNModel.FK_DETALLE_SOLICITUD_ANALISIS" />
+        <AssociationConnector Association="MARNModel.FK_VARIABLE_ANALISIS" />
+        <AssociationConnector Association="MARNModel.FK_ANALISIS_EMPLEADO_DETALLE_SOLICITUD" />
+        <AssociationConnector Association="MARNModel.FK_ANALISIS_EMPLEADO_EMPLEADO" />
+        <AssociationConnector Association="MARNModel.FK_CALCULO_CALCULO" />
+        <AssociationConnector Association="MARNModel.FK_REPORTE_ANALISIS_EMPLEADO" />
+        <AssociationConnector Association="MARNModel.FK_EMPLEADO_AREA" />
+        <AssociationConnector Association="MARNModel.FK_CALCULO_RESULTADO" />
+        <AssociationConnector Association="MARNModel.FK_INPUT_CALCULO" />
+        <AssociationConnector Association="MARNModel.FK_PRODUCTO_CATALOGO" />
+        <AssociationConnector Association="MARNModel.FK_DETALLE_SOLICITUD_SOLICITUD" />
+        <AssociationConnector Association="MARNModel.FK_DETALLE_VISITA_MUESTRA" />
+        <AssociationConnector Association="MARNModel.FK_DETALLE_VISITA_VISITA" />
+        <AssociationConnector Association="MARNModel.FK_EMPLEADO_TIPO_EMPLEADO" />
+        <AssociationConnector Association="MARNModel.FK_EXISTENCIA_SOLUCION_EMPLEADO" />
+        <AssociationConnector Association="MARNModel.FK_PROCESO_ANALISTA_EMPLEADO" />
+        <AssociationConnector Association="MARNModel.FK_SALIDA_EXISTENCIA_EMPLEADO" />
+        <AssociationConnector Association="MARNModel.FK_SOLICITUD_EMPLEADO" />
+        <AssociationConnector Association="MARNModel.FK_VISITA_EMPLEADO" />
+        <AssociationConnector Association="MARNModel.FK_SOLICITUD_ESTADO" />
+        <AssociationConnector Association="MARNModel.FK_SOLICITUD_ESTADO_PROCESO" />
+        <AssociationConnector Association="MARNModel.FK_EXISTENCIA_PRODUCTO_PRODUCTO" />
+        <AssociationConnector Association="MARNModel.FK_SALIDA_EXISTENCIA_EXISTENCIA_PRODUCTO" />
+        <AssociationConnector Association="MARNModel.FK_EXISTENCIA_SOLUCION_SOLUCION" />
+        <AssociationConnector Association="MARNModel.FK_SALIDA_SOLUCION_EXISTENCIA_SOLUCION" />
+        <AssociationConnector Association="MARNModel.FK_INPUT_VARIABLE" />
+        <AssociationConnector Association="MARNModel.FK_PRODUCTO_LOTE" />
+        <AssociationConnector Association="MARNModel.FK_PRODUCTO_MARCA" />
+        <AssociationConnector Association="MARNModel.FK_VARIABLE_MUESTRA" />
+        <AssociationConnector Association="MARNModel.FK_VISITA_PROCEDENCIA" />
+        <AssociationConnector Association="MARNModel.FK_PROCESO_ANALISTA_SOLICITUD" />
+        <AssociationConnector Association="MARNModel.FK_PRODUCTO_REACTIVO" />
+        <AssociationConnector Association="MARNModel.FK_PRODUCTO_UNIDAD" />
+        <AssociationConnector Association="MARNModel.FK_REACTIVO_SOLUCION_REACTIVO" />
+        <AssociationConnector Association="MARNModel.FK_REACTIVO_SOLUCION_SOLUCION" />
+        <AssociationConnector Association="MARNModel.FK_REACTIVO_SOLUCION_UNIDAD" />
+        <AssociationConnector Association="MARNModel.FK_SALIDA_EXISTENCIA_UNIDAD" />
+        <AssociationConnector Association="MARNModel.FK_SALIDA_SOLUCION_SALIDA_EXISTENCIA" />
+        <AssociationConnector Association="MARNModel.FK_SOLICITUD_SOLICITANTE" />
+        <AssociationConnector Association="MARNModel.FK_VISITA_SOLICITUD" />
+        <AssociationConnector Association="MARNModel.FK_VARIABLE_SOLUCION" />
+        <AssociationConnector Association="MARNModel.FK_VISITA_VISITA" />
+        <AssociationConnector Association="MARNModel.FK_VARIABLE_TIPO_VARIABLE" />
+        <EntityTypeShape EntityType="MARNModel.ESTADO_PROCESO_ANALISTA" Width="1.5" PointX="3" PointY="4.125" />
+        <EntityTypeShape EntityType="MARNModel.INFORME" Width="1.5" PointX="10.5" PointY="4.625" />
+        <AssociationConnector Association="MARNModel.FK_PROCESO_ANALISTA_ESTADO_PROCESO_ANALISTA" />
+        <AssociationConnector Association="MARNModel.FK_INFORMES_SOLICITUD" />
+        <EntityTypeShape EntityType="MARNModel.NOTIFICACION" Width="1.5" PointX="5.25" PointY="35.375" />
+        <AssociationConnector Association="MARNModel.FK_NOTIFICACION_EMPLEADO" />
+        <AssociationConnector Association="MARNModel.FK_NOTIFICACION_EMPLEADO_R" />
+        <EntityTypeShape EntityType="MARNModel.ANALISIS_REACTIVO" Width="1.5" PointX="12.75" PointY="22.875" />
+        <EntityTypeShape EntityType="MARNModel.SITIO_MUESTREO" Width="1.5" PointX="8.375" PointY="0.875" />
+        <AssociationConnector Association="MARNModel.FK_ANALISIS_REACTIVO_ANALISIS_EMPLEADO" />
+        <AssociationConnector Association="MARNModel.FK_ANALISIS_REACTIVO_REACTIVO" />
+        <AssociationConnector Association="MARNModel.FK_ANALISIS_REACTIVO_UNIDAD" />
+        <AssociationConnector Association="MARNModel.FK_SALIDA_EXISTENCIA_REACITVO" />
+        <AssociationConnector Association="MARNModel.FK_VISITA_SITIO_MUESTREO" />
+        <EntityTypeShape EntityType="MARNModel.GRUPO_SOLICITUD" Width="1.5" PointX="8.25" PointY="25.25" />
+        <AssociationConnector Association="MARNModel.fk_GROUPO_SOLICITANTE" />
+        <AssociationConnector Association="MARNModel.FK_VISITA_GRUPO_SOLICITUD" />
+        <AssociationConnector Association="MARNModel.FK_VISITA_EMPLEADO2" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

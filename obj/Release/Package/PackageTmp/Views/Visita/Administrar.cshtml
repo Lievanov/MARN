@@ -1,0 +1,272 @@
+﻿@{
+    ViewBag.Title = "Solicitudes";
+    MARNEntities db = new MARNEntities();
+    GRUPO_SOLICITUD solicitud = ViewBag.solicitud;
+
+    var visitas = db.VISITAs.Where(v => v.GRUPO_SOLICITUD.id_grupo_solicitud == solicitud.id_grupo_solicitud).GroupBy(v => v.id).Select(v => new { Key = v.Key, Count = v.Count() }).ToList();
+
+}
+<h1 class="page-header">Solicitud</h1>
+
+<input type="hidden" id="solicitud" value="@solicitud.id_grupo_solicitud" />
+
+<div class="row">
+    <div class="col-sm-5">
+        <div class="col-sm-6"><b>Identificador</b></div>
+        <div class="col-sm-6">@solicitud.identificador</div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-5">
+        <div class="col-sm-6"><b>Solicitante</b></div>
+        <div class="col-sm-6">@solicitud.SOLICITANTE.nombre_solicitante</div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-5">
+        <div class="col-sm-6"><b>Fecha de Solicitud</b></div>
+        <div class="col-sm-6">@solicitud.fecha_solicitud</div>
+    </div>
+</div>
+<br /><br />
+<p>
+    <a href="#" class="btn btn-success" id="nuevaVisita">Nueva Visita</a>
+</p>
+
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+        <table id="tablaVisita" class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Visita
+                    </th>
+                    <th>
+                        Encargado
+                    </th>
+                    <th>
+                        Fecha Visita
+                    </th>
+                    <th>
+                        Fecha Recepcion
+                    </th>
+                    <th>
+                        Muestras
+                    </th>
+                    <th>Administrar</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in visitas)
+                {
+                    VISITA visita = db.VISITAs.First(v => v.id == item.Key);
+                    <tr>
+                        <td>@visita.id</td>
+                        <td>@visita.EMPLEADO.nombre_empleado</td>
+                        <td>@visita.fecha_visita.Value.ToShortDateString()</td>
+                        <td>@visita.fecha_entrega.Value.ToShortDateString()</td>
+                        <td>@item.Count</td>
+                        <td class="text-center">
+                            <a href="#" class="verMuestras" data-value="@visita.id"><span class="glyphicon glyphicon-list"></span></a> 
+                            |   <a href="#" class="editarVisita" data-value="@visita.id"><span class="glyphicon glyphicon-edit"></span></a> 
+                            |   <a href="#" class="eliminarVisita" data-value="@visita.id"><span class="glyphicon glyphicon-remove"></span></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="nuevaVisitaModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Muestras</h4>
+            </div>
+            <div class="modal-body" id="nuevaVisitaModalContent">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="muestrasModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Nueva Visita</h4>
+            </div>
+            <div class="modal-body" id="muestrasModalContent">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="https://cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js"></script>
+    <script type="text/javascript">
+        var tablaSolicitante;
+        $(function () {
+            tablaSolicitante = $("#tablaVisita").DataTable({
+                select: {
+                    style: 'os',
+                    selector: 'td:first-child'
+                },
+                language: {
+                    url: '/Scripts/spanish.json'
+                }
+            });
+
+            $(".verMuestras").click(function () {
+                $.ajax({
+                    url: "@Url.Action("Lista", "Solicitud")",
+                    data: { visita: $(this).data("value") },
+                    type: "POST",
+                    success: function (html) {
+                        $("#muestrasModal").modal("show");
+                        $("#muestrasModalContent").html(html);
+
+                        tablaSolicitante = $("#tablaSolicitante").DataTable({
+                            language: {
+                                url: '/Scripts/spanish.json'
+                            }
+                        });
+                    }
+                });
+            });
+
+            $("#nuevaVisita").click(function () {
+                $.ajax({
+                    url: "@Url.Action("CreateVisitas", "Visita")",
+                    data: { solicitud: $("#solicitud").val() },
+                    success: function (html) {
+                        $("#nuevaVisitaModal").modal("show");
+                        $("#nuevaVisitaModalContent").html(html);
+
+                        $("#fechaVisita").datepicker({ format: "yyyy-mm-dd" });
+                        $("#fechaEntrega").datepicker({ format: "yyyy-mm-dd" });
+
+                        $("#crearVisita").click(function (e) {
+                            e.preventDefault();
+                            $.ajax({
+                                url: "@Url.Action("CreateVisitas", "Visita")",
+                                data: $("#crearVisita").closest("form").serialize(),
+                                dataType: "JSON",
+                                type: "POST",
+                                success: function (json) {
+                                    $("#alert").removeClass("hide").show();
+
+                                    if (json.isValid) {
+                                        $("#alertMsg")
+                                            .removeAttr("class")
+                                            .addClass("alert")
+                                            .addClass("alert-success")
+                                            .html("Ingreso registrado con éxito");
+
+                                        setTimeout(function () { window.location = ''; }, 2000)
+                                    }
+                                    else {
+                                        $("#alertMsg")
+                                            .removeAttr("class")
+                                            .addClass("alert")
+                                            .addClass("alert-danger")
+                                            .html(json.msg);
+                                    }
+                                }
+                            });
+                        });
+                    }
+                })
+            });
+            
+            $(".editarVisita").click(function () {
+                alert("En construcción");
+                return;
+
+                $.ajax({
+                    url: "@Url.Action("EditarVisita", "Visita")",
+                    data: { id: $(this).data("value") },
+                    success: function (html) {
+                        $("#nuevaVisitaModal").modal("show");
+                        $("#nuevaVisitaModalContent").html(html);
+
+                        $("#fechaVisita").datepicker({ format: "yyyy-mm-dd" });
+                        $("#fechaEntrega").datepicker({ format: "yyyy-mm-dd" });
+
+                        $("#editarVisita").click(function (e) {
+                            e.preventDefault();
+                            $.ajax({
+                                url: "@Url.Action("EditarVisitaPost", "Visita")",
+                                data: $("#editarVisita").closest("form").serialize(),
+                                dataType: "JSON",
+                                type: "POST",
+                                success: function (json) {
+                                    $("#alert").removeClass("hide").show();
+
+                                    if (json.isValid) {
+                                        $("#alertMsg")
+                                            .removeAttr("class")
+                                            .addClass("alert")
+                                            .addClass("alert-success")
+                                            .html("Ingreso registrado con éxito");
+
+                                        setTimeout(function () { window.location = ''; }, 2000)
+                                    }
+                                    else {
+                                        $("#alertMsg")
+                                            .removeAttr("class")
+                                            .addClass("alert")
+                                            .addClass("alert-danger")
+                                            .html(json.msg);
+                                    }
+                                }
+                            });
+                        });
+                    }
+                })
+            });
+
+            $(".eliminarVisita").click(function () {
+                alert("En construcción");
+                return;
+
+                var idVisita = $(this).data("value");
+                $.ajax({
+                    url: "@Url.Action("ElimnarVisita", "Visita")",
+                    data: { id: idVisita },
+                    type: "POST",
+                    success: function (json) {
+                        if (json.isValid)
+                        {
+                            alert("La visita " + idVisita + " fue eliminado con éxito");
+                        }
+                        else
+                        {
+                            alert("La visita " + idVisita + " no pudo ser eliminada");
+                        }
+                    }
+                });
+            });
+        });
+
+    </script>
+}
+
+@section Styles {
+    <link href="https://cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css" rel="stylesheet" />
+
+    <style type="text/css">
+        table.dataTable thead {
+            font-size: 0.85em;
+        }
+
+        table.dataTable tbody {
+            font-size: 0.85em;
+        }
+    </style>
+}

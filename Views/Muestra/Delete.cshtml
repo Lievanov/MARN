@@ -1,0 +1,21 @@
+﻿@model LaboratorioMarn.MUESTRA
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Eliminar</h2>
+
+<h3>¿Está seguro que desea eliminar el parametro de muestra <i>@Model.nombre_muestra</i>?</h3>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+    <div class="form-actions no-color">
+        <br />
+        @*<input type="submit" value="Delete" class="btn btn-default" /> |*@
+        <button type="submit" class="btn btn-primary">Eliminar</button>
+        @Html.ActionLink("Volver a la lista", "Index")
+    </div>
+    }
+</div>

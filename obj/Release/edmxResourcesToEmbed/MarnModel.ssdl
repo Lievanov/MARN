@@ -1,0 +1,1370 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MARNModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ALMACEN">
+    <Key>
+      <PropertyRef Name="id_almacen" />
+    </Key>
+    <Property Name="id_almacen" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="estante" Type="tinyint" />
+    <Property Name="nivel" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="ANALISIS">
+    <Key>
+      <PropertyRef Name="id_analisis" />
+    </Key>
+    <Property Name="id_analisis" Type="int" Nullable="false" />
+    <Property Name="id_area" Type="tinyint" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="metodo" Type="varchar" MaxLength="100" />
+    <Property Name="formula" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="unidades" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="incertezas" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+    <Property Name="costo" Type="decimal" Precision="6" Scale="2" />
+    <Property Name="costo_iva" Type="decimal" Precision="6" Scale="2" />
+  </EntityType>
+  <EntityType Name="ANALISIS_EMPLEADO">
+    <Key>
+      <PropertyRef Name="id_analisis_empleado" />
+    </Key>
+    <Property Name="id_analisis_empleado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_empleado" Type="tinyint" Nullable="false" />
+    <Property Name="id_detalle_solicitud" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ANALISIS_REACTIVO">
+    <Key>
+      <PropertyRef Name="id_analisis_reactivo" />
+    </Key>
+    <Property Name="id_analisis_reactivo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_reactivo" Type="int" Nullable="false" />
+    <Property Name="cantidad" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+    <Property Name="id_unidad" Type="tinyint" Nullable="false" />
+    <Property Name="id_analisis_empleado" Type="int" Nullable="false" />
+    <Property Name="fecha" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="AREA">
+    <Key>
+      <PropertyRef Name="id_area" />
+    </Key>
+    <Property Name="id_area" Type="tinyint" Nullable="false" />
+    <Property Name="nombre_area" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CALCULO">
+    <Key>
+      <PropertyRef Name="id_calculo" />
+    </Key>
+    <Property Name="id_calculo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_analisis_empleado" Type="int" Nullable="false" />
+    <Property Name="id_resultado" Type="int" Nullable="false" />
+    <Property Name="resultado_calculo" Type="decimal" Precision="8" Scale="3" Nullable="false" />
+  </EntityType>
+  <EntityType Name="CATALOGO">
+    <Key>
+      <PropertyRef Name="id_catalogo" />
+    </Key>
+    <Property Name="id_catalogo" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre_catalogo" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DETALLE_SOLICITUD">
+    <Key>
+      <PropertyRef Name="id_detalle_solicitud" />
+    </Key>
+    <Property Name="id_detalle_solicitud" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_solicitud" Type="int" Nullable="false" />
+    <Property Name="id_analisis" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DETALLE_VISITA">
+    <Key>
+      <PropertyRef Name="id_detalle_visita" />
+    </Key>
+    <Property Name="id_detalle_visita" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_visita" Type="int" Nullable="false" />
+    <Property Name="id_muestra" Type="int" Nullable="false" />
+    <Property Name="value" Type="decimal" Precision="6" Scale="3" />
+  </EntityType>
+  <EntityType Name="EMPLEADO">
+    <Key>
+      <PropertyRef Name="id_empleado" />
+    </Key>
+    <Property Name="id_empleado" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_area" Type="tinyint" />
+    <Property Name="id_tipo_empleado" Type="tinyint" Nullable="false" />
+    <Property Name="nombre_empleado" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="telefono_empleado" Type="varchar" MaxLength="8" />
+    <Property Name="id_aspnet_user" Type="nvarchar" MaxLength="128" />
+    <Property Name="avatar" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="ESTADO">
+    <Key>
+      <PropertyRef Name="id_estado" />
+    </Key>
+    <Property Name="id_estado" Type="tinyint" Nullable="false" />
+    <Property Name="nombre_estado" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ESTADO_PROCESO">
+    <Key>
+      <PropertyRef Name="id_estado_proceso" />
+    </Key>
+    <Property Name="id_estado_proceso" Type="tinyint" Nullable="false" />
+    <Property Name="nombre_estado_proceso" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ESTADO_PROCESO_ANALISTA">
+    <Key>
+      <PropertyRef Name="id_estado_proceso_analista" />
+    </Key>
+    <Property Name="id_estado_proceso_analista" Type="tinyint" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EXISTENCIA_PRODUCTO">
+    <Key>
+      <PropertyRef Name="id_existencia_producto" />
+    </Key>
+    <Property Name="id_existencia_producto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_producto" Type="int" Nullable="false" />
+    <Property Name="cantidad" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+    <Property Name="estado" Type="varchar" MaxLength="25" Nullable="false" />
+  </EntityType>
+  <EntityType Name="EXISTENCIA_SOLUCION">
+    <Key>
+      <PropertyRef Name="id_existencia_solucion" />
+    </Key>
+    <Property Name="id_existencia_solucion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_empleado" Type="tinyint" Nullable="false" />
+    <Property Name="id_solucion" Type="int" Nullable="false" />
+    <Property Name="cantidad" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+    <Property Name="id_unidad" Type="tinyint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="GRUPO_SOLICITUD">
+    <Key>
+      <PropertyRef Name="id_grupo_solicitud" />
+    </Key>
+    <Property Name="id_grupo_solicitud" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_solicitante" Type="int" Nullable="false" />
+    <Property Name="fecha_solicitud" Type="datetime" Nullable="false" />
+    <Property Name="fecha_creacion" Type="datetime" Nullable="false" />
+    <Property Name="preset" Type="varchar" MaxLength="255" />
+    <Property Name="identificador" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="INFORMES">
+    <Key>
+      <PropertyRef Name="id_informe" />
+    </Key>
+    <Property Name="id_informe" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_solicitud" Type="int" Nullable="false" />
+    <Property Name="tipo" Type="nchar" MaxLength="1" Nullable="false" />
+    <Property Name="data" Type="varchar" MaxLength="1500" Nullable="false" />
+    <Property Name="fecha_creacion" Type="datetime" Nullable="false" />
+    <Property Name="activo" Type="tinyint" Nullable="false" />
+    <Property Name="areas" Type="nchar" MaxLength="4" />
+  </EntityType>
+  <EntityType Name="INPUT">
+    <Key>
+      <PropertyRef Name="id_input" />
+    </Key>
+    <Property Name="id_input" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_variable" Type="int" Nullable="false" />
+    <Property Name="id_calculo" Type="int" Nullable="false" />
+    <Property Name="valor" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+    <Property Name="lectura" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="LOTE">
+    <Key>
+      <PropertyRef Name="id_lote" />
+    </Key>
+    <Property Name="id_lote" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="MARCA">
+    <Key>
+      <PropertyRef Name="id_marca" />
+    </Key>
+    <Property Name="id_marca" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="nchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="MUESTRA">
+    <Key>
+      <PropertyRef Name="id_muestra" />
+    </Key>
+    <Property Name="id_muestra" Type="int" Nullable="false" />
+    <Property Name="nombre_muestra" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="expresado" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="NOTIFICACION">
+    <Key>
+      <PropertyRef Name="id_notificacion" />
+    </Key>
+    <Property Name="id_notificacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="empleado_remitente" Type="tinyint" Nullable="false" />
+    <Property Name="titulo" Type="varchar" MaxLength="150" />
+    <Property Name="mensaje" Type="varchar" MaxLength="300" />
+    <Property Name="fecha_notificacion" Type="datetime" Nullable="false" />
+    <Property Name="empleado_receptor" Type="tinyint" Nullable="false" />
+    <Property Name="leido" Type="tinyint" Nullable="false" />
+    <Property Name="fecha_lectura" Type="datetime" />
+    <Property Name="redireccion" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="eliminado" Type="tinyint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PROCEDENCIA">
+    <Key>
+      <PropertyRef Name="id_procedencia" />
+    </Key>
+    <Property Name="id_procedencia" Type="tinyint" Nullable="false" />
+    <Property Name="nombre_procedencia" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PROCESO_ANALISTA">
+    <Key>
+      <PropertyRef Name="id_proceso_analista" />
+    </Key>
+    <Property Name="id_proceso_analista" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="fecha_asignacion" Type="datetime" />
+    <Property Name="fecha_inicio" Type="datetime" />
+    <Property Name="fecha_fin" Type="datetime" />
+    <Property Name="solicitud_id" Type="int" Nullable="false" />
+    <Property Name="empleado_id" Type="tinyint" Nullable="false" />
+    <Property Name="cantidad_analisis" Type="tinyint" Nullable="false" />
+    <Property Name="id_analisis" Type="nchar" MaxLength="10" />
+    <Property Name="id_estado_proceso_analista" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="PRODUCTO">
+    <Key>
+      <PropertyRef Name="id_producto" />
+    </Key>
+    <Property Name="id_producto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_almacen" Type="tinyint" Nullable="false" />
+    <Property Name="id_marca" Type="tinyint" Nullable="false" />
+    <Property Name="id_catalogo" Type="tinyint" Nullable="false" />
+    <Property Name="id_lote" Type="int" Nullable="false" />
+    <Property Name="id_reactivo" Type="int" Nullable="false" />
+    <Property Name="fecha_ingreso" Type="date" Nullable="false" />
+    <Property Name="fecha_vencimiento" Type="datetime" />
+    <Property Name="presentacion_cantidad" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+    <Property Name="id_unidad" Type="tinyint" Nullable="false" />
+    <Property Name="minimo_porcentaje" Type="tinyint" Nullable="false" />
+    <Property Name="estado" Type="tinyint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="REACTIVO">
+    <Key>
+      <PropertyRef Name="id_reactivo" />
+    </Key>
+    <Property Name="id_reactivo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="150" />
+  </EntityType>
+  <EntityType Name="REACTIVO_SOLUCION">
+    <Key>
+      <PropertyRef Name="id_reactivo_solucion" />
+    </Key>
+    <Property Name="id_reactivo_solucion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_solucion" Type="int" Nullable="false" />
+    <Property Name="id_reactivo" Type="int" Nullable="false" />
+    <Property Name="cantidad" Type="decimal" Precision="6" Scale="2" />
+    <Property Name="id_unidad" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="REPORTE">
+    <Key>
+      <PropertyRef Name="id_reporte" />
+    </Key>
+    <Property Name="id_reporte" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_analisis_empleado" Type="int" Nullable="false" />
+    <Property Name="resultado" Type="decimal" Precision="10" Scale="3" Nullable="false" />
+    <Property Name="incerteza" Type="decimal" Precision="6" Scale="4" Nullable="false" />
+    <Property Name="unidades" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="limite_deteccion" Type="decimal" Precision="6" Scale="5" Nullable="false" />
+    <Property Name="metodo" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="RESULTADO">
+    <Key>
+      <PropertyRef Name="id_resultado" />
+    </Key>
+    <Property Name="id_resultado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="promedio" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+    <Property Name="incertidumbre" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SALIDA_EXISTENCIA">
+    <Key>
+      <PropertyRef Name="id_salida_existencia" />
+    </Key>
+    <Property Name="id_salida_existencia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_existencia_producto" Type="int" Nullable="false" />
+    <Property Name="id_empleado" Type="tinyint" />
+    <Property Name="cantidad_salida" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+    <Property Name="cantidad_existencia" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+    <Property Name="fecha_salida" Type="datetime" />
+    <Property Name="id_unidad" Type="tinyint" Nullable="false" />
+    <Property Name="id_reactivo" Type="int" />
+  </EntityType>
+  <EntityType Name="SALIDA_SOLUCION">
+    <Key>
+      <PropertyRef Name="id_salida_solucion" />
+    </Key>
+    <Property Name="id_salida_solucion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_salida_existencia" Type="int" Nullable="false" />
+    <Property Name="id_existencia_solucion" Type="int" Nullable="false" />
+    <Property Name="cantidad" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SITIO_MUESTREO">
+    <Key>
+      <PropertyRef Name="id_sitio_muestreo" />
+    </Key>
+    <Property Name="id_sitio_muestreo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre_sitio" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="direccion_sitio" Type="varchar" MaxLength="500" Nullable="false" />
+    <Property Name="observacione" Type="varchar" MaxLength="500" />
+    <Property Name="lat" Type="decimal" Precision="18" Scale="15" />
+    <Property Name="lng" Type="decimal" Precision="18" Scale="15" />
+  </EntityType>
+  <EntityType Name="SOLICITANTE">
+    <Key>
+      <PropertyRef Name="id_solicitante" />
+    </Key>
+    <Property Name="id_solicitante" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre_solicitante" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="direccion_solicitante" Type="varchar" MaxLength="300" Nullable="false" />
+    <Property Name="contacto_solicitante" Type="varchar" MaxLength="100" />
+    <Property Name="correo_solicitante" Type="varchar" MaxLength="100" />
+    <Property Name="telefono_1_solicitante" Type="varchar" MaxLength="10" />
+    <Property Name="telefono_2_solicitante" Type="varchar" MaxLength="10" />
+    <Property Name="preset_analisis" Type="varchar" MaxLength="300" />
+  </EntityType>
+  <EntityType Name="SOLICITUD">
+    <Key>
+      <PropertyRef Name="id_solicitud" />
+    </Key>
+    <Property Name="id_solicitud" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="no_referencia" Type="varchar" MaxLength="10" />
+    <Property Name="id_empleado" Type="tinyint" Nullable="false" />
+    <Property Name="id_estado" Type="tinyint" Nullable="false" />
+    <Property Name="id_solicitante" Type="int" />
+    <Property Name="id_estado_proceso" Type="tinyint" Nullable="false" />
+    <Property Name="fecha_creacion" Type="datetime" />
+    <Property Name="fecha_inicio" Type="datetime" />
+    <Property Name="fecha_finalizacion" Type="datetime" />
+    <Property Name="informe_generado" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="SOLUCION">
+    <Key>
+      <PropertyRef Name="id_solucion" />
+    </Key>
+    <Property Name="id_solucion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="cantidad" Type="decimal" Precision="6" Scale="2" />
+    <Property Name="unidad" Type="tinyint" />
+  </EntityType>
+  <EntityType Name="TIPO_EMPLEADO">
+    <Key>
+      <PropertyRef Name="id_tipo_empleado" />
+    </Key>
+    <Property Name="id_tipo_empleado" Type="tinyint" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TIPO_MUESTRA">
+    <Key>
+      <PropertyRef Name="id_tipo_muestra" />
+    </Key>
+    <Property Name="id_tipo_muestra" Type="tinyint" Nullable="false" />
+    <Property Name="nombre_tipo_muestra" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TIPO_VARIABLE">
+    <Key>
+      <PropertyRef Name="id_tipovariable" />
+    </Key>
+    <Property Name="id_tipovariable" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="UNIDAD">
+    <Key>
+      <PropertyRef Name="id_unidad" />
+    </Key>
+    <Property Name="id_unidad" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" />
+    <Property Name="unidad" Type="varchar" MaxLength="50" />
+    <Property Name="equivalencia" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="VARIABLE">
+    <Key>
+      <PropertyRef Name="id_variable" />
+    </Key>
+    <Property Name="id_variable" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_analisis" Type="int" Nullable="false" />
+    <Property Name="id_tipovariable" Type="tinyint" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="50" />
+    <Property Name="id_solucion" Type="int" />
+    <Property Name="id_muestra" Type="int" />
+  </EntityType>
+  <EntityType Name="VISITA">
+    <Key>
+      <PropertyRef Name="id_visita" />
+    </Key>
+    <Property Name="id_visita" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_solicitud" Type="int" Nullable="false" />
+    <Property Name="id_empleado" Type="tinyint" Nullable="false" />
+    <Property Name="fecha_visita" Type="datetime" />
+    <Property Name="fecha_entrega" Type="datetime" />
+    <Property Name="id_procedencia" Type="tinyint" Nullable="false" />
+    <Property Name="id_tipo_muestra" Type="tinyint" Nullable="false" />
+    <Property Name="fecha_creacion" Type="datetime" />
+    <Property Name="id_sitio_muestreo" Type="int" />
+    <Property Name="id_empleado_entrega" Type="tinyint" />
+    <Property Name="identificador" Type="varchar" MaxLength="50" />
+    <Property Name="no_frascos" Type="tinyint" />
+    <Property Name="lat" Type="decimal" Precision="18" Scale="10" />
+    <Property Name="lng" Type="decimal" Precision="18" Scale="10" />
+    <Property Name="id" Type="varchar" MaxLength="50" />
+    <Property Name="id_grupo_solicitud" Type="int" />
+  </EntityType>
+  <Association Name="FK_ANALISIS_AREA">
+    <End Role="AREA" Type="Self.AREA" Multiplicity="1" />
+    <End Role="ANALISIS" Type="Self.ANALISIS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AREA">
+        <PropertyRef Name="id_area" />
+      </Principal>
+      <Dependent Role="ANALISIS">
+        <PropertyRef Name="id_area" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ANALISIS_EMPLEADO_DETALLE_SOLICITUD">
+    <End Role="DETALLE_SOLICITUD" Type="Self.DETALLE_SOLICITUD" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ANALISIS_EMPLEADO" Type="Self.ANALISIS_EMPLEADO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DETALLE_SOLICITUD">
+        <PropertyRef Name="id_detalle_solicitud" />
+      </Principal>
+      <Dependent Role="ANALISIS_EMPLEADO">
+        <PropertyRef Name="id_detalle_solicitud" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ANALISIS_EMPLEADO_EMPLEADO">
+    <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+    <End Role="ANALISIS_EMPLEADO" Type="Self.ANALISIS_EMPLEADO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLEADO">
+        <PropertyRef Name="id_empleado" />
+      </Principal>
+      <Dependent Role="ANALISIS_EMPLEADO">
+        <PropertyRef Name="id_empleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ANALISIS_REACTIVO_ANALISIS_EMPLEADO">
+    <End Role="ANALISIS_EMPLEADO" Type="Self.ANALISIS_EMPLEADO" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ANALISIS_REACTIVO" Type="Self.ANALISIS_REACTIVO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ANALISIS_EMPLEADO">
+        <PropertyRef Name="id_analisis_empleado" />
+      </Principal>
+      <Dependent Role="ANALISIS_REACTIVO">
+        <PropertyRef Name="id_analisis_empleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ANALISIS_REACTIVO_REACTIVO">
+    <End Role="REACTIVO" Type="Self.REACTIVO" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ANALISIS_REACTIVO" Type="Self.ANALISIS_REACTIVO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="REACTIVO">
+        <PropertyRef Name="id_reactivo" />
+      </Principal>
+      <Dependent Role="ANALISIS_REACTIVO">
+        <PropertyRef Name="id_reactivo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ANALISIS_REACTIVO_UNIDAD">
+    <End Role="UNIDAD" Type="Self.UNIDAD" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ANALISIS_REACTIVO" Type="Self.ANALISIS_REACTIVO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UNIDAD">
+        <PropertyRef Name="id_unidad" />
+      </Principal>
+      <Dependent Role="ANALISIS_REACTIVO">
+        <PropertyRef Name="id_unidad" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CALCULO_CALCULO">
+    <End Role="ANALISIS_EMPLEADO" Type="Self.ANALISIS_EMPLEADO" Multiplicity="1" />
+    <End Role="CALCULO" Type="Self.CALCULO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ANALISIS_EMPLEADO">
+        <PropertyRef Name="id_analisis_empleado" />
+      </Principal>
+      <Dependent Role="CALCULO">
+        <PropertyRef Name="id_analisis_empleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CALCULO_RESULTADO">
+    <End Role="RESULTADO" Type="Self.RESULTADO" Multiplicity="1" />
+    <End Role="CALCULO" Type="Self.CALCULO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RESULTADO">
+        <PropertyRef Name="id_resultado" />
+      </Principal>
+      <Dependent Role="CALCULO">
+        <PropertyRef Name="id_resultado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DETALLE_SOLICITUD_ANALISIS">
+    <End Role="ANALISIS" Type="Self.ANALISIS" Multiplicity="1" />
+    <End Role="DETALLE_SOLICITUD" Type="Self.DETALLE_SOLICITUD" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ANALISIS">
+        <PropertyRef Name="id_analisis" />
+      </Principal>
+      <Dependent Role="DETALLE_SOLICITUD">
+        <PropertyRef Name="id_analisis" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DETALLE_SOLICITUD_SOLICITUD">
+    <End Role="SOLICITUD" Type="Self.SOLICITUD" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DETALLE_SOLICITUD" Type="Self.DETALLE_SOLICITUD" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SOLICITUD">
+        <PropertyRef Name="id_solicitud" />
+      </Principal>
+      <Dependent Role="DETALLE_SOLICITUD">
+        <PropertyRef Name="id_solicitud" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DETALLE_VISITA_MUESTRA">
+    <End Role="MUESTRA" Type="Self.MUESTRA" Multiplicity="1" />
+    <End Role="DETALLE_VISITA" Type="Self.DETALLE_VISITA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MUESTRA">
+        <PropertyRef Name="id_muestra" />
+      </Principal>
+      <Dependent Role="DETALLE_VISITA">
+        <PropertyRef Name="id_muestra" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DETALLE_VISITA_VISITA">
+    <End Role="VISITA" Type="Self.VISITA" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="DETALLE_VISITA" Type="Self.DETALLE_VISITA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VISITA">
+        <PropertyRef Name="id_visita" />
+      </Principal>
+      <Dependent Role="DETALLE_VISITA">
+        <PropertyRef Name="id_visita" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EMPLEADO_AREA">
+    <End Role="AREA" Type="Self.AREA" Multiplicity="0..1" />
+    <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AREA">
+        <PropertyRef Name="id_area" />
+      </Principal>
+      <Dependent Role="EMPLEADO">
+        <PropertyRef Name="id_area" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EMPLEADO_TIPO_EMPLEADO">
+    <End Role="TIPO_EMPLEADO" Type="Self.TIPO_EMPLEADO" Multiplicity="1" />
+    <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPO_EMPLEADO">
+        <PropertyRef Name="id_tipo_empleado" />
+      </Principal>
+      <Dependent Role="EMPLEADO">
+        <PropertyRef Name="id_tipo_empleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EXISTENCIA_PRODUCTO_PRODUCTO">
+    <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="1" />
+    <End Role="EXISTENCIA_PRODUCTO" Type="Self.EXISTENCIA_PRODUCTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PRODUCTO">
+        <PropertyRef Name="id_producto" />
+      </Principal>
+      <Dependent Role="EXISTENCIA_PRODUCTO">
+        <PropertyRef Name="id_producto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EXISTENCIA_SOLUCION_EMPLEADO">
+    <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+    <End Role="EXISTENCIA_SOLUCION" Type="Self.EXISTENCIA_SOLUCION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLEADO">
+        <PropertyRef Name="id_empleado" />
+      </Principal>
+      <Dependent Role="EXISTENCIA_SOLUCION">
+        <PropertyRef Name="id_empleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_EXISTENCIA_SOLUCION_SOLUCION">
+    <End Role="SOLUCION" Type="Self.SOLUCION" Multiplicity="1" />
+    <End Role="EXISTENCIA_SOLUCION" Type="Self.EXISTENCIA_SOLUCION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SOLUCION">
+        <PropertyRef Name="id_solucion" />
+      </Principal>
+      <Dependent Role="EXISTENCIA_SOLUCION">
+        <PropertyRef Name="id_solucion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_GROUPO_SOLICITANTE">
+    <End Role="SOLICITANTE" Type="Self.SOLICITANTE" Multiplicity="1" />
+    <End Role="GRUPO_SOLICITUD" Type="Self.GRUPO_SOLICITUD" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SOLICITANTE">
+        <PropertyRef Name="id_solicitante" />
+      </Principal>
+      <Dependent Role="GRUPO_SOLICITUD">
+        <PropertyRef Name="id_solicitante" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_INFORMES_SOLICITUD">
+    <End Role="SOLICITUD" Type="Self.SOLICITUD" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="INFORMES" Type="Self.INFORMES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SOLICITUD">
+        <PropertyRef Name="id_solicitud" />
+      </Principal>
+      <Dependent Role="INFORMES">
+        <PropertyRef Name="id_solicitud" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_INPUT_CALCULO">
+    <End Role="CALCULO" Type="Self.CALCULO" Multiplicity="1" />
+    <End Role="INPUT" Type="Self.INPUT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CALCULO">
+        <PropertyRef Name="id_calculo" />
+      </Principal>
+      <Dependent Role="INPUT">
+        <PropertyRef Name="id_calculo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_INPUT_VARIABLE">
+    <End Role="VARIABLE" Type="Self.VARIABLE" Multiplicity="1" />
+    <End Role="INPUT" Type="Self.INPUT" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="VARIABLE">
+        <PropertyRef Name="id_variable" />
+      </Principal>
+      <Dependent Role="INPUT">
+        <PropertyRef Name="id_variable" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NOTIFICACION_EMPLEADO">
+    <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+    <End Role="NOTIFICACION" Type="Self.NOTIFICACION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLEADO">
+        <PropertyRef Name="id_empleado" />
+      </Principal>
+      <Dependent Role="NOTIFICACION">
+        <PropertyRef Name="empleado_remitente" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NOTIFICACION_EMPLEADO1">
+    <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+    <End Role="NOTIFICACION" Type="Self.NOTIFICACION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLEADO">
+        <PropertyRef Name="id_empleado" />
+      </Principal>
+      <Dependent Role="NOTIFICACION">
+        <PropertyRef Name="empleado_receptor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PROCESO_ANALISTA_EMPLEADO">
+    <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+    <End Role="PROCESO_ANALISTA" Type="Self.PROCESO_ANALISTA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLEADO">
+        <PropertyRef Name="id_empleado" />
+      </Principal>
+      <Dependent Role="PROCESO_ANALISTA">
+        <PropertyRef Name="empleado_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PROCESO_ANALISTA_ESTADO_PROCESO_ANALISTA">
+    <End Role="ESTADO_PROCESO_ANALISTA" Type="Self.ESTADO_PROCESO_ANALISTA" Multiplicity="0..1" />
+    <End Role="PROCESO_ANALISTA" Type="Self.PROCESO_ANALISTA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ESTADO_PROCESO_ANALISTA">
+        <PropertyRef Name="id_estado_proceso_analista" />
+      </Principal>
+      <Dependent Role="PROCESO_ANALISTA">
+        <PropertyRef Name="id_estado_proceso_analista" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PROCESO_ANALISTA_SOLICITUD">
+    <End Role="SOLICITUD" Type="Self.SOLICITUD" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="PROCESO_ANALISTA" Type="Self.PROCESO_ANALISTA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SOLICITUD">
+        <PropertyRef Name="id_solicitud" />
+      </Principal>
+      <Dependent Role="PROCESO_ANALISTA">
+        <PropertyRef Name="solicitud_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PRODUCTO_ALMACEN">
+    <End Role="ALMACEN" Type="Self.ALMACEN" Multiplicity="1" />
+    <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ALMACEN">
+        <PropertyRef Name="id_almacen" />
+      </Principal>
+      <Dependent Role="PRODUCTO">
+        <PropertyRef Name="id_almacen" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PRODUCTO_CATALOGO">
+    <End Role="CATALOGO" Type="Self.CATALOGO" Multiplicity="1" />
+    <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CATALOGO">
+        <PropertyRef Name="id_catalogo" />
+      </Principal>
+      <Dependent Role="PRODUCTO">
+        <PropertyRef Name="id_catalogo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PRODUCTO_LOTE">
+    <End Role="LOTE" Type="Self.LOTE" Multiplicity="1" />
+    <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LOTE">
+        <PropertyRef Name="id_lote" />
+      </Principal>
+      <Dependent Role="PRODUCTO">
+        <PropertyRef Name="id_lote" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PRODUCTO_MARCA">
+    <End Role="MARCA" Type="Self.MARCA" Multiplicity="1" />
+    <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MARCA">
+        <PropertyRef Name="id_marca" />
+      </Principal>
+      <Dependent Role="PRODUCTO">
+        <PropertyRef Name="id_marca" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PRODUCTO_REACTIVO">
+    <End Role="REACTIVO" Type="Self.REACTIVO" Multiplicity="1" />
+    <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="REACTIVO">
+        <PropertyRef Name="id_reactivo" />
+      </Principal>
+      <Dependent Role="PRODUCTO">
+        <PropertyRef Name="id_reactivo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PRODUCTO_UNIDAD">
+    <End Role="UNIDAD" Type="Self.UNIDAD" Multiplicity="1" />
+    <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UNIDAD">
+        <PropertyRef Name="id_unidad" />
+      </Principal>
+      <Dependent Role="PRODUCTO">
+        <PropertyRef Name="id_unidad" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_REACTIVO_SOLUCION_REACTIVO">
+    <End Role="REACTIVO" Type="Self.REACTIVO" Multiplicity="1" />
+    <End Role="REACTIVO_SOLUCION" Type="Self.REACTIVO_SOLUCION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="REACTIVO">
+        <PropertyRef Name="id_reactivo" />
+      </Principal>
+      <Dependent Role="REACTIVO_SOLUCION">
+        <PropertyRef Name="id_reactivo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_REACTIVO_SOLUCION_SOLUCION">
+    <End Role="SOLUCION" Type="Self.SOLUCION" Multiplicity="1" />
+    <End Role="REACTIVO_SOLUCION" Type="Self.REACTIVO_SOLUCION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SOLUCION">
+        <PropertyRef Name="id_solucion" />
+      </Principal>
+      <Dependent Role="REACTIVO_SOLUCION">
+        <PropertyRef Name="id_solucion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_REACTIVO_SOLUCION_UNIDAD">
+    <End Role="UNIDAD" Type="Self.UNIDAD" Multiplicity="0..1" />
+    <End Role="REACTIVO_SOLUCION" Type="Self.REACTIVO_SOLUCION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UNIDAD">
+        <PropertyRef Name="id_unidad" />
+      </Principal>
+      <Dependent Role="REACTIVO_SOLUCION">
+        <PropertyRef Name="id_unidad" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_REPORTE_ANALISIS_EMPLEADO">
+    <End Role="ANALISIS_EMPLEADO" Type="Self.ANALISIS_EMPLEADO" Multiplicity="1" />
+    <End Role="REPORTE" Type="Self.REPORTE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ANALISIS_EMPLEADO">
+        <PropertyRef Name="id_analisis_empleado" />
+      </Principal>
+      <Dependent Role="REPORTE">
+        <PropertyRef Name="id_analisis_empleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SALIDA_EXISTENCIA_EMPLEADO">
+    <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="0..1" />
+    <End Role="SALIDA_EXISTENCIA" Type="Self.SALIDA_EXISTENCIA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLEADO">
+        <PropertyRef Name="id_empleado" />
+      </Principal>
+      <Dependent Role="SALIDA_EXISTENCIA">
+        <PropertyRef Name="id_empleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SALIDA_EXISTENCIA_EXISTENCIA_PRODUCTO">
+    <End Role="EXISTENCIA_PRODUCTO" Type="Self.EXISTENCIA_PRODUCTO" Multiplicity="1" />
+    <End Role="SALIDA_EXISTENCIA" Type="Self.SALIDA_EXISTENCIA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EXISTENCIA_PRODUCTO">
+        <PropertyRef Name="id_existencia_producto" />
+      </Principal>
+      <Dependent Role="SALIDA_EXISTENCIA">
+        <PropertyRef Name="id_existencia_producto" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SALIDA_EXISTENCIA_REACITVO">
+    <End Role="REACTIVO" Type="Self.REACTIVO" Multiplicity="0..1" />
+    <End Role="SALIDA_EXISTENCIA" Type="Self.SALIDA_EXISTENCIA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="REACTIVO">
+        <PropertyRef Name="id_reactivo" />
+      </Principal>
+      <Dependent Role="SALIDA_EXISTENCIA">
+        <PropertyRef Name="id_reactivo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SALIDA_EXISTENCIA_UNIDAD">
+    <End Role="UNIDAD" Type="Self.UNIDAD" Multiplicity="1" />
+    <End Role="SALIDA_EXISTENCIA" Type="Self.SALIDA_EXISTENCIA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="UNIDAD">
+        <PropertyRef Name="id_unidad" />
+      </Principal>
+      <Dependent Role="SALIDA_EXISTENCIA">
+        <PropertyRef Name="id_unidad" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SALIDA_SOLUCION_EXISTENCIA_SOLUCION">
+    <End Role="EXISTENCIA_SOLUCION" Type="Self.EXISTENCIA_SOLUCION" Multiplicity="1" />
+    <End Role="SALIDA_SOLUCION" Type="Self.SALIDA_SOLUCION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EXISTENCIA_SOLUCION">
+        <PropertyRef Name="id_existencia_solucion" />
+      </Principal>
+      <Dependent Role="SALIDA_SOLUCION">
+        <PropertyRef Name="id_existencia_solucion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SALIDA_SOLUCION_SALIDA_EXISTENCIA">
+    <End Role="SALIDA_EXISTENCIA" Type="Self.SALIDA_EXISTENCIA" Multiplicity="1" />
+    <End Role="SALIDA_SOLUCION" Type="Self.SALIDA_SOLUCION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SALIDA_EXISTENCIA">
+        <PropertyRef Name="id_salida_existencia" />
+      </Principal>
+      <Dependent Role="SALIDA_SOLUCION">
+        <PropertyRef Name="id_salida_existencia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SOLICITUD_EMPLEADO">
+    <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+    <End Role="SOLICITUD" Type="Self.SOLICITUD" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLEADO">
+        <PropertyRef Name="id_empleado" />
+      </Principal>
+      <Dependent Role="SOLICITUD">
+        <PropertyRef Name="id_empleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SOLICITUD_ESTADO">
+    <End Role="ESTADO" Type="Self.ESTADO" Multiplicity="1" />
+    <End Role="SOLICITUD" Type="Self.SOLICITUD" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ESTADO">
+        <PropertyRef Name="id_estado" />
+      </Principal>
+      <Dependent Role="SOLICITUD">
+        <PropertyRef Name="id_estado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SOLICITUD_ESTADO_PROCESO">
+    <End Role="ESTADO_PROCESO" Type="Self.ESTADO_PROCESO" Multiplicity="1" />
+    <End Role="SOLICITUD" Type="Self.SOLICITUD" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ESTADO_PROCESO">
+        <PropertyRef Name="id_estado_proceso" />
+      </Principal>
+      <Dependent Role="SOLICITUD">
+        <PropertyRef Name="id_estado_proceso" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_SOLICITUD_SOLICITANTE">
+    <End Role="SOLICITANTE" Type="Self.SOLICITANTE" Multiplicity="0..1" />
+    <End Role="SOLICITUD" Type="Self.SOLICITUD" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SOLICITANTE">
+        <PropertyRef Name="id_solicitante" />
+      </Principal>
+      <Dependent Role="SOLICITUD">
+        <PropertyRef Name="id_solicitante" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VARIABLE_ANALISIS">
+    <End Role="ANALISIS" Type="Self.ANALISIS" Multiplicity="1" />
+    <End Role="VARIABLE" Type="Self.VARIABLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ANALISIS">
+        <PropertyRef Name="id_analisis" />
+      </Principal>
+      <Dependent Role="VARIABLE">
+        <PropertyRef Name="id_analisis" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VARIABLE_MUESTRA">
+    <End Role="MUESTRA" Type="Self.MUESTRA" Multiplicity="0..1" />
+    <End Role="VARIABLE" Type="Self.VARIABLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MUESTRA">
+        <PropertyRef Name="id_muestra" />
+      </Principal>
+      <Dependent Role="VARIABLE">
+        <PropertyRef Name="id_muestra" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VARIABLE_SOLUCION">
+    <End Role="SOLUCION" Type="Self.SOLUCION" Multiplicity="0..1" />
+    <End Role="VARIABLE" Type="Self.VARIABLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SOLUCION">
+        <PropertyRef Name="id_solucion" />
+      </Principal>
+      <Dependent Role="VARIABLE">
+        <PropertyRef Name="id_solucion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VARIABLE_TIPO_VARIABLE">
+    <End Role="TIPO_VARIABLE" Type="Self.TIPO_VARIABLE" Multiplicity="1" />
+    <End Role="VARIABLE" Type="Self.VARIABLE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPO_VARIABLE">
+        <PropertyRef Name="id_tipovariable" />
+      </Principal>
+      <Dependent Role="VARIABLE">
+        <PropertyRef Name="id_tipovariable" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VISITA_EMPLEADO">
+    <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+    <End Role="VISITA" Type="Self.VISITA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLEADO">
+        <PropertyRef Name="id_empleado" />
+      </Principal>
+      <Dependent Role="VISITA">
+        <PropertyRef Name="id_empleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VISITA_GRUPO_SOLICITUD">
+    <End Role="GRUPO_SOLICITUD" Type="Self.GRUPO_SOLICITUD" Multiplicity="0..1" />
+    <End Role="VISITA" Type="Self.VISITA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GRUPO_SOLICITUD">
+        <PropertyRef Name="id_grupo_solicitud" />
+      </Principal>
+      <Dependent Role="VISITA">
+        <PropertyRef Name="id_grupo_solicitud" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VISITA_PROCEDENCIA">
+    <End Role="PROCEDENCIA" Type="Self.PROCEDENCIA" Multiplicity="1" />
+    <End Role="VISITA" Type="Self.VISITA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PROCEDENCIA">
+        <PropertyRef Name="id_procedencia" />
+      </Principal>
+      <Dependent Role="VISITA">
+        <PropertyRef Name="id_procedencia" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VISITA_SITIO_MUESTREO">
+    <End Role="SITIO_MUESTREO" Type="Self.SITIO_MUESTREO" Multiplicity="0..1" />
+    <End Role="VISITA" Type="Self.VISITA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SITIO_MUESTREO">
+        <PropertyRef Name="id_sitio_muestreo" />
+      </Principal>
+      <Dependent Role="VISITA">
+        <PropertyRef Name="id_sitio_muestreo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VISITA_SOLICITUD">
+    <End Role="SOLICITUD" Type="Self.SOLICITUD" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="VISITA" Type="Self.VISITA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SOLICITUD">
+        <PropertyRef Name="id_solicitud" />
+      </Principal>
+      <Dependent Role="VISITA">
+        <PropertyRef Name="id_solicitud" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_VISITA_VISITA">
+    <End Role="TIPO_MUESTRA" Type="Self.TIPO_MUESTRA" Multiplicity="1" />
+    <End Role="VISITA" Type="Self.VISITA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPO_MUESTRA">
+        <PropertyRef Name="id_tipo_muestra" />
+      </Principal>
+      <Dependent Role="VISITA">
+        <PropertyRef Name="id_tipo_muestra" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MARNModelStoreContainer">
+    <EntitySet Name="ALMACEN" EntityType="Self.ALMACEN" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ANALISIS" EntityType="Self.ANALISIS" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ANALISIS_EMPLEADO" EntityType="Self.ANALISIS_EMPLEADO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ANALISIS_REACTIVO" EntityType="Self.ANALISIS_REACTIVO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="AREA" EntityType="Self.AREA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CALCULO" EntityType="Self.CALCULO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CATALOGO" EntityType="Self.CATALOGO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DETALLE_SOLICITUD" EntityType="Self.DETALLE_SOLICITUD" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DETALLE_VISITA" EntityType="Self.DETALLE_VISITA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EMPLEADO" EntityType="Self.EMPLEADO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ESTADO" EntityType="Self.ESTADO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ESTADO_PROCESO" EntityType="Self.ESTADO_PROCESO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ESTADO_PROCESO_ANALISTA" EntityType="Self.ESTADO_PROCESO_ANALISTA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EXISTENCIA_PRODUCTO" EntityType="Self.EXISTENCIA_PRODUCTO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="EXISTENCIA_SOLUCION" EntityType="Self.EXISTENCIA_SOLUCION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="GRUPO_SOLICITUD" EntityType="Self.GRUPO_SOLICITUD" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="INFORMES" EntityType="Self.INFORMES" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="INPUT" EntityType="Self.INPUT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LOTE" EntityType="Self.LOTE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MARCA" EntityType="Self.MARCA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MUESTRA" EntityType="Self.MUESTRA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NOTIFICACION" EntityType="Self.NOTIFICACION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PROCEDENCIA" EntityType="Self.PROCEDENCIA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PROCESO_ANALISTA" EntityType="Self.PROCESO_ANALISTA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="REACTIVO" EntityType="Self.REACTIVO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="REACTIVO_SOLUCION" EntityType="Self.REACTIVO_SOLUCION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="REPORTE" EntityType="Self.REPORTE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RESULTADO" EntityType="Self.RESULTADO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SALIDA_EXISTENCIA" EntityType="Self.SALIDA_EXISTENCIA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SALIDA_SOLUCION" EntityType="Self.SALIDA_SOLUCION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SITIO_MUESTREO" EntityType="Self.SITIO_MUESTREO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SOLICITANTE" EntityType="Self.SOLICITANTE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SOLICITUD" EntityType="Self.SOLICITUD" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SOLUCION" EntityType="Self.SOLUCION" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TIPO_EMPLEADO" EntityType="Self.TIPO_EMPLEADO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TIPO_MUESTRA" EntityType="Self.TIPO_MUESTRA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TIPO_VARIABLE" EntityType="Self.TIPO_VARIABLE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="UNIDAD" EntityType="Self.UNIDAD" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VARIABLE" EntityType="Self.VARIABLE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="VISITA" EntityType="Self.VISITA" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_ANALISIS_AREA" Association="Self.FK_ANALISIS_AREA">
+      <End Role="AREA" EntitySet="AREA" />
+      <End Role="ANALISIS" EntitySet="ANALISIS" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ANALISIS_EMPLEADO_DETALLE_SOLICITUD" Association="Self.FK_ANALISIS_EMPLEADO_DETALLE_SOLICITUD">
+      <End Role="DETALLE_SOLICITUD" EntitySet="DETALLE_SOLICITUD" />
+      <End Role="ANALISIS_EMPLEADO" EntitySet="ANALISIS_EMPLEADO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ANALISIS_EMPLEADO_EMPLEADO" Association="Self.FK_ANALISIS_EMPLEADO_EMPLEADO">
+      <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+      <End Role="ANALISIS_EMPLEADO" EntitySet="ANALISIS_EMPLEADO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ANALISIS_REACTIVO_ANALISIS_EMPLEADO" Association="Self.FK_ANALISIS_REACTIVO_ANALISIS_EMPLEADO">
+      <End Role="ANALISIS_EMPLEADO" EntitySet="ANALISIS_EMPLEADO" />
+      <End Role="ANALISIS_REACTIVO" EntitySet="ANALISIS_REACTIVO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ANALISIS_REACTIVO_REACTIVO" Association="Self.FK_ANALISIS_REACTIVO_REACTIVO">
+      <End Role="REACTIVO" EntitySet="REACTIVO" />
+      <End Role="ANALISIS_REACTIVO" EntitySet="ANALISIS_REACTIVO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ANALISIS_REACTIVO_UNIDAD" Association="Self.FK_ANALISIS_REACTIVO_UNIDAD">
+      <End Role="UNIDAD" EntitySet="UNIDAD" />
+      <End Role="ANALISIS_REACTIVO" EntitySet="ANALISIS_REACTIVO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CALCULO_CALCULO" Association="Self.FK_CALCULO_CALCULO">
+      <End Role="ANALISIS_EMPLEADO" EntitySet="ANALISIS_EMPLEADO" />
+      <End Role="CALCULO" EntitySet="CALCULO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CALCULO_RESULTADO" Association="Self.FK_CALCULO_RESULTADO">
+      <End Role="RESULTADO" EntitySet="RESULTADO" />
+      <End Role="CALCULO" EntitySet="CALCULO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DETALLE_SOLICITUD_ANALISIS" Association="Self.FK_DETALLE_SOLICITUD_ANALISIS">
+      <End Role="ANALISIS" EntitySet="ANALISIS" />
+      <End Role="DETALLE_SOLICITUD" EntitySet="DETALLE_SOLICITUD" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DETALLE_SOLICITUD_SOLICITUD" Association="Self.FK_DETALLE_SOLICITUD_SOLICITUD">
+      <End Role="SOLICITUD" EntitySet="SOLICITUD" />
+      <End Role="DETALLE_SOLICITUD" EntitySet="DETALLE_SOLICITUD" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DETALLE_VISITA_MUESTRA" Association="Self.FK_DETALLE_VISITA_MUESTRA">
+      <End Role="MUESTRA" EntitySet="MUESTRA" />
+      <End Role="DETALLE_VISITA" EntitySet="DETALLE_VISITA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DETALLE_VISITA_VISITA" Association="Self.FK_DETALLE_VISITA_VISITA">
+      <End Role="VISITA" EntitySet="VISITA" />
+      <End Role="DETALLE_VISITA" EntitySet="DETALLE_VISITA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EMPLEADO_AREA" Association="Self.FK_EMPLEADO_AREA">
+      <End Role="AREA" EntitySet="AREA" />
+      <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EMPLEADO_TIPO_EMPLEADO" Association="Self.FK_EMPLEADO_TIPO_EMPLEADO">
+      <End Role="TIPO_EMPLEADO" EntitySet="TIPO_EMPLEADO" />
+      <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EXISTENCIA_PRODUCTO_PRODUCTO" Association="Self.FK_EXISTENCIA_PRODUCTO_PRODUCTO">
+      <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+      <End Role="EXISTENCIA_PRODUCTO" EntitySet="EXISTENCIA_PRODUCTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EXISTENCIA_SOLUCION_EMPLEADO" Association="Self.FK_EXISTENCIA_SOLUCION_EMPLEADO">
+      <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+      <End Role="EXISTENCIA_SOLUCION" EntitySet="EXISTENCIA_SOLUCION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_EXISTENCIA_SOLUCION_SOLUCION" Association="Self.FK_EXISTENCIA_SOLUCION_SOLUCION">
+      <End Role="SOLUCION" EntitySet="SOLUCION" />
+      <End Role="EXISTENCIA_SOLUCION" EntitySet="EXISTENCIA_SOLUCION" />
+    </AssociationSet>
+    <AssociationSet Name="fk_GROUPO_SOLICITANTE" Association="Self.fk_GROUPO_SOLICITANTE">
+      <End Role="SOLICITANTE" EntitySet="SOLICITANTE" />
+      <End Role="GRUPO_SOLICITUD" EntitySet="GRUPO_SOLICITUD" />
+    </AssociationSet>
+    <AssociationSet Name="FK_INFORMES_SOLICITUD" Association="Self.FK_INFORMES_SOLICITUD">
+      <End Role="SOLICITUD" EntitySet="SOLICITUD" />
+      <End Role="INFORMES" EntitySet="INFORMES" />
+    </AssociationSet>
+    <AssociationSet Name="FK_INPUT_CALCULO" Association="Self.FK_INPUT_CALCULO">
+      <End Role="CALCULO" EntitySet="CALCULO" />
+      <End Role="INPUT" EntitySet="INPUT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_INPUT_VARIABLE" Association="Self.FK_INPUT_VARIABLE">
+      <End Role="VARIABLE" EntitySet="VARIABLE" />
+      <End Role="INPUT" EntitySet="INPUT" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NOTIFICACION_EMPLEADO" Association="Self.FK_NOTIFICACION_EMPLEADO">
+      <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+      <End Role="NOTIFICACION" EntitySet="NOTIFICACION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NOTIFICACION_EMPLEADO1" Association="Self.FK_NOTIFICACION_EMPLEADO1">
+      <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+      <End Role="NOTIFICACION" EntitySet="NOTIFICACION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PROCESO_ANALISTA_EMPLEADO" Association="Self.FK_PROCESO_ANALISTA_EMPLEADO">
+      <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+      <End Role="PROCESO_ANALISTA" EntitySet="PROCESO_ANALISTA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PROCESO_ANALISTA_ESTADO_PROCESO_ANALISTA" Association="Self.FK_PROCESO_ANALISTA_ESTADO_PROCESO_ANALISTA">
+      <End Role="ESTADO_PROCESO_ANALISTA" EntitySet="ESTADO_PROCESO_ANALISTA" />
+      <End Role="PROCESO_ANALISTA" EntitySet="PROCESO_ANALISTA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PROCESO_ANALISTA_SOLICITUD" Association="Self.FK_PROCESO_ANALISTA_SOLICITUD">
+      <End Role="SOLICITUD" EntitySet="SOLICITUD" />
+      <End Role="PROCESO_ANALISTA" EntitySet="PROCESO_ANALISTA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PRODUCTO_ALMACEN" Association="Self.FK_PRODUCTO_ALMACEN">
+      <End Role="ALMACEN" EntitySet="ALMACEN" />
+      <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PRODUCTO_CATALOGO" Association="Self.FK_PRODUCTO_CATALOGO">
+      <End Role="CATALOGO" EntitySet="CATALOGO" />
+      <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PRODUCTO_LOTE" Association="Self.FK_PRODUCTO_LOTE">
+      <End Role="LOTE" EntitySet="LOTE" />
+      <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PRODUCTO_MARCA" Association="Self.FK_PRODUCTO_MARCA">
+      <End Role="MARCA" EntitySet="MARCA" />
+      <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PRODUCTO_REACTIVO" Association="Self.FK_PRODUCTO_REACTIVO">
+      <End Role="REACTIVO" EntitySet="REACTIVO" />
+      <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PRODUCTO_UNIDAD" Association="Self.FK_PRODUCTO_UNIDAD">
+      <End Role="UNIDAD" EntitySet="UNIDAD" />
+      <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_REACTIVO_SOLUCION_REACTIVO" Association="Self.FK_REACTIVO_SOLUCION_REACTIVO">
+      <End Role="REACTIVO" EntitySet="REACTIVO" />
+      <End Role="REACTIVO_SOLUCION" EntitySet="REACTIVO_SOLUCION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_REACTIVO_SOLUCION_SOLUCION" Association="Self.FK_REACTIVO_SOLUCION_SOLUCION">
+      <End Role="SOLUCION" EntitySet="SOLUCION" />
+      <End Role="REACTIVO_SOLUCION" EntitySet="REACTIVO_SOLUCION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_REACTIVO_SOLUCION_UNIDAD" Association="Self.FK_REACTIVO_SOLUCION_UNIDAD">
+      <End Role="UNIDAD" EntitySet="UNIDAD" />
+      <End Role="REACTIVO_SOLUCION" EntitySet="REACTIVO_SOLUCION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_REPORTE_ANALISIS_EMPLEADO" Association="Self.FK_REPORTE_ANALISIS_EMPLEADO">
+      <End Role="ANALISIS_EMPLEADO" EntitySet="ANALISIS_EMPLEADO" />
+      <End Role="REPORTE" EntitySet="REPORTE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SALIDA_EXISTENCIA_EMPLEADO" Association="Self.FK_SALIDA_EXISTENCIA_EMPLEADO">
+      <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+      <End Role="SALIDA_EXISTENCIA" EntitySet="SALIDA_EXISTENCIA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SALIDA_EXISTENCIA_EXISTENCIA_PRODUCTO" Association="Self.FK_SALIDA_EXISTENCIA_EXISTENCIA_PRODUCTO">
+      <End Role="EXISTENCIA_PRODUCTO" EntitySet="EXISTENCIA_PRODUCTO" />
+      <End Role="SALIDA_EXISTENCIA" EntitySet="SALIDA_EXISTENCIA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SALIDA_EXISTENCIA_REACITVO" Association="Self.FK_SALIDA_EXISTENCIA_REACITVO">
+      <End Role="REACTIVO" EntitySet="REACTIVO" />
+      <End Role="SALIDA_EXISTENCIA" EntitySet="SALIDA_EXISTENCIA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SALIDA_EXISTENCIA_UNIDAD" Association="Self.FK_SALIDA_EXISTENCIA_UNIDAD">
+      <End Role="UNIDAD" EntitySet="UNIDAD" />
+      <End Role="SALIDA_EXISTENCIA" EntitySet="SALIDA_EXISTENCIA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SALIDA_SOLUCION_EXISTENCIA_SOLUCION" Association="Self.FK_SALIDA_SOLUCION_EXISTENCIA_SOLUCION">
+      <End Role="EXISTENCIA_SOLUCION" EntitySet="EXISTENCIA_SOLUCION" />
+      <End Role="SALIDA_SOLUCION" EntitySet="SALIDA_SOLUCION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SALIDA_SOLUCION_SALIDA_EXISTENCIA" Association="Self.FK_SALIDA_SOLUCION_SALIDA_EXISTENCIA">
+      <End Role="SALIDA_EXISTENCIA" EntitySet="SALIDA_EXISTENCIA" />
+      <End Role="SALIDA_SOLUCION" EntitySet="SALIDA_SOLUCION" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SOLICITUD_EMPLEADO" Association="Self.FK_SOLICITUD_EMPLEADO">
+      <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+      <End Role="SOLICITUD" EntitySet="SOLICITUD" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SOLICITUD_ESTADO" Association="Self.FK_SOLICITUD_ESTADO">
+      <End Role="ESTADO" EntitySet="ESTADO" />
+      <End Role="SOLICITUD" EntitySet="SOLICITUD" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SOLICITUD_ESTADO_PROCESO" Association="Self.FK_SOLICITUD_ESTADO_PROCESO">
+      <End Role="ESTADO_PROCESO" EntitySet="ESTADO_PROCESO" />
+      <End Role="SOLICITUD" EntitySet="SOLICITUD" />
+    </AssociationSet>
+    <AssociationSet Name="FK_SOLICITUD_SOLICITANTE" Association="Self.FK_SOLICITUD_SOLICITANTE">
+      <End Role="SOLICITANTE" EntitySet="SOLICITANTE" />
+      <End Role="SOLICITUD" EntitySet="SOLICITUD" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VARIABLE_ANALISIS" Association="Self.FK_VARIABLE_ANALISIS">
+      <End Role="ANALISIS" EntitySet="ANALISIS" />
+      <End Role="VARIABLE" EntitySet="VARIABLE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VARIABLE_MUESTRA" Association="Self.FK_VARIABLE_MUESTRA">
+      <End Role="MUESTRA" EntitySet="MUESTRA" />
+      <End Role="VARIABLE" EntitySet="VARIABLE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VARIABLE_SOLUCION" Association="Self.FK_VARIABLE_SOLUCION">
+      <End Role="SOLUCION" EntitySet="SOLUCION" />
+      <End Role="VARIABLE" EntitySet="VARIABLE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VARIABLE_TIPO_VARIABLE" Association="Self.FK_VARIABLE_TIPO_VARIABLE">
+      <End Role="TIPO_VARIABLE" EntitySet="TIPO_VARIABLE" />
+      <End Role="VARIABLE" EntitySet="VARIABLE" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VISITA_EMPLEADO" Association="Self.FK_VISITA_EMPLEADO">
+      <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+      <End Role="VISITA" EntitySet="VISITA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VISITA_GRUPO_SOLICITUD" Association="Self.FK_VISITA_GRUPO_SOLICITUD">
+      <End Role="GRUPO_SOLICITUD" EntitySet="GRUPO_SOLICITUD" />
+      <End Role="VISITA" EntitySet="VISITA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VISITA_PROCEDENCIA" Association="Self.FK_VISITA_PROCEDENCIA">
+      <End Role="PROCEDENCIA" EntitySet="PROCEDENCIA" />
+      <End Role="VISITA" EntitySet="VISITA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VISITA_SITIO_MUESTREO" Association="Self.FK_VISITA_SITIO_MUESTREO">
+      <End Role="SITIO_MUESTREO" EntitySet="SITIO_MUESTREO" />
+      <End Role="VISITA" EntitySet="VISITA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VISITA_SOLICITUD" Association="Self.FK_VISITA_SOLICITUD">
+      <End Role="SOLICITUD" EntitySet="SOLICITUD" />
+      <End Role="VISITA" EntitySet="VISITA" />
+    </AssociationSet>
+    <AssociationSet Name="FK_VISITA_VISITA" Association="Self.FK_VISITA_VISITA">
+      <End Role="TIPO_MUESTRA" EntitySet="TIPO_MUESTRA" />
+      <End Role="VISITA" EntitySet="VISITA" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

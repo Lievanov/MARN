@@ -1,0 +1,110 @@
+﻿@model   IEnumerable<LaboratorioMarn.GRUPO_SOLICITUD>
+
+@{
+    ViewBag.Title = "Solicitudes";
+}
+<h1 class="page-header">Solicitudes</h1>
+<p>
+    @Html.ActionLink("Crear nueva solicitud", "Create", "GrupoSolicitud")
+</p>
+<table id="tablaSolicitante" class="table">
+    <thead>
+        <tr>    
+            <th>
+                Identificador
+            </th>        
+            <th>
+               Solicitante
+            </th>
+            <th>
+               Fecha de solicitud
+            </th>
+            <th>
+              Visitas
+            </th>
+            <th>
+               Muestras
+            </th>
+            <th>
+               Estado
+            </th>
+            <th>
+                Administrar 
+            </th>
+            <th></th>
+</tr>
+    </thead>
+    <tbody>
+        @foreach (GRUPO_SOLICITUD grupoSolicitud in Model)
+        {
+            <tr>
+                <td>
+                    @grupoSolicitud.identificador
+                </td>     
+                <td>
+                    @grupoSolicitud.SOLICITANTE.nombre_solicitante
+                </td>
+                <td>
+                    @grupoSolicitud.fecha_solicitud.ToShortDateString()
+                </td>
+                <td>
+                    @grupoSolicitud.VISITAs.GroupBy(v => v.id).Count()
+                </td>
+                <td>
+                    @grupoSolicitud.VISITAs.Count()
+                </td>
+                <td>
+                    @if (@grupoSolicitud.VISITAs.GroupBy(v => v.id).Count() == 0) 
+                    {
+                        <span>Sin visitas</span>
+                    }
+                    else if (@grupoSolicitud.VISITAs.Where(v => v.SOLICITUD.id_estado == 4).Count() == grupoSolicitud.VISITAs.Count())
+                    {
+                        <span>Analisis terminados</span>
+                    }
+                    else
+                    {
+                        <span>En proceso</span>
+                    }
+                </td>
+                <td>
+                    <a href="@Url.Action("Administrar", "Visita")/@grupoSolicitud.id_grupo_solicitud">Visitas</a>
+               </td>
+            </tr>
+        }
+    </tbody>
+</table>
+    @*<input type="button" value="Create" onclick="location.href='@Url.Action("Create","Index")'" />*@
+
+@section Scripts {
+    <script type="text/javascript" src="https://cdn.datatables.net/select/1.1.2/js/dataTables.select.min.js"></script>
+    <script type="text/javascript">
+        var tablaSolicitante;
+        $(function () {
+            tablaSolicitante = $("#tablaSolicitante").DataTable({
+                select: {
+                    style: 'os',
+                    selector: 'td:first-child'
+                },
+                language: {
+                    url: 'Scripts/spanish.json'
+                }
+            });
+        })
+
+    </script>
+}
+
+@section Styles {
+    <link href="https://cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css" rel="stylesheet" />
+
+    <style type="text/css">
+        table.dataTable thead {
+            font-size: 0.85em;
+        }
+
+        table.dataTable tbody {
+            font-size: 0.85em;
+        }
+    </style>
+}

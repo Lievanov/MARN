@@ -1,0 +1,84 @@
+﻿@model   IEnumerable<LaboratorioMarn.SOLICITUD>
+
+<table id="tablaSolicitante" class="table">
+    <thead>
+        <tr>
+            <th># referencia</th>
+            
+            <th>
+                Estado
+            </th>
+            <th>
+                Fecha de solicitud
+            </th>
+            <th>
+                Fecha de Inicio
+            </th>
+            <th>
+                Fecha de finalización
+            </th>
+
+            <th>
+                Analisis
+            </th>
+            <th>
+                Areas
+            </th>
+            <th>
+                Estado del Proceso
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (SOLICITUD solicitud in Model)
+        {
+            <tr>
+                <td>@solicitud.no_referencia </td>
+                
+                <td>
+                    @solicitud.ESTADO.nombre_estado
+                </td>
+
+                <td>
+                    @solicitud.fecha_creacion.Value.ToShortDateString()
+                </td>
+
+                @if (solicitud.fecha_inicio != null)
+                {
+                    <td>
+                        @solicitud.fecha_inicio.Value.ToShortDateString()
+                    </td>
+                }
+                else
+                {
+                    <td></td>
+                }
+
+                @if (solicitud.fecha_finalizacion != null)
+                {
+                    <td>
+                        @solicitud.fecha_finalizacion.Value.ToShortDateString()
+                    </td>
+                }
+                else
+                {
+                    <td></td>
+                }
+                <td>
+                    @solicitud.DETALLE_SOLICITUD.Count()
+                </td>
+                <td>
+                    @solicitud.DETALLE_SOLICITUD.GroupBy(ds => ds.ANALISI.AREA.id_area).Count()
+                </td>
+
+
+                <td>@solicitud.ESTADO_PROCESO.nombre_estado_proceso</td>
+                
+                <td>
+                    <a target="_blank" href="@Url.Action("Detalle", "Solicitud")/@solicitud.id_solicitud">Administrar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

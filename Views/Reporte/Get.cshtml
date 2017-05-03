@@ -1,0 +1,77 @@
+﻿@model IEnumerable<LaboratorioMarn.REPORTE>
+
+@{
+    PROCESO_ANALISTA procesoAnalista = ViewBag.procesoAnalista;
+}
+
+<h4>Empleado: @ViewBag.empleado.nombre_empleado</h4>
+
+@if (procesoAnalista.id_estado_proceso_analista == 4)
+{ 
+    <p class="bg-info">Este reporte ya fue aprobado.</p>
+}
+
+<table class="table table-condensed table-striped table-bordered">
+    <tr>
+        <th>
+            Análisis
+        </th>
+        <th>
+            Resultado
+        </th>
+        <th>
+            Incertezas
+        </th>
+        <th>
+            Unidades
+        </th>
+        <th>
+            Límite de Detección
+        </th>
+        <th>
+            Método
+        </th>
+    </tr>
+    @foreach (REPORTE reporte in Model)
+    {
+        <tr>
+            <td>
+                @reporte.ANALISIS_EMPLEADO.DETALLE_SOLICITUD.ANALISI.nombre
+            </td>
+            <td>
+                @reporte.resultado
+            </td>
+            <td>
+                @reporte.incerteza
+            </td>
+            <td>
+                @reporte.unidades
+            </td>
+            <td>
+                @reporte.limite_deteccion
+            </td>
+            <td>
+                @reporte.metodo
+            </td>
+        </tr>
+    }
+</table>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="col-md-12 hide" id="alert">
+            <div class="alert alert-success" role="alert" id="alertMsg"></div>
+        </div>
+    </div>
+    @if (procesoAnalista.id_estado_proceso_analista != 6)
+    { 
+        <div class="col-md-4">
+            @if (procesoAnalista.id_estado_proceso_analista == 3)
+            { 
+                <a href="#" class="accionResultado btn btn-success" data-accion="aprobar">Aprobar</a>
+            }
+
+            <a href="#" class="accionResultado btn btn-danger" data-accion="denegar">Denegar</a>
+        </div>
+    }
+</div>

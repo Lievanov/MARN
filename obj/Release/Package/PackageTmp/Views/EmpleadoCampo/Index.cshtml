@@ -1,0 +1,76 @@
+﻿@model IEnumerable<LaboratorioMarn.EMPLEADO>
+
+@{
+    ViewBag.Title = "Index";
+    
+}
+
+<h2>Empleados de campo</h2>
+
+<p>
+    @Html.ActionLink("Nuevo empleado de campo", "Create")
+</p>
+
+<div class="row">
+
+    <div class="col-sm-7 col-sm-offset-2">
+        <table class="table table-striped" id="detalleReactivo">
+            <thead>
+
+                <tr>
+                    <th>
+                        Nombre Empleado
+                    </th>
+                    <th>
+                        Telefono Empleado
+                    </th>
+                    
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.nombre_empleado)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.telefono_empleado)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Editar", "Edit", new { id = item.id_empleado }) |
+                            @Html.ActionLink("Eliminar", "Delete", new { id = item.id_empleado })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <script type="text/javascript" src="//cdn.datatables.net/u/dt/dt-1.10.12/datatables.min.js"></script>
+    <script type="text/javascript">
+    $(function () {
+        $('#detalleReactivo').DataTable({
+            language: {
+                url: '/Scripts/spanish.json'
+            }
+        });
+    });
+    </script>
+}
+@section Styles {
+    <link href="https://cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css" rel="stylesheet" />
+    <style type="text/css">
+        table.dataTable thead {
+            font-size: 0.85em;
+        }
+
+        table.dataTable tbody {
+            font-size: 0.85em;
+        }
+    </style>
+
+}

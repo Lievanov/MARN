@@ -1,0 +1,593 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{552D3226-AECC-4596-AFEE-5BC980D6BA77}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LaboratorioMarn</RootNamespace>
+    <AssemblyName>LaboratorioMarn</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>AllFilesInTheProject</FilesToIncludeForPublish>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <FilesToIncludeForPublish>AllFilesInTheProject</FilesToIncludeForPublish>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Mvc.RazorTools">
+      <HintPath>..\packages\Mvc.RazorTools.Base.1.0.5\lib\net45\Mvc.RazorTools.dll</HintPath>
+    </Reference>
+    <Reference Include="Mvc.RazorTools.FontAwesome">
+      <HintPath>..\packages\Mvc.RazorTools.FontAwesome.4.3.0.0\lib\net45\Mvc.RazorTools.FontAwesome.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.8.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="WebActivatorEx">
+      <HintPath>..\packages\WebActivatorEx.2.0.6\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.1.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.1.0\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.1.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin">
+      <HintPath>..\packages\Microsoft.Owin.3.0.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.3.0.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.0\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Facebook">
+      <HintPath>..\packages\Microsoft.Owin.Security.Facebook.3.0.0\lib\net45\Microsoft.Owin.Security.Facebook.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.0\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Google">
+      <HintPath>..\packages\Microsoft.Owin.Security.Google.3.0.0\lib\net45\Microsoft.Owin.Security.Google.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Twitter">
+      <HintPath>..\packages\Microsoft.Owin.Security.Twitter.3.0.0\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.MicrosoftAccount">
+      <HintPath>..\packages\Microsoft.Owin.Security.MicrosoftAccount.3.0.0\lib\net45\Microsoft.Owin.Security.MicrosoftAccount.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ALMACEN.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ANALISI.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ANALISIS_EMPLEADO.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ANALISIS_REACTIVO.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\IdentityConfig.cs" />
+    <Compile Include="App_Start\Razor Tools\FontAwesome.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="AREA.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CALCULO.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CATALOGO.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Classes\Notificacion.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AlmacenController.cs" />
+    <Compile Include="Controllers\AnalisiController.cs" />
+    <Compile Include="Controllers\AnalisisController.cs" />
+    <Compile Include="Controllers\AnalistaController.cs" />
+    <Compile Include="Controllers\EmpleadoCampoController.cs" />
+    <Compile Include="Controllers\EmpleadoController.cs" />
+    <Compile Include="Controllers\GrupoSolicitudController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InventarioAnalistaController.cs" />
+    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MuestraController.cs" />
+    <Compile Include="Controllers\ReactivoController.cs" />
+    <Compile Include="Controllers\NotificacionController.cs" />
+    <Compile Include="Controllers\ReporteController.cs" />
+    <Compile Include="Controllers\ReportesSolicitudController.cs" />
+    <Compile Include="Controllers\RoleAdminController.cs" />
+    <Compile Include="Controllers\SitioMuestreoController.cs" />
+    <Compile Include="Controllers\SolicitanteController.cs" />
+    <Compile Include="Controllers\SolicitudController.cs" />
+    <Compile Include="Controllers\ProductoController.cs" />
+    <Compile Include="Controllers\VisitaController.cs" />
+    <Compile Include="DETALLE_SOLICITUD.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DETALLE_VISITA.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EMPLEADO.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ESTADO.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ESTADO_PROCESO.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ESTADO_PROCESO_ANALISTA.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EXISTENCIA_PRODUCTO.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EXISTENCIA_SOLUCION.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="GRUPO_SOLICITUD.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="INFORME.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Infrastructure\AppIdentityDbContext.cs" />
+    <Compile Include="Infrastructure\AppRoleManager.cs" />
+    <Compile Include="Infrastructure\AppUserManager.cs" />
+    <Compile Include="INPUT.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="LOTE.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MARCA.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MarnModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MarnModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MarnModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="MarnModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MarnModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AnalisisSolicitud.cs" />
+    <Compile Include="Models\AppRole.cs" />
+    <Compile Include="Models\AppUser.cs" />
+    <Compile Include="Models\Informe\InformeSolicitud.cs" />
+    <Compile Include="Models\Informe\Parametro.cs" />
+    <Compile Include="Models\Informe\Resultado.cs" />
+    <Compile Include="Models\reporteSolicitudxsolicitantes.cs" />
+    <Compile Include="Models\reporteAnalisixAreas.cs" />
+    <Compile Include="Models\SolicitudDatos.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Solicitudes.cs" />
+    <Compile Include="Models\UserViewModels.cs" />
+    <Compile Include="MUESTRA.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="NOTIFICACION.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROCEDENCIA.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROCESO_ANALISTA.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PRODUCTO.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="REACTIVO.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="REACTIVO_SOLUCION.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="REPORTE.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="RESULTADO.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SALIDA_EXISTENCIA.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SALIDA_SOLUCION.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SITIO_MUESTREO.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SOLICITANTE.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SOLICITUD.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="SOLUCION.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Startup.cs" />
+    <Compile Include="TIPO_EMPLEADO.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TIPO_MUESTRA.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TIPO_VARIABLE.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="UNIDAD.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VARIABLE.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="VISITA.cs">
+      <DependentUpon>MarnModel.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Avatar\empleado_2.png" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\css-regions-polyfill.min.js" />
+    <Content Include="Content\datepicker.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\jquery.dataTables.min.css" />
+    <Content Include="Content\login.css" />
+    <Content Include="Content\print-headers-and-footers.css" />
+    <Content Include="Content\print-headers-and-footers.js" />
+    <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Images\logo marn.jpg" />
+    <Content Include="Images\marn logo 2.png" />
+    <Content Include="Images\marn solo letra.png" />
+    <Content Include="Scripts\bootstrap-datepicker.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <EntityDeploy Include="MarnModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MarnModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="MarnModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MarnModel.edmx</DependentUpon>
+      <LastGenOutput>MarnModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="MarnModel.edmx.diagram">
+      <DependentUpon>MarnModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="MarnModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MarnModel.edmx</DependentUpon>
+      <LastGenOutput>MarnModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="connectionStrings.config" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\css-regions-polyfill.min.js.map" />
+    <None Include="Properties\PublishProfiles\Test.pubxml" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\data.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\morris.min.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\ResetPassword.cshtml" />
+    <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
+    <Content Include="Views\Manage\AddPhoneNumber.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\Index.cshtml" />
+    <Content Include="Views\Manage\ManageLogins.cshtml" />
+    <Content Include="Views\Manage\SetPassword.cshtml" />
+    <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
+    <Content Include="Views\Shared\Lockout.cshtml" />
+    <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Empleado\Create.cshtml" />
+    <Content Include="Views\Empleado\Index.cshtml" />
+    <Content Include="Views\Empleado\Edit.cshtml" />
+    <Content Include="Views\Solicitante\Index.cshtml" />
+    <Content Include="Views\Solicitante\Create.cshtml" />
+    <Content Include="Views\Solicitante\Edit.cshtml" />
+    <Content Include="Views\Solicitante\Delete.cshtml" />
+    <Content Include="Views\Solicitud\Edit.cshtml" />
+    <Content Include="Views\Solicitud\Delete.cshtml" />
+    <Content Include="Views\Solicitud\Create.cshtml" />
+    <Content Include="Views\Solicitud\SeleccionSolicitante.cshtml" />
+    <Content Include="Views\Almacen\Index.cshtml" />
+    <Content Include="Views\Almacen\Create.cshtml" />
+    <Content Include="Views\Almacen\Edit.cshtml" />
+    <Content Include="Views\Producto\Index.cshtml" />
+    <Content Include="Views\Producto\Create.cshtml" />
+    <Content Include="Views\Producto\SeleccionSalida.cshtml" />
+    <Content Include="Views\Producto\Salida\Seleccion.cshtml" />
+    <Content Include="Views\Producto\Salida\Formulario.cshtml" />
+    <Content Include="Views\Solicitud\FormDetalleSolicitud.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Create.cshtml" />
+    <Content Include="Views\Solicitud\Index.cshtml" />
+    <Content Include="Views\Admin\Edit.cshtml" />
+    <Content Include="Views\Solicitud\AsignarAnalisis.cshtml" />
+    <Content Include="Views\Solicitud\Asignacion.cshtml" />
+    <Content Include="Views\Solicitud\Detalle.cshtml" />
+    <Content Include="Views\Solicitante\_Create.cshtml" />
+    <Content Include="Views\ReportesSolicitud\CreaInformeResultados.cshtml" />
+    <Content Include="Views\Visita\Index.cshtml" />
+    <Content Include="Views\Visita\Create.cshtml" />
+    <Content Include="Views\Visita\Edit.cshtml" />
+    <Content Include="Views\Visita\CompleteVisit.cshtml" />
+    <Content Include="Views\ReportesSolicitud\Reporte.cshtml" />
+    <Content Include="Views\_ViewStartAnalista.cshtml" />
+    <Content Include="Views\Shared\_LayoutAnalista.cshtml" />
+    <Content Include="Views\Analista\Index.cshtml" />
+    <Content Include="Scripts\spanish.json" />
+    <Content Include="Views\Solicitud\Informe.cshtml" />
+    <Content Include="Views\Analista\IngresoResultados.cshtml" />
+    <Content Include="Views\Reporte\Create.cshtml" />
+    <Content Include="Views\Reporte\Editar.cshtml" />
+    <Content Include="Views\Muestra\Create.cshtml" />
+    <Content Include="Views\Muestra\Delete.cshtml" />
+    <Content Include="Views\Muestra\Details.cshtml" />
+    <Content Include="Views\Muestra\Edit.cshtml" />
+    <Content Include="Views\Muestra\Index.cshtml" />
+    <Content Include="Views\Reactivo\Create.cshtml" />
+    <Content Include="Views\Reactivo\Delete.cshtml" />
+    <Content Include="Views\Reactivo\Details.cshtml" />
+    <Content Include="Views\Reactivo\Edit.cshtml" />
+    <Content Include="Views\Reactivo\Index.cshtml" />
+    <Content Include="Views\Reporte\Get.cshtml" />
+    <Content Include="Views\Notificacion\Index.cshtml" />
+    <Content Include="Views\Notificacion\GetLast.cshtml" />
+    <Content Include="Views\Analisis\Administrar.cshtml" />
+    <Content Include="Views\Producto\reporteSalida.cshtml" />
+    <Content Include="Views\Producto\inventarioLocal.cshtml" />
+    <Content Include="Views\Analisis\Reactivos.cshtml" />
+    <Content Include="Views\InventarioAnalista\Lista.cshtml" />
+    <Content Include="Views\InventarioAnalista\Salida.cshtml" />
+    <Content Include="Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Views\ReportesSolicitud\TrabajoCosto.cshtml" />
+    <Content Include="Views\SitioMuestreo\Create.cshtml" />
+    <Content Include="Views\SitioMuestreo\Delete.cshtml" />
+    <Content Include="Views\SitioMuestreo\Edit.cshtml" />
+    <Content Include="Views\SitioMuestreo\Index.cshtml" />
+    <Content Include="Views\Analisi\Create.cshtml" />
+    <Content Include="Views\Analisi\Delete.cshtml" />
+    <Content Include="Views\Analisi\Edit.cshtml" />
+    <Content Include="Views\Analisi\Index.cshtml" />
+    <Content Include="Views\Admin\EditProfile.cshtml" />
+    <Content Include="Views\EmpleadoCampo\Create.cshtml" />
+    <Content Include="Views\EmpleadoCampo\Delete.cshtml" />
+    <Content Include="Views\EmpleadoCampo\Edit.cshtml" />
+    <Content Include="Views\EmpleadoCampo\Index.cshtml" />
+    <Content Include="Views\Producto\ReporteUso.cshtml" />
+    <Content Include="Views\GrupoSolicitud\Create.cshtml" />
+    <Content Include="Views\GrupoSolicitud\FormSolicitud.cshtml" />
+    <Content Include="Views\GrupoSolicitud\Index.cshtml" />
+    <Content Include="Views\Visita\Administrar.cshtml" />
+    <Content Include="Views\Visita\CreateVisitas.cshtml" />
+    <Content Include="Views\Solicitud\SeleccionDetalle.cshtml" />
+    <Content Include="Views\Solicitud\Lista.cshtml" />
+    <Content Include="Views\GrupoSolicitud\SeleccionSolicitante.cshtml" />
+    <Content Include="Views\Solicitante\SeleccionSolicitante.cshtml" />
+    <Content Include="Views\Visita\EditarVisita.cshtml" />
+    <None Include="Web.Test.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include=".eb\" />
+    <Folder Include="App_Data\" />
+    <Folder Include="Views\Resultado\" />
+    <Folder Include="Views\RoleAdmin\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>57349</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:57349/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>
