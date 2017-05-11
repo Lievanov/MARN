@@ -45,6 +45,7 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.nombre)
+                            @{ if(!item.metodo.Contains("SMWW"))  {<text> (Sedimento) </text>} }
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.metodo)

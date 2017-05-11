@@ -20,6 +20,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -366,7 +367,9 @@
     <Content Include="Content\datepicker.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\html2canvas.js" />
     <Content Include="Content\jquery.dataTables.min.css" />
+    <Content Include="Content\jspdf.min.js" />
     <Content Include="Content\login.css" />
     <Content Include="Content\print-headers-and-footers.css" />
     <Content Include="Content\print-headers-and-footers.js" />

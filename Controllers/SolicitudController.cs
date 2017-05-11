@@ -203,7 +203,7 @@ namespace LaboratorioMarn.Controllers
                     if (analisisList.Count() > 0)
                     {
                         PROCESO_ANALISTA procesoAnalista;
-                        if (db.PROCESO_ANALISTA.Where(pa => pa.empleado_id == empleadoSeleccion.idEmpleado).Count() > 1)
+                        if (db.PROCESO_ANALISTA.Where(pa => pa.empleado_id == empleadoSeleccion.idEmpleado).Count() == 1)
                         {
                             procesoAnalista = db.PROCESO_ANALISTA.Where(pa => pa.empleado_id == empleadoSeleccion.idEmpleado).First();
 

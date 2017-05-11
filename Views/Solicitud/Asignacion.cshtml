@@ -44,6 +44,7 @@
                 <div class="checkbox col-md-offset-1">
                     <input type="checkbox" class="analisisSeleccionEmpleado" value="@analisis.id_analisis" />
                     @analisis.nombre
+                    @{ if (!analisis.metodo.Contains("SMWW")) {<text> (Sedimento) </text>} }
                 </div>
             </div>
     }

@@ -82,6 +82,8 @@ foreach (AREA area in Model)
                     }
 
                     @Html.DisplayFor(modelItem => item.nombre)
+                    @{ if (!item.metodo.Contains("SMWW"))
+                        {<text> (Sedimento) </text>} }
                 </div>
             }
         </div>
