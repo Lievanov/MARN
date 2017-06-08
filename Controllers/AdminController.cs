@@ -12,8 +12,10 @@ using System.IO;
 
 namespace LaboratorioMarn.Controllers
 {
+
     public class AdminController : Controller
     {
+
         MARNEntities db = new MARNEntities();
 
         // GET: Admin
@@ -97,6 +99,8 @@ namespace LaboratorioMarn.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(CreateModel model)
         {
+
+
             if (ModelState.IsValid)
             {
 
@@ -117,11 +121,11 @@ namespace LaboratorioMarn.Controllers
 
                     AppRole role = await RoleManager.FindByNameAsync(name);
                     if (role == null)
-                    { 
+                    {
                         IdentityResult resultRole = await RoleManager.CreateAsync(new AppRole(name));
                         if (resultRole.Succeeded)
                         {
-                            role = await RoleManager.FindByNameAsync(name);                 
+                            role = await RoleManager.FindByNameAsync(name);
                         }
                         else
                         {
@@ -129,7 +133,7 @@ namespace LaboratorioMarn.Controllers
                         }
                     }
 
-                    await UserManager.AddToRoleAsync(user.Id, name);      
+                    await UserManager.AddToRoleAsync(user.Id, name);
 
                     EMPLEADO empleado = new EMPLEADO()
                     {
@@ -158,34 +162,43 @@ namespace LaboratorioMarn.Controllers
             this.setViewBagParameters();
 
             return View(model);
+
         }
 
         [HttpPost]
         public async Task<ActionResult> Delete(string id)
         {
-            AppUser user = await UserManager.FindByIdAsync(id);
-            if (user != null)
+            try
             {
-                var userid = user.Id;
-                IdentityResult result = await UserManager.DeleteAsync(user);
-                if (result.Succeeded)
+                AppUser user = await UserManager.FindByIdAsync(id);
+                if (user != null)
                 {
-                    EMPLEADO empleado = db.EMPLEADOes.Single(e => e.id_aspnet_user == userid);
+                    var userid = user.Id;
+                    IdentityResult result = await UserManager.DeleteAsync(user);
+                    if (result.Succeeded)
+                    {
+                        EMPLEADO empleado = db.EMPLEADOes.Single(e => e.id_aspnet_user == userid);
 
-                    empleado.id_aspnet_user = null;
+                        empleado.id_aspnet_user = null;
 
-                    db.SaveChanges();
+                        db.SaveChanges();
 
-                    return RedirectToAction("Index");
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return View("Error", result.Errors);
+                    }
                 }
                 else
                 {
-                    return View("Error", result.Errors);
+                    return View("Error", new string[] { "User Not Found" });
                 }
+
             }
-            else
+            catch (System.Data.SqlClient.SqlException)
             {
-                return View("Error", new string[] { "User Not Found" });
+                return RedirectToAction("Index");
             }
         }
 
@@ -194,10 +207,10 @@ namespace LaboratorioMarn.Controllers
             AppUser user = await UserManager.FindByIdAsync(id);
             if (user != null)
             {
-                
+
                 EMPLEADO empleado = db.EMPLEADOes.Single(e => e.id_aspnet_user == user.Id);
                 ViewBag.Empleado = empleado;
-                
+
                 return View(user);
             }
             else
@@ -215,7 +228,7 @@ namespace LaboratorioMarn.Controllers
             {
                 user.Email = email;
                 IdentityResult validEmail = await UserManager.UserValidator.ValidateAsync(user);
-                
+
                 if (!validEmail.Succeeded)
                 {
                     AddErrorsFromResult(validEmail);

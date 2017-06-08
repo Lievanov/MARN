@@ -16,7 +16,7 @@
             onrendered: function (canvas) {
                 var img = canvas.toDataURL("image/png");
                 var doc = new jsPDF();
-                doc.addImage(img, 'PNG', 5, 10, 210, 250);
+                doc.addImage(img, 'PNG', -30, 10,280, 250);
                 doc.save(doc.pdf);
             }
         })
