@@ -1,0 +1,82 @@
+﻿@model IEnumerable<LaboratorioMarn.LIMITE>
+
+@{
+    ViewBag.Title = "Limites de incerteza";
+}
+
+<h2>Limites de incerteza</h2>
+
+<button type="button" class="btn btn-link">
+    @Html.ActionLink("Ingresar Nuevo Limite", "Create")
+</button><br />
+<div class="col-sm-7 col-sm-offset-2">
+    <table class="table" id="tablaLimite">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.id_analisis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.unidades)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.incerteza)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.limite_deteccion)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.id_analisis)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.unidades)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.incerteza)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.limite_deteccion)
+                </td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.analisis }) |
+                    @Html.ActionLink("Eliminar", "Delete", new { id = item.analisis })    
+                </td>
+            </tr>
+        }
+
+    </table>
+    </div>
+</br></br></br></br>
+
+
+@section Scripts {
+        <script type="text/javascript" src="//cdn.datatables.net/u/dt/dt-1.10.12/datatables.min.js"></script>
+        <script type="text/javascript">
+            $(function () {
+                $('#tablaLimite').DataTable({
+                    language: {
+                        url: 'Scripts/spanish.json'
+                    }
+                });
+            });
+        </script>
+    }
+    @section Styles {
+        <link href="https://cdn.datatables.net/select/1.1.2/css/select.dataTables.min.css" rel="stylesheet" />
+        <style type="text/css">
+            table.dataTable thead {
+                font-size: 0.85em;
+            }
+
+            table.dataTable tbody {
+                font-size: 0.85em;
+            }
+            
+        </style>
+
+    }

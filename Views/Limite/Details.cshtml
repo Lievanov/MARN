@@ -1,0 +1,50 @@
+﻿@model LaboratorioMarn.LIMITE
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>LIMITE</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.id_analisis)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.id_analisis)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.unidades)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.unidades)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.incerteza)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.incerteza)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.limite_deteccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.limite_deteccion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.analisis }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

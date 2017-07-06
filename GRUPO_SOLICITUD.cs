@@ -11,8 +11,6 @@ namespace LaboratorioMarn
 {
     using System;
     using System.Collections.Generic;
-
-    using System.ComponentModel.DataAnnotations;
     
     public partial class GRUPO_SOLICITUD
     {
@@ -23,8 +21,6 @@ namespace LaboratorioMarn
     
         public int id_grupo_solicitud { get; set; }
         public int id_solicitante { get; set; }
-
-        [DataType(DataType.DateTime), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public System.DateTime fecha_solicitud { get; set; }
         public System.DateTime fecha_creacion { get; set; }
         public string preset { get; set; }

@@ -11,8 +11,6 @@ namespace LaboratorioMarn
 {
     using System;
     using System.Collections.Generic;
-
-    using System.ComponentModel.DataAnnotations;
     
     public partial class ANALISIS_REACTIVO
     {
@@ -21,8 +19,6 @@ namespace LaboratorioMarn
         public decimal cantidad { get; set; }
         public byte id_unidad { get; set; }
         public int id_analisis_empleado { get; set; }
-
-         [DataType(DataType.DateTime), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public System.DateTime fecha { get; set; }
     
         public virtual ANALISIS_EMPLEADO ANALISIS_EMPLEADO { get; set; }

@@ -11,7 +11,6 @@ namespace LaboratorioMarn
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class VISITA
     {
@@ -23,11 +22,7 @@ namespace LaboratorioMarn
         public int id_visita { get; set; }
         public int id_solicitud { get; set; }
         public byte id_empleado { get; set; }
-
-        [DataType(DataType.DateTime), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> fecha_visita { get; set; }
-
-        [DataType(DataType.DateTime), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> fecha_entrega { get; set; }
         public byte id_procedencia { get; set; }
         public byte id_tipo_muestra { get; set; }

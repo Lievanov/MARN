@@ -11,7 +11,6 @@ namespace LaboratorioMarn
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     
     public partial class SOLICITUD
     {
@@ -29,16 +28,9 @@ namespace LaboratorioMarn
         public byte id_estado { get; set; }
         public Nullable<int> id_solicitante { get; set; }
         public byte id_estado_proceso { get; set; }
-
-        [DataType(DataType.DateTime), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> fecha_creacion { get; set; }
-
-        [DataType(DataType.DateTime), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> fecha_inicio { get; set; }
-
-        [DataType(DataType.DateTime), DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> fecha_finalizacion { get; set; }
-
         public Nullable<byte> informe_generado { get; set; }
     
         public virtual ICollection<DETALLE_SOLICITUD> DETALLE_SOLICITUD { get; set; }

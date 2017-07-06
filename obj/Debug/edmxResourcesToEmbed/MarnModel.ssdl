@@ -166,6 +166,16 @@
     <Property Name="valor" Type="decimal" Precision="6" Scale="2" Nullable="false" />
     <Property Name="lectura" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
+  <EntityType Name="LIMITES">
+    <Key>
+      <PropertyRef Name="analisis" />
+    </Key>
+    <Property Name="analisis" Type="varchar" MaxLength="255" Nullable="false" />
+    <Property Name="id_analisis" Type="int" />
+    <Property Name="unidades" Type="varchar" MaxLength="255" />
+    <Property Name="incerteza" Type="decimal" Precision="6" Scale="4" />
+    <Property Name="limite_deteccion" Type="decimal" Precision="6" Scale="5" />
+  </EntityType>
   <EntityType Name="LOTE">
     <Key>
       <PropertyRef Name="id_lote" />
@@ -1131,6 +1141,7 @@
     <EntitySet Name="GRUPO_SOLICITUD" EntityType="Self.GRUPO_SOLICITUD" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="INFORMES" EntityType="Self.INFORMES" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="INPUT" EntityType="Self.INPUT" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="LIMITES" EntityType="Self.LIMITES" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LOTE" EntityType="Self.LOTE" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MARCA" EntityType="Self.MARCA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MUESTRA" EntityType="Self.MUESTRA" Schema="dbo" store:Type="Tables" />

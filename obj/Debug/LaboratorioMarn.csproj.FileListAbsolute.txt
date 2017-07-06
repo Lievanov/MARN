@@ -112,8 +112,6 @@ C:\Users\Diego Lievano\Documents\Calidad Agua\calidadagua\bin\es\System.Web.WebP
 C:\Users\Diego Lievano\Documents\Calidad Agua\calidadagua\bin\es\System.Web.WebPages.Deployment.resources.dll
 C:\Users\Diego Lievano\Documents\Calidad Agua\calidadagua\bin\es\System.Web.WebPages.Razor.resources.dll
 C:\Users\Diego Lievano\Documents\Calidad Agua\calidadagua\bin\es\System.Web.Optimization.resources.dll
-C:\Users\Diego Lievano\Documents\Calidad Agua\calidadagua\bin\es\EntityFramework.resources.dll
-C:\Users\Diego Lievano\Documents\Calidad Agua\calidadagua\bin\es\EntityFramework.SqlServer.resources.dll
 C:\Users\Diego Lievano\Documents\Calidad Agua\calidadagua\bin\es\Microsoft.AspNet.Identity.Core.resources.dll
 C:\Users\Diego Lievano\Documents\Calidad Agua\calidadagua\bin\es\Microsoft.AspNet.Identity.Owin.resources.dll
 C:\Users\Diego Lievano\Documents\Calidad Agua\calidadagua\bin\es\Microsoft.AspNet.Identity.EntityFramework.resources.dll
@@ -127,3 +125,5 @@ C:\Users\Diego Lievano\Documents\Calidad Agua\calidadagua\bin\es\Microsoft.Owin.
 C:\Users\Diego Lievano\Documents\Calidad Agua\calidadagua\obj\Debug\LaboratorioMarn.csprojResolveAssemblyReference.cache
 C:\Users\Diego Lievano\Documents\Calidad Agua\calidadagua\obj\Debug\LaboratorioMarn.dll
 C:\Users\Diego Lievano\Documents\Calidad Agua\calidadagua\obj\Debug\LaboratorioMarn.pdb
+C:\Users\Diego Lievano\Documents\Calidad Agua\calidadagua\bin\EntityFramework.dll
+C:\Users\Diego Lievano\Documents\Calidad Agua\calidadagua\bin\EntityFramework.SqlServer.dll

@@ -1,0 +1,55 @@
+﻿@model LaboratorioMarn.LIMITE
+
+@{
+    ViewBag.Title = "Eliminar";
+}
+
+<h2>Eliminar Limite de Incerteza</h2>
+
+<h3>Esta seguro de eliminar el Limite de Incerteza?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.id_analisis)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.id_analisis)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.unidades)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.unidades)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.incerteza)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.incerteza)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.limite_deteccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.limite_deteccion)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-default" /> |
+            @Html.ActionLink("Regresar a Lista Limite de Incerteza", "Index")
+        </div>
+    }
+</div>

@@ -1,7 +1,7 @@
 ﻿@model LaboratorioMarn.REPORTE
 @{
-    ANALISIS_EMPLEADO analisisEmpleado = ViewBag.AnalisisEmpleado;
-    ANALISI analisis = analisisEmpleado.DETALLE_SOLICITUD.ANALISI;
+        ANALISIS_EMPLEADO analisisEmpleado = ViewBag.AnalisisEmpleado;
+        ANALISI analisis = analisisEmpleado.DETALLE_SOLICITUD.ANALISI;
 }
 <div class="row">
     <div class="col-sm-12">
@@ -53,7 +53,7 @@
             <div class="form-group">
                 <label class="control-label col-md-4" for="resultado">Método: </label>
                 <div class="col-md-7">
-                    <input type="text" name="metodo" value="@analisis.metodo" class="form-control" />
+                    <input type="text" name="metodo" value="2 * @analisis.metodo" class="form-control" />
                     @Html.ValidationMessageFor(model => model.metodo, "", new { @class = "text-danger" })
                 </div>
             </div>

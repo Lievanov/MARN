@@ -270,6 +270,7 @@
       <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
       <End Role="VISITA" EntitySet="VISITAs" />
     </AssociationSet>
+    <EntitySet Name="LIMITES" EntityType="MARNModel.LIMITE" />
   </EntityContainer>
   <EntityType Name="ALMACEN">
     <Key>
@@ -1497,4 +1498,14 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <EntityType Name="LIMITE">
+    <Key>
+      <PropertyRef Name="analisis" />
+    </Key>
+    <Property Name="analisis" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="id_analisis" Type="Int32" />
+    <Property Name="unidades" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="incerteza" Type="Decimal" Precision="6" Scale="4" />
+    <Property Name="limite_deteccion" Type="Decimal" Precision="6" Scale="5" />
+  </EntityType>
 </Schema>
