@@ -270,7 +270,6 @@
       <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
       <End Role="VISITA" EntitySet="VISITAs" />
     </AssociationSet>
-    <EntitySet Name="LIMITES" EntityType="MARNModel.LIMITE" />
   </EntityContainer>
   <EntityType Name="ALMACEN">
     <Key>
@@ -297,6 +296,7 @@
     <NavigationProperty Name="VARIABLEs" Relationship="MARNModel.FK_VARIABLE_ANALISIS" FromRole="ANALISI" ToRole="VARIABLE" />
     <Property Name="costo" Type="Decimal" Precision="6" Scale="2" />
     <Property Name="costo_iva" Type="Decimal" Precision="6" Scale="2" />
+    <Property Name="limites" Type="Decimal" Precision="6" Scale="2" />
   </EntityType>
   <EntityType Name="ANALISIS_EMPLEADO">
     <Key>
@@ -1286,7 +1286,7 @@
     <Property Name="tipo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="true" />
     <Property Name="fecha_creacion" Type="DateTime" Nullable="false" Precision="3" />
     <NavigationProperty Name="SOLICITUD" Relationship="MARNModel.FK_INFORMES_SOLICITUD" FromRole="INFORME" ToRole="SOLICITUD" />
-    <Property Name="data" Type="String" Nullable="false" MaxLength="1500" FixedLength="false" Unicode="false" />
+    <Property Name="data" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
     <Property Name="activo" Type="Byte" Nullable="false" />
     <Property Name="areas" Type="String" MaxLength="4" FixedLength="true" Unicode="true" />
   </EntityType>
@@ -1498,14 +1498,4 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <EntityType Name="LIMITE">
-    <Key>
-      <PropertyRef Name="analisis" />
-    </Key>
-    <Property Name="analisis" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="id_analisis" Type="Int32" />
-    <Property Name="unidades" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-    <Property Name="incerteza" Type="Decimal" Precision="6" Scale="4" />
-    <Property Name="limite_deteccion" Type="Decimal" Precision="6" Scale="5" />
-  </EntityType>
 </Schema>

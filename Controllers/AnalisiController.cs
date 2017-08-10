@@ -101,6 +101,8 @@ namespace LaboratorioMarn.Controllers
                 analisisOriginal.metodo = analisis.metodo;
                 analisisOriginal.nombre = analisis.nombre;
                 analisisOriginal.unidades = analisis.unidades;
+                analisisOriginal.incertezas = analisis.incertezas;
+                analisisOriginal.limites = analisis.limites;
                 analisisOriginal.costo = analisis.costo;
                 db.SaveChanges();
                 return RedirectToAction("Index");

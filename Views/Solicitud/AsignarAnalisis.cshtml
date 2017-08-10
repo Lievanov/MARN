@@ -95,12 +95,12 @@
 
     @foreach (var analisis in analisisList)
     {
-        DETALLE_SOLICITUD detalle = solicitud.DETALLE_SOLICITUD.Where(ds => ds.id_analisis == analisis.id_analisis).First();
-        
-        
-        if (detalle.ANALISIS_EMPLEADO.Count() > 0)
+        try
         {
-            <script type="text/javascript">
+            DETALLE_SOLICITUD detalle = solicitud.DETALLE_SOLICITUD.Where(ds => ds.id_analisis == analisis.id_analisis).First();
+            if (detalle.ANALISIS_EMPLEADO.Count() > 0)
+            {
+                <script type="text/javascript">
 
                 $(function () {
 
@@ -128,10 +128,15 @@
                     }
 
                     analisisSeleccion.push(@detalle.id_analisis);
-                    $(".empleado#@detalle.id_analisis").html(empleadoObj.empleado.nombre);                    
+                    $(".empleado#@detalle.id_analisis").html(empleadoObj.empleado.nombre);
                 });
 
-            </script>
+                </script>
+            }
+        }
+        catch (Exception e)
+        {
+
         }
     }
 </div>

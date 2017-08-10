@@ -58,7 +58,7 @@ namespace LaboratorioMarn.Controllers
                 }
                 
                 ANALISIS_EMPLEADO analisisEmpleado = db.ANALISIS_EMPLEADO.Find(idAnalisisEmpleado);
-
+                
                 reporte.id_analisis_empleado = analisisEmpleado.id_analisis_empleado;
                 db.REPORTEs.Add(reporte);
 

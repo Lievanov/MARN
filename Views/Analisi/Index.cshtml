@@ -28,6 +28,12 @@
                         Metodo
                     </th>
                     <th>
+                        Incertidumbre
+                    </th>
+                    <th>
+                        Limites de Deteccion
+                    </th>
+                    <th>
                         Unidades
                     </th>
                     <th>
@@ -49,6 +55,12 @@
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.metodo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.incertezas)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.limites)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.unidades)

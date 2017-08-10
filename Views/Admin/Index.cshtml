@@ -43,8 +43,11 @@
                             {
                                 @Html.ActionLink("Editar", "Edit", new { id = user.Id }, new { @class = "btn btn-primary btn-xs" })
                                 <button class="btn btn-danger btn-xs"
-                                        type="submit">
-                                    Eliminar
+                                        type="submit"
+                                        disabled="disabled"
+                                        style="display:none"
+                                        >
+                                    Eliminar!
                                 </button>
                             }
                         </td>

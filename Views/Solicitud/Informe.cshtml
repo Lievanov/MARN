@@ -16,7 +16,7 @@
             onrendered: function (canvas) {
                 var img = canvas.toDataURL("image/png");
                 var doc = new jsPDF();
-                doc.addImage(img, 'PNG', -30, 10,280, 250);
+                doc.addImage(img, 'PNG', -30, 10, 280, 250);
                 doc.save(doc.pdf);
             }
         })
@@ -147,18 +147,44 @@
                         <th>LIMITE DE DETECCION</th>
                         @*<th>METODO</th>*@
                     </tr>
-
+                    
                     @foreach (Resultado resultado in Model.Resultados)
                     {
-                        <tr>
-                            <td>@resultado.analisis</td>
-                            <td>@resultado.resultado</td>
-                            <td>+/- @resultado.incerteza</td>
-                            <td>@resultado.unidades</td>                            
-                            <td>@resultado.metodo</td>
-                        </tr>
+                        if (Model.areas == "Bact")
+                        {
+                            if ((resultado.analisis == "Coliformes totales" || resultado.analisis == "Coliformes fecales" || resultado.analisis == "Enterococcus fecales"))
+                            {
+                                <tr>
+                                    <td>@resultado.analisis</td>
+                                    <td>@resultado.resultado</td>
+                                    <td>+/- @resultado.incerteza</td>
+                                    <td>@resultado.unidades</td>
+                                    <td>@resultado.metodo</td>
+                                </tr>
+                            }
+                        }
+                        else if (Model.areas == "FQAA")
+                        {
+                            if ((resultado.analisis == "Coliformes totales" || resultado.analisis == "Coliformes fecales" || resultado.analisis == "Enterococcus fecales"))
+                            {
+
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td>@resultado.analisis</td>
+                                    <td>@resultado.resultado</td>
+                                    <td>+/- @resultado.incerteza</td>
+                                    <td>@resultado.unidades</td>
+                                    <td>@resultado.metodo</td>
+                                </tr>
+                            }
+                        }
                     }
                 </table>
+                <BR> 
+                
+                Comentario: <br><textarea id="TextArea1" rows="3" cols="114"  maxlength="350" ></textarea><BR> <BR> <BR> 
 
                 <p style="font-size: 0.8em;">
                     <b>Abreviaturas: </b>ND: No Detectable &nbsp;&nbsp;&nbsp;&nbsp;NR: No Realizado &nbsp;&nbsp;&nbsp;&nbsp;SMEWW: Standard  Methods for Examination of water and Wastewater

@@ -17,6 +17,7 @@ using LaboratorioMarn.Classes;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Text;
+using System.Data.Entity.Core;
 
 namespace LaboratorioMarn.Controllers
 {
@@ -203,14 +204,15 @@ namespace LaboratorioMarn.Controllers
                     if (analisisList.Count() > 0)
                     {
                         PROCESO_ANALISTA procesoAnalista;
+                        /*
                         if (db.PROCESO_ANALISTA.Where(pa => pa.empleado_id == empleadoSeleccion.idEmpleado).Count() == 1)
                         {
                             procesoAnalista = db.PROCESO_ANALISTA.Where(pa => pa.empleado_id == empleadoSeleccion.idEmpleado).First();
 
                             procesoAnalista.cantidad_analisis = (byte)analisisList.Count();
                         }
-                        else 
-                        { 
+                        else */
+                        {
                             procesoAnalista = new PROCESO_ANALISTA
                             {
                                 solicitud_id = solicitud.id_solicitud,
@@ -418,6 +420,7 @@ namespace LaboratorioMarn.Controllers
                             unidades = reporte.unidades,
                             limiteDeteccion = reporte.limite_deteccion.ToString(),
                             metodo = detalle.ANALISI.metodo
+                            //id_area = reporte.id_area
                         };
 
                         resultados.Add(resultado);
@@ -478,7 +481,7 @@ namespace LaboratorioMarn.Controllers
 
                 result = new { valid = true, informes = informesIds };
             }
-            catch (Exception e)
+            catch (DbEntityValidationException e)
             {
                 result = new { valid = false, msg = e.Message };
             }

@@ -21,6 +21,7 @@
     <Property Name="incertezas" Type="decimal" Precision="6" Scale="2" Nullable="false" />
     <Property Name="costo" Type="decimal" Precision="6" Scale="2" />
     <Property Name="costo_iva" Type="decimal" Precision="6" Scale="2" />
+    <Property Name="limites" Type="decimal" Precision="6" Scale="2" />
   </EntityType>
   <EntityType Name="ANALISIS_EMPLEADO">
     <Key>
@@ -151,7 +152,7 @@
     <Property Name="id_informe" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="id_solicitud" Type="int" Nullable="false" />
     <Property Name="tipo" Type="nchar" MaxLength="1" Nullable="false" />
-    <Property Name="data" Type="varchar" MaxLength="1500" Nullable="false" />
+    <Property Name="data" Type="varchar(max)" />
     <Property Name="fecha_creacion" Type="datetime" Nullable="false" />
     <Property Name="activo" Type="tinyint" Nullable="false" />
     <Property Name="areas" Type="nchar" MaxLength="4" />
@@ -165,16 +166,6 @@
     <Property Name="id_calculo" Type="int" Nullable="false" />
     <Property Name="valor" Type="decimal" Precision="6" Scale="2" Nullable="false" />
     <Property Name="lectura" Type="varchar" MaxLength="50" Nullable="false" />
-  </EntityType>
-  <EntityType Name="LIMITES">
-    <Key>
-      <PropertyRef Name="analisis" />
-    </Key>
-    <Property Name="analisis" Type="varchar" MaxLength="255" Nullable="false" />
-    <Property Name="id_analisis" Type="int" />
-    <Property Name="unidades" Type="varchar" MaxLength="255" />
-    <Property Name="incerteza" Type="decimal" Precision="6" Scale="4" />
-    <Property Name="limite_deteccion" Type="decimal" Precision="6" Scale="5" />
   </EntityType>
   <EntityType Name="LOTE">
     <Key>
@@ -420,6 +411,60 @@
     <Property Name="id" Type="varchar" MaxLength="50" />
     <Property Name="id_grupo_solicitud" Type="int" />
   </EntityType>
+  <Association Name="FK__ANALISIS___id_em__3A4CA8FD">
+    <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ANALISIS_EMPLEADO" Type="Self.ANALISIS_EMPLEADO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLEADO">
+        <PropertyRef Name="id_empleado" />
+      </Principal>
+      <Dependent Role="ANALISIS_EMPLEADO">
+        <PropertyRef Name="id_empleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__NOTIFICAC__emple__3B40CD36">
+    <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="NOTIFICACION" Type="Self.NOTIFICACION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLEADO">
+        <PropertyRef Name="id_empleado" />
+      </Principal>
+      <Dependent Role="NOTIFICACION">
+        <PropertyRef Name="empleado_receptor" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PROCESO_A__emple__3C34F16F">
+    <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="PROCESO_ANALISTA" Type="Self.PROCESO_ANALISTA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLEADO">
+        <PropertyRef Name="id_empleado" />
+      </Principal>
+      <Dependent Role="PROCESO_ANALISTA">
+        <PropertyRef Name="empleado_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__SOLICITUD__id_em__3D2915A8">
+    <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+    <End Role="SOLICITUD" Type="Self.SOLICITUD" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLEADO">
+        <PropertyRef Name="id_empleado" />
+      </Principal>
+      <Dependent Role="SOLICITUD">
+        <PropertyRef Name="id_empleado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_ANALISIS_AREA">
     <End Role="AREA" Type="Self.AREA" Multiplicity="1" />
     <End Role="ANALISIS" Type="Self.ANALISIS" Multiplicity="*" />
@@ -1141,7 +1186,6 @@
     <EntitySet Name="GRUPO_SOLICITUD" EntityType="Self.GRUPO_SOLICITUD" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="INFORMES" EntityType="Self.INFORMES" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="INPUT" EntityType="Self.INPUT" Schema="dbo" store:Type="Tables" />
-    <EntitySet Name="LIMITES" EntityType="Self.LIMITES" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="LOTE" EntityType="Self.LOTE" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MARCA" EntityType="Self.MARCA" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="MUESTRA" EntityType="Self.MUESTRA" Schema="dbo" store:Type="Tables" />
@@ -1165,6 +1209,22 @@
     <EntitySet Name="UNIDAD" EntityType="Self.UNIDAD" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="VARIABLE" EntityType="Self.VARIABLE" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="VISITA" EntityType="Self.VISITA" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__ANALISIS___id_em__3A4CA8FD" Association="Self.FK__ANALISIS___id_em__3A4CA8FD">
+      <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+      <End Role="ANALISIS_EMPLEADO" EntitySet="ANALISIS_EMPLEADO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__NOTIFICAC__emple__3B40CD36" Association="Self.FK__NOTIFICAC__emple__3B40CD36">
+      <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+      <End Role="NOTIFICACION" EntitySet="NOTIFICACION" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PROCESO_A__emple__3C34F16F" Association="Self.FK__PROCESO_A__emple__3C34F16F">
+      <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+      <End Role="PROCESO_ANALISTA" EntitySet="PROCESO_ANALISTA" />
+    </AssociationSet>
+    <AssociationSet Name="FK__SOLICITUD__id_em__3D2915A8" Association="Self.FK__SOLICITUD__id_em__3D2915A8">
+      <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+      <End Role="SOLICITUD" EntitySet="SOLICITUD" />
+    </AssociationSet>
     <AssociationSet Name="FK_ANALISIS_AREA" Association="Self.FK_ANALISIS_AREA">
       <End Role="AREA" EntitySet="AREA" />
       <End Role="ANALISIS" EntitySet="ANALISIS" />

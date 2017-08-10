@@ -29,6 +29,7 @@ namespace LaboratorioMarn
         public decimal incertezas { get; set; }
         public Nullable<decimal> costo { get; set; }
         public Nullable<decimal> costo_iva { get; set; }
+        public Nullable<decimal> limites { get; set; }
     
         public virtual AREA AREA { get; set; }
         public virtual ICollection<DETALLE_SOLICITUD> DETALLE_SOLICITUD { get; set; }

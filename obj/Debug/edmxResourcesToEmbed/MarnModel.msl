@@ -13,6 +13,7 @@
     <EntitySetMapping Name="ANALISIS">
       <EntityTypeMapping TypeName="MARNModel.ANALISI">
         <MappingFragment StoreEntitySet="ANALISIS">
+          <ScalarProperty Name="limites" ColumnName="limites" />
           <ScalarProperty Name="costo_iva" ColumnName="costo_iva" />
           <ScalarProperty Name="costo" ColumnName="costo" />
           <ScalarProperty Name="incertezas" ColumnName="incertezas" />
@@ -449,17 +450,6 @@
           <ScalarProperty Name="fecha_solicitud" ColumnName="fecha_solicitud" />
           <ScalarProperty Name="id_solicitante" ColumnName="id_solicitante" />
           <ScalarProperty Name="id_grupo_solicitud" ColumnName="id_grupo_solicitud" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="LIMITES">
-      <EntityTypeMapping TypeName="MARNModel.LIMITE">
-        <MappingFragment StoreEntitySet="LIMITES">
-          <ScalarProperty Name="limite_deteccion" ColumnName="limite_deteccion" />
-          <ScalarProperty Name="incerteza" ColumnName="incerteza" />
-          <ScalarProperty Name="unidades" ColumnName="unidades" />
-          <ScalarProperty Name="id_analisis" ColumnName="id_analisis" />
-          <ScalarProperty Name="analisis" ColumnName="analisis" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

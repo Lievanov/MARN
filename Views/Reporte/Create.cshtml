@@ -1,7 +1,7 @@
 ﻿@model LaboratorioMarn.REPORTE
 @{
-        ANALISIS_EMPLEADO analisisEmpleado = ViewBag.AnalisisEmpleado;
-        ANALISI analisis = analisisEmpleado.DETALLE_SOLICITUD.ANALISI;
+    ANALISIS_EMPLEADO analisisEmpleado = ViewBag.AnalisisEmpleado;
+    ANALISI analisis = analisisEmpleado.DETALLE_SOLICITUD.ANALISI;
 }
 <div class="row">
     <div class="col-sm-12">
@@ -10,6 +10,33 @@
             <input type="hidden" name="idAnalisisEmpleado" value="@analisisEmpleado.id_analisis_empleado" />
             @Html.AntiForgeryToken()
 
+            <script type="text/javascript">
+                var incer1 = document.getElementById('incerteza').value;
+                var limiteDeteccion = document.getElementById('limite_deteccion').value;
+
+                incer1 = parseFloat(incer1.toString());
+                function sumar() {
+                    var total = 0;
+                    var resul = document.getElementById('resultado').value;
+                    resul = parseFloat(resul.toString());
+                    total = resul * incer1;
+                    total = total.toFixed(6).toString();
+                    document.getElementById('incerteza').value = total;
+                }
+
+                function cambiarComas() {
+                    var incer1 = document.getElementById('incerteza').value;
+                    var limiteDeteccion = document.getElementById('limite_deteccion').value;
+                    var resul = document.getElementById('resultado').value;
+                    incer1 = incer1.toString().replace(".", ",");
+                    limiteDeteccion = (limiteDeteccion.toString());
+                    resul = (resul.toString());
+                    document.getElementById('incerteza').value = incer1;
+                    document.getElementById('limite_deteccion').value = limiteDeteccion;
+                    document.getElementById('resultado').value = resul;
+                }
+
+            </script>
             <div class="form-group">
                 <label class="control-label col-md-4" for="resultado">Análisis: </label>
                 <label class="control-label col-md-7" style="text-align: center" for="resultado">@analisis.nombre</label>
@@ -17,13 +44,13 @@
             <div class="form-group">
                 <label class="control-label col-md-4" for="resultado">Resultado: </label>
                 <div class="col-md-7">
-                    @Html.EditorFor(model => model.resultado, new { htmlAttributes = new { @class = "form-control" } })
+                    <input type="text" name="resultado" id="resultado" onchange="sumar()" class="form-control" />
                     @Html.ValidationMessageFor(model => model.resultado, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group">
                 @if (analisis.id_area == 4)
-                { 
+                {
                     <label class="control-label col-md-4" for="resultado">Precisión: </label>
                 }
                 else
@@ -31,46 +58,54 @@
                     <label class="control-label col-md-4" for="resultado">Incerteza: </label>
                 }
                 <div class="col-md-7">
-                    @Html.EditorFor(model => model.incerteza, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.incerteza, "", new { @class = "text-danger" })
+
+                    <input type="text" name="incerteza" id="incerteza" value="@analisis.incertezas" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.unidades, "", new { @class = "text-danger" })
+                    @*@Html.EditorFor(model => model.incerteza, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.incerteza, "", new { @class = "text-danger" })*@
                 </div>
             </div>
             <div class="form-group">
                 <label class="control-label col-md-4" for="resultado">Unidades: </label>
                 <div class="col-md-7">
-                    <input type="text" name="unidades" value="@analisis.unidades" class="form-control"/>
+                    <input type="text" name="unidades" id="unidades" value="@analisis.unidades" class="form-control" />
                     @Html.ValidationMessageFor(model => model.unidades, "", new { @class = "text-danger" })
-                  
+
                 </div>
             </div>
             <div class="form-group">
+
                 <label class="control-label col-md-4" for="resultado">Límite de Detección: </label>
                 <div class="col-md-7">
-                    @Html.EditorFor(model => model.limite_deteccion, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.limite_deteccion, new { htmlAttributes = new { @class = "form-control", @Value = @analisis.limites } })
                     @Html.ValidationMessageFor(model => model.limite_deteccion, "", new { @class = "text-danger" })
+                    @*<input type="text" name="deteccion" value="@analisis.limites" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.limite_deteccion, "", new { @class = "text-danger" })*@
                 </div>
             </div>
-            <div class="form-group">
-                <label class="control-label col-md-4" for="resultado">Método: </label>
-                <div class="col-md-7">
-                    <input type="text" name="metodo" value="2 * @analisis.metodo" class="form-control" />
-                    @Html.ValidationMessageFor(model => model.metodo, "", new { @class = "text-danger" })
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="col-md-12">
-                    <div class="col-md-6 hide" id="alert">
-                        <div class="alert alert-success" role="alert" id="alertMsg"></div>
-                    </div>
-                    <div class="col-md-5 pull-right">
-                        <button type="submit" class="btn btn-success" id="guardar">Guardar</button>
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <div class="form-group">
+                    <label class="control-label col-md-4" for="resultado">Método: </label>
+                    <div class="col-md-7">
+                        <input type="text" name="metodo" value="@analisis.metodo" class="form-control" />
+                        @Html.ValidationMessageFor(model => model.metodo, "", new { @class = "text-danger" })
                     </div>
                 </div>
-            </div>
+                <div class="form-group">
+                    <div class="col-md-12">
+                        <div class="col-md-6 hide" id="alert">
+                            <div class="alert alert-success" role="alert" id="alertMsg"></div>
+                        </div>
+                        <div class="col-md-5 pull-right">
+                            <button type="submit" class="btn btn-success" onclick="cambiarComas()" id="guardar">Guardar</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </div>
+                </div>
         }
     </div>
 </div>
+
+
+
 
 

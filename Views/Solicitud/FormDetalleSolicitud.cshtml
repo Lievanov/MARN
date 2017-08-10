@@ -14,6 +14,7 @@
         var empleadosSeleccion = new Array();
         var analisisSeleccion = new Array();
 
+
         function inArray(needle, haystack) {
             var length = haystack.length;
             for (var i = 0; i < length; i++) {
@@ -96,6 +97,7 @@
                             e.preventDefault()
                             var area = $(this).data("value");
 
+
                             $.ajax({
                                 url: "@Url.Action("Asignacion", "Solicitud")",
                                 method: "POST",
@@ -147,6 +149,8 @@
                                         });
                                     });
 
+                                    var count = 1; // Validar que solo salga 1 alerta para asignar
+
                                     $("#asignarAnalisisModal").click(function (e) {
                                         e.preventDefault();
                                         var checkboxes = $(".analisisSeleccionEmpleado:checked");
@@ -173,6 +177,7 @@
                                                         for (var i = 0; i < prevSeleccion.length; i++) {
                                                             if (prevSeleccion[i] == checkbox) {
                                                                 prevSeleccion.splice(i, 1);
+
                                                                 break;
                                                             }
                                                         }
@@ -183,6 +188,7 @@
 
                                                     empleadoObj.analisis.push(checkbox);
                                                     $(".empleado#" + checkbox).html(empleadoObj.empleado.nombre);
+
                                                 }
                                             });
                                         });
@@ -196,14 +202,22 @@
                                                     analisisSeleccion.splice(j, 1);
                                                     break;
                                                 }
+
                                             }
                                         }
 
-                                        alert("Se asigno correctamente");
-
+                                        if( count == 1){ // solo muestra alerta de asignacion una vez
+                                            alert("Se asigno correctamente")
+                                       }
+                                        count = count + 1;
                                     });
+
+
+
                                 }
+
                             });
+
                         });
 
                         $("#guardarAsignacion").click(function (e) {
@@ -245,9 +259,8 @@
                 });
             });
         });
-        
-    </script>    
-    
-}
 
-                    
+    </script>
+
+}
+            

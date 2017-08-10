@@ -66,6 +66,5 @@ namespace LaboratorioMarn
         public virtual DbSet<ANALISIS_REACTIVO> ANALISIS_REACTIVO { get; set; }
         public virtual DbSet<SITIO_MUESTREO> SITIO_MUESTREO { get; set; }
         public virtual DbSet<GRUPO_SOLICITUD> GRUPO_SOLICITUD { get; set; }
-        public virtual DbSet<LIMITE> LIMITES { get; set; }
     }
 }

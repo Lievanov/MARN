@@ -26,6 +26,7 @@
           <Property Name="incertezas" Type="decimal" Precision="6" Scale="2" Nullable="false" />
           <Property Name="costo" Type="decimal" Precision="6" Scale="2" />
           <Property Name="costo_iva" Type="decimal" Precision="6" Scale="2" />
+          <Property Name="limites" Type="decimal" Precision="6" Scale="2" />
         </EntityType>
         <EntityType Name="ANALISIS_EMPLEADO">
           <Key>
@@ -156,7 +157,7 @@
           <Property Name="id_informe" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="id_solicitud" Type="int" Nullable="false" />
           <Property Name="tipo" Type="nchar" MaxLength="1" Nullable="false" />
-          <Property Name="data" Type="varchar" MaxLength="1500" Nullable="false" />
+          <Property Name="data" Type="varchar(max)" />
           <Property Name="fecha_creacion" Type="datetime" Nullable="false" />
           <Property Name="activo" Type="tinyint" Nullable="false" />
           <Property Name="areas" Type="nchar" MaxLength="4" />
@@ -170,16 +171,6 @@
           <Property Name="id_calculo" Type="int" Nullable="false" />
           <Property Name="valor" Type="decimal" Precision="6" Scale="2" Nullable="false" />
           <Property Name="lectura" Type="varchar" MaxLength="50" Nullable="false" />
-        </EntityType>
-        <EntityType Name="LIMITES">
-          <Key>
-            <PropertyRef Name="analisis" />
-          </Key>
-          <Property Name="analisis" Type="varchar" MaxLength="255" Nullable="false" />
-          <Property Name="id_analisis" Type="int" />
-          <Property Name="unidades" Type="varchar" MaxLength="255" />
-          <Property Name="incerteza" Type="decimal" Precision="6" Scale="4" />
-          <Property Name="limite_deteccion" Type="decimal" Precision="6" Scale="5" />
         </EntityType>
         <EntityType Name="LOTE">
           <Key>
@@ -425,6 +416,60 @@
           <Property Name="id" Type="varchar" MaxLength="50" />
           <Property Name="id_grupo_solicitud" Type="int" />
         </EntityType>
+        <Association Name="FK__ANALISIS___id_em__3A4CA8FD">
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="ANALISIS_EMPLEADO" Type="Self.ANALISIS_EMPLEADO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="ANALISIS_EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__NOTIFICAC__emple__3B40CD36">
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="NOTIFICACION" Type="Self.NOTIFICACION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="NOTIFICACION">
+              <PropertyRef Name="empleado_receptor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PROCESO_A__emple__3C34F16F">
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="PROCESO_ANALISTA" Type="Self.PROCESO_ANALISTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="PROCESO_ANALISTA">
+              <PropertyRef Name="empleado_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__SOLICITUD__id_em__3D2915A8">
+          <End Role="EMPLEADO" Type="Self.EMPLEADO" Multiplicity="1" />
+          <End Role="SOLICITUD" Type="Self.SOLICITUD" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLEADO">
+              <PropertyRef Name="id_empleado" />
+            </Principal>
+            <Dependent Role="SOLICITUD">
+              <PropertyRef Name="id_empleado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ANALISIS_AREA">
           <End Role="AREA" Type="Self.AREA" Multiplicity="1" />
           <End Role="ANALISIS" Type="Self.ANALISIS" Multiplicity="*" />
@@ -1146,7 +1191,6 @@
           <EntitySet Name="GRUPO_SOLICITUD" EntityType="Self.GRUPO_SOLICITUD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INFORMES" EntityType="Self.INFORMES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="INPUT" EntityType="Self.INPUT" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="LIMITES" EntityType="Self.LIMITES" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LOTE" EntityType="Self.LOTE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MARCA" EntityType="Self.MARCA" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MUESTRA" EntityType="Self.MUESTRA" Schema="dbo" store:Type="Tables" />
@@ -1170,6 +1214,22 @@
           <EntitySet Name="UNIDAD" EntityType="Self.UNIDAD" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VARIABLE" EntityType="Self.VARIABLE" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VISITA" EntityType="Self.VISITA" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ANALISIS___id_em__3A4CA8FD" Association="Self.FK__ANALISIS___id_em__3A4CA8FD">
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+            <End Role="ANALISIS_EMPLEADO" EntitySet="ANALISIS_EMPLEADO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__NOTIFICAC__emple__3B40CD36" Association="Self.FK__NOTIFICAC__emple__3B40CD36">
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+            <End Role="NOTIFICACION" EntitySet="NOTIFICACION" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PROCESO_A__emple__3C34F16F" Association="Self.FK__PROCESO_A__emple__3C34F16F">
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+            <End Role="PROCESO_ANALISTA" EntitySet="PROCESO_ANALISTA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__SOLICITUD__id_em__3D2915A8" Association="Self.FK__SOLICITUD__id_em__3D2915A8">
+            <End Role="EMPLEADO" EntitySet="EMPLEADO" />
+            <End Role="SOLICITUD" EntitySet="SOLICITUD" />
+          </AssociationSet>
           <AssociationSet Name="FK_ANALISIS_AREA" Association="Self.FK_ANALISIS_AREA">
             <End Role="AREA" EntitySet="AREA" />
             <End Role="ANALISIS" EntitySet="ANALISIS" />
@@ -1673,7 +1733,6 @@
             <End Role="EMPLEADO" EntitySet="EMPLEADOes" />
             <End Role="VISITA" EntitySet="VISITAs" />
           </AssociationSet>
-          <EntitySet Name="LIMITES" EntityType="MARNModel.LIMITE" />
         </EntityContainer>
         <EntityType Name="ALMACEN">
           <Key>
@@ -1700,6 +1759,7 @@
           <NavigationProperty Name="VARIABLEs" Relationship="MARNModel.FK_VARIABLE_ANALISIS" FromRole="ANALISI" ToRole="VARIABLE" />
           <Property Name="costo" Type="Decimal" Precision="6" Scale="2" />
           <Property Name="costo_iva" Type="Decimal" Precision="6" Scale="2" />
+          <Property Name="limites" Type="Decimal" Precision="6" Scale="2" />
         </EntityType>
         <EntityType Name="ANALISIS_EMPLEADO">
           <Key>
@@ -2689,7 +2749,7 @@
           <Property Name="tipo" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="true" />
           <Property Name="fecha_creacion" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="SOLICITUD" Relationship="MARNModel.FK_INFORMES_SOLICITUD" FromRole="INFORME" ToRole="SOLICITUD" />
-          <Property Name="data" Type="String" Nullable="false" MaxLength="1500" FixedLength="false" Unicode="false" />
+          <Property Name="data" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="activo" Type="Byte" Nullable="false" />
           <Property Name="areas" Type="String" MaxLength="4" FixedLength="true" Unicode="true" />
         </EntityType>
@@ -2901,16 +2961,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="LIMITE">
-          <Key>
-            <PropertyRef Name="analisis" />
-          </Key>
-          <Property Name="analisis" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="id_analisis" Type="Int32" />
-          <Property Name="unidades" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="incerteza" Type="Decimal" Precision="6" Scale="4" />
-          <Property Name="limite_deteccion" Type="Decimal" Precision="6" Scale="5" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2929,6 +2979,7 @@
           <EntitySetMapping Name="ANALISIS">
             <EntityTypeMapping TypeName="MARNModel.ANALISI">
               <MappingFragment StoreEntitySet="ANALISIS">
+                <ScalarProperty Name="limites" ColumnName="limites" />
                 <ScalarProperty Name="costo_iva" ColumnName="costo_iva" />
                 <ScalarProperty Name="costo" ColumnName="costo" />
                 <ScalarProperty Name="incertezas" ColumnName="incertezas" />
@@ -3368,17 +3419,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="LIMITES">
-            <EntityTypeMapping TypeName="MARNModel.LIMITE">
-              <MappingFragment StoreEntitySet="LIMITES">
-                <ScalarProperty Name="limite_deteccion" ColumnName="limite_deteccion" />
-                <ScalarProperty Name="incerteza" ColumnName="incerteza" />
-                <ScalarProperty Name="unidades" ColumnName="unidades" />
-                <ScalarProperty Name="id_analisis" ColumnName="id_analisis" />
-                <ScalarProperty Name="analisis" ColumnName="analisis" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -3401,7 +3441,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="b674712365cd4ffebaee8479befa2c27" Name="Diagram1">
+      <Diagram DiagramId="b674712365cd4ffebaee8479befa2c27" Name="Diagram1" ZoomLevel="82">
         <EntityTypeShape EntityType="MARNModel.ALMACEN" Width="1.5" PointX="1.5" PointY="10.5" IsExpanded="true" />
         <EntityTypeShape EntityType="MARNModel.ANALISI" Width="1.5" PointX="3" PointY="20.375" IsExpanded="true" />
         <EntityTypeShape EntityType="MARNModel.ANALISIS_EMPLEADO" Width="1.5" PointX="10.5" PointY="17.625" IsExpanded="true" />
@@ -3500,7 +3540,6 @@
         <AssociationConnector Association="MARNModel.fk_GROUPO_SOLICITANTE" ManuallyRouted="false" />
         <AssociationConnector Association="MARNModel.FK_VISITA_GRUPO_SOLICITUD" ManuallyRouted="false" />
         <AssociationConnector Association="MARNModel.FK_VISITA_EMPLEADO2" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="MARNModel.LIMITE" Width="1.5" PointX="3.625" PointY="2" />
       </Diagram>
     </Diagrams>
   </Designer>

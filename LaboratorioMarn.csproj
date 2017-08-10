@@ -209,7 +209,6 @@
     <Compile Include="Controllers\GrupoSolicitudController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventarioAnalistaController.cs" />
-    <Compile Include="Controllers\LimiteController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MuestraController.cs" />
     <Compile Include="Controllers\ReactivoController.cs" />
@@ -259,9 +258,6 @@
     <Compile Include="Infrastructure\AppRoleManager.cs" />
     <Compile Include="Infrastructure\AppUserManager.cs" />
     <Compile Include="INPUT.cs">
-      <DependentUpon>MarnModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="LIMITE.cs">
       <DependentUpon>MarnModel.tt</DependentUpon>
     </Compile>
     <Compile Include="LOTE.cs">
@@ -545,11 +541,6 @@
     <Content Include="Views\GrupoSolicitud\SeleccionSolicitante.cshtml" />
     <Content Include="Views\Solicitante\SeleccionSolicitante.cshtml" />
     <Content Include="Views\Visita\EditarVisita.cshtml" />
-    <Content Include="Views\Limite\Create.cshtml" />
-    <Content Include="Views\Limite\Delete.cshtml" />
-    <Content Include="Views\Limite\Details.cshtml" />
-    <Content Include="Views\Limite\Edit.cshtml" />
-    <Content Include="Views\Limite\Index.cshtml" />
     <None Include="Web.Test.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

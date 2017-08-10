@@ -44,6 +44,24 @@
 
         <div class="form-group">
 
+            @Html.Label("Incertidumbre: ", htmlAttributes: new { @class = "control-label col-xs-2" })
+            <div class="col-xs-3">
+                @Html.EditorFor(model => model.incertezas, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.incertezas, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+
+            @Html.Label("Limite de deteccion: ", htmlAttributes: new { @class = "control-label col-xs-2" })
+            <div class="col-xs-3">
+                @Html.EditorFor(model => model.limites, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.limites, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+
             @Html.Label("Unidades: ", htmlAttributes: new { @class = "control-label col-xs-2" })
             <div class="col-xs-3">
                 @Html.EditorFor(model => model.unidades, new { htmlAttributes = new { @class = "form-control" } })
