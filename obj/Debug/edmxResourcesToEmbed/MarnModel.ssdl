@@ -18,10 +18,10 @@
     <Property Name="metodo" Type="varchar" MaxLength="100" />
     <Property Name="formula" Type="varchar" MaxLength="100" Nullable="false" />
     <Property Name="unidades" Type="varchar" MaxLength="100" Nullable="false" />
-    <Property Name="incertezas" Type="decimal" Precision="6" Scale="2" Nullable="false" />
+    <Property Name="incertezas" Type="decimal" Precision="10" Scale="7" />
     <Property Name="costo" Type="decimal" Precision="6" Scale="2" />
     <Property Name="costo_iva" Type="decimal" Precision="6" Scale="2" />
-    <Property Name="limites" Type="decimal" Precision="6" Scale="2" />
+    <Property Name="limites" Type="decimal" Precision="10" Scale="7" />
   </EntityType>
   <EntityType Name="ANALISIS_EMPLEADO">
     <Key>
@@ -266,9 +266,9 @@
     <Property Name="id_reporte" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="id_analisis_empleado" Type="int" Nullable="false" />
     <Property Name="resultado" Type="decimal" Precision="10" Scale="3" Nullable="false" />
-    <Property Name="incerteza" Type="decimal" Precision="6" Scale="4" Nullable="false" />
+    <Property Name="incerteza" Type="decimal" Precision="10" Scale="7" />
     <Property Name="unidades" Type="varchar" MaxLength="25" Nullable="false" />
-    <Property Name="limite_deteccion" Type="decimal" Precision="6" Scale="5" Nullable="false" />
+    <Property Name="limite_deteccion" Type="decimal" Precision="10" Scale="7" />
     <Property Name="metodo" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="RESULTADO">

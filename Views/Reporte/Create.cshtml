@@ -11,29 +11,12 @@
             @Html.AntiForgeryToken()
 
             <script type="text/javascript">
-                var incer1 = document.getElementById('incerteza').value;
-                var limiteDeteccion = document.getElementById('limite_deteccion').value;
-
-                incer1 = parseFloat(incer1.toString());
                 function sumar() {
-                    var total = 0;
-                    var resul = document.getElementById('resultado').value;
-                    resul = parseFloat(resul.toString());
-                    total = resul * incer1;
-                    total = total.toFixed(6).toString();
-                    document.getElementById('incerteza').value = total;
-                }
+                    var resultado = document.getElementById('resultado').value;
+                    var incerteza = document.getElementById('incerteza').value;
 
-                function cambiarComas() {
-                    var incer1 = document.getElementById('incerteza').value;
-                    var limiteDeteccion = document.getElementById('limite_deteccion').value;
-                    var resul = document.getElementById('resultado').value;
-                    incer1 = incer1.toString().replace(".", ",");
-                    limiteDeteccion = (limiteDeteccion.toString());
-                    resul = (resul.toString());
-                    document.getElementById('incerteza').value = incer1;
-                    document.getElementById('limite_deteccion').value = limiteDeteccion;
-                    document.getElementById('resultado').value = resul;
+                    incerteza *= resultado;
+                    document.getElementById('incerteza').value = incerteza;
                 }
 
             </script>

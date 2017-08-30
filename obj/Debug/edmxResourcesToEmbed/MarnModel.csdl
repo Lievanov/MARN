@@ -290,13 +290,13 @@
     <Property Name="metodo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="formula" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
     <Property Name="unidades" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-    <Property Name="incertezas" Type="Decimal" Nullable="false" Precision="6" Scale="2" />
+    <Property Name="incertezas" Type="Decimal" Precision="10" Scale="7" />
     <NavigationProperty Name="AREA" Relationship="MARNModel.FK_ANALISIS_AREA" FromRole="ANALISI" ToRole="AREA" />
     <NavigationProperty Name="DETALLE_SOLICITUD" Relationship="MARNModel.FK_DETALLE_SOLICITUD_ANALISIS" FromRole="ANALISI" ToRole="DETALLE_SOLICITUD" />
     <NavigationProperty Name="VARIABLEs" Relationship="MARNModel.FK_VARIABLE_ANALISIS" FromRole="ANALISI" ToRole="VARIABLE" />
     <Property Name="costo" Type="Decimal" Precision="6" Scale="2" />
     <Property Name="costo_iva" Type="Decimal" Precision="6" Scale="2" />
-    <Property Name="limites" Type="Decimal" Precision="6" Scale="2" />
+    <Property Name="limites" Type="Decimal" Precision="10" Scale="7" />
   </EntityType>
   <EntityType Name="ANALISIS_EMPLEADO">
     <Key>
@@ -543,9 +543,9 @@
     <Property Name="id_reporte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="id_analisis_empleado" Type="Int32" Nullable="false" />
     <Property Name="resultado" Type="Decimal" Nullable="false" Precision="10" Scale="3" />
-    <Property Name="incerteza" Type="Decimal" Nullable="false" Precision="6" Scale="4" />
+    <Property Name="incerteza" Type="Decimal" Precision="10" Scale="7" />
     <Property Name="unidades" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-    <Property Name="limite_deteccion" Type="Decimal" Nullable="false" Precision="6" Scale="5" />
+    <Property Name="limite_deteccion" Type="Decimal" Precision="10" Scale="7" />
     <Property Name="metodo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="ANALISIS_EMPLEADO" Relationship="MARNModel.FK_REPORTE_ANALISIS_EMPLEADO" FromRole="REPORTE" ToRole="ANALISIS_EMPLEADO" />
   </EntityType>

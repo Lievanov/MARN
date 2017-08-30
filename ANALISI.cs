@@ -26,7 +26,7 @@ namespace LaboratorioMarn
         public string metodo { get; set; }
         public string formula { get; set; }
         public string unidades { get; set; }
-        public decimal incertezas { get; set; }
+        public Nullable<decimal> incertezas { get; set; }
         public Nullable<decimal> costo { get; set; }
         public Nullable<decimal> costo_iva { get; set; }
         public Nullable<decimal> limites { get; set; }
