@@ -31,6 +31,9 @@
         <th>
             Método
         </th>
+        <th>
+            Comentario
+        </th>
     </tr>
     @foreach (REPORTE reporte in Model)
     {
@@ -52,6 +55,9 @@
             </td>
             <td>
                 @reporte.metodo
+            </td>
+            <td>
+                @reporte.comentario
             </td>
         </tr>
     }

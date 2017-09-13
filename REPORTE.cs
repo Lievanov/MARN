@@ -16,11 +16,12 @@ namespace LaboratorioMarn
     {
         public int id_reporte { get; set; }
         public int id_analisis_empleado { get; set; }
-        public decimal resultado { get; set; }
+        public Nullable<decimal> resultado { get; set; }
         public Nullable<decimal> incerteza { get; set; }
         public string unidades { get; set; }
         public Nullable<decimal> limite_deteccion { get; set; }
         public string metodo { get; set; }
+        public string comentario { get; set; }
     
         public virtual ANALISIS_EMPLEADO ANALISIS_EMPLEADO { get; set; }
     }

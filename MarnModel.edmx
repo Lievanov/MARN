@@ -20,13 +20,13 @@
           <Property Name="id_analisis" Type="int" Nullable="false" />
           <Property Name="id_area" Type="tinyint" Nullable="false" />
           <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="metodo" Type="varchar" MaxLength="100" />
+          <Property Name="metodo" Type="varchar" MaxLength="500" />
           <Property Name="formula" Type="varchar" MaxLength="100" Nullable="false" />
           <Property Name="unidades" Type="varchar" MaxLength="100" Nullable="false" />
-          <Property Name="incertezas" Type="decimal" Precision="10" Scale="7" />
+          <Property Name="incertezas" Type="decimal" Precision="28" Scale="8" />
           <Property Name="costo" Type="decimal" Precision="6" Scale="2" />
           <Property Name="costo_iva" Type="decimal" Precision="6" Scale="2" />
-          <Property Name="limites" Type="decimal" Precision="10" Scale="7" />
+          <Property Name="limites" Type="decimal" Precision="28" Scale="8" />
         </EntityType>
         <EntityType Name="ANALISIS_EMPLEADO">
           <Key>
@@ -270,11 +270,12 @@
           </Key>
           <Property Name="id_reporte" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="id_analisis_empleado" Type="int" Nullable="false" />
-          <Property Name="resultado" Type="decimal" Precision="10" Scale="3" Nullable="false" />
-          <Property Name="incerteza" Type="decimal" Precision="10" Scale="7" />
+          <Property Name="resultado" Type="decimal" Precision="28" Scale="8" />
+          <Property Name="incerteza" Type="decimal" Precision="28" Scale="8" />
           <Property Name="unidades" Type="varchar" MaxLength="25" Nullable="false" />
-          <Property Name="limite_deteccion" Type="decimal" Precision="10" Scale="7" />
-          <Property Name="metodo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="limite_deteccion" Type="decimal" Precision="28" Scale="8" />
+          <Property Name="metodo" Type="varchar" MaxLength="500" />
+          <Property Name="comentario" Type="varchar" MaxLength="500" />
         </EntityType>
         <EntityType Name="RESULTADO">
           <Key>
@@ -1750,16 +1751,16 @@
           <Property Name="id_analisis" Type="Int32" Nullable="false" />
           <Property Name="id_area" Type="Byte" Nullable="false" />
           <Property Name="nombre" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="metodo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="metodo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <Property Name="formula" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="unidades" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="incertezas" Type="Decimal" Precision="10" Scale="7" />
+          <Property Name="incertezas" Type="Decimal" Precision="28" Scale="8" />
           <NavigationProperty Name="AREA" Relationship="MARNModel.FK_ANALISIS_AREA" FromRole="ANALISI" ToRole="AREA" />
           <NavigationProperty Name="DETALLE_SOLICITUD" Relationship="MARNModel.FK_DETALLE_SOLICITUD_ANALISIS" FromRole="ANALISI" ToRole="DETALLE_SOLICITUD" />
           <NavigationProperty Name="VARIABLEs" Relationship="MARNModel.FK_VARIABLE_ANALISIS" FromRole="ANALISI" ToRole="VARIABLE" />
           <Property Name="costo" Type="Decimal" Precision="6" Scale="2" />
           <Property Name="costo_iva" Type="Decimal" Precision="6" Scale="2" />
-          <Property Name="limites" Type="Decimal" Precision="10" Scale="7" />
+          <Property Name="limites" Type="Decimal" Precision="28" Scale="8" />
         </EntityType>
         <EntityType Name="ANALISIS_EMPLEADO">
           <Key>
@@ -2005,12 +2006,13 @@
           </Key>
           <Property Name="id_reporte" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="id_analisis_empleado" Type="Int32" Nullable="false" />
-          <Property Name="resultado" Type="Decimal" Nullable="false" Precision="10" Scale="3" />
-          <Property Name="incerteza" Type="Decimal" Precision="10" Scale="7" />
+          <Property Name="resultado" Type="Decimal" Precision="28" Scale="8" />
+          <Property Name="incerteza" Type="Decimal" Precision="28" Scale="8" />
           <Property Name="unidades" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="false" />
-          <Property Name="limite_deteccion" Type="Decimal" Precision="10" Scale="7" />
-          <Property Name="metodo" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="limite_deteccion" Type="Decimal" Precision="28" Scale="8" />
+          <Property Name="metodo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="ANALISIS_EMPLEADO" Relationship="MARNModel.FK_REPORTE_ANALISIS_EMPLEADO" FromRole="REPORTE" ToRole="ANALISIS_EMPLEADO" />
+          <Property Name="comentario" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="RESULTADO">
           <Key>
@@ -3195,6 +3197,7 @@
           <EntitySetMapping Name="REPORTEs">
             <EntityTypeMapping TypeName="MARNModel.REPORTE">
               <MappingFragment StoreEntitySet="REPORTE">
+                <ScalarProperty Name="comentario" ColumnName="comentario" />
                 <ScalarProperty Name="metodo" ColumnName="metodo" />
                 <ScalarProperty Name="limite_deteccion" ColumnName="limite_deteccion" />
                 <ScalarProperty Name="unidades" ColumnName="unidades" />
@@ -3441,7 +3444,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="b674712365cd4ffebaee8479befa2c27" Name="Diagram1" ZoomLevel="82">
+      <Diagram DiagramId="b674712365cd4ffebaee8479befa2c27" Name="Diagram1" ZoomLevel="61">
         <EntityTypeShape EntityType="MARNModel.ALMACEN" Width="1.5" PointX="1.5" PointY="10.5" IsExpanded="true" />
         <EntityTypeShape EntityType="MARNModel.ANALISI" Width="1.5" PointX="3" PointY="20.375" IsExpanded="true" />
         <EntityTypeShape EntityType="MARNModel.ANALISIS_EMPLEADO" Width="1.5" PointX="10.5" PointY="17.625" IsExpanded="true" />

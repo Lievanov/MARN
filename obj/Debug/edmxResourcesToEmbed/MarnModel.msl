@@ -229,6 +229,7 @@
     <EntitySetMapping Name="REPORTEs">
       <EntityTypeMapping TypeName="MARNModel.REPORTE">
         <MappingFragment StoreEntitySet="REPORTE">
+          <ScalarProperty Name="comentario" ColumnName="comentario" />
           <ScalarProperty Name="metodo" ColumnName="metodo" />
           <ScalarProperty Name="limite_deteccion" ColumnName="limite_deteccion" />
           <ScalarProperty Name="unidades" ColumnName="unidades" />

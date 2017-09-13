@@ -145,7 +145,7 @@
                         }
                         <th>UNIDADES</th>
                         <th>LIMITE DE DETECCION</th>
-                        @*<th>METODO</th>*@
+                        <th>METODO</th>
                     </tr>
                     
                     @foreach (Resultado resultado in Model.Resultados)
@@ -156,9 +156,10 @@
                             {
                                 <tr>
                                     <td>@resultado.analisis</td>
-                                    <td>@resultado.resultado</td>
-                                    <td>+/- @resultado.incerteza</td>
+                                    <td><textarea id="TextArea2" rows="1" cols="14" maxlength="14" style="border: none;">@resultado.resultado</textarea></td>
+                                    <td><textarea id="TextArea3" rows="1" cols="14" maxlength="14" style="border: none;">+/- @resultado.incerteza</textarea></td>
                                     <td>@resultado.unidades</td>
+                                    <td><textarea id="TextArea3" rows="1" cols="14" maxlength="14" style="border: none;">@resultado.limiteDeteccion</textarea></td>
                                     <td>@resultado.metodo</td>
                                 </tr>
                             }
@@ -173,9 +174,10 @@
                             {
                                 <tr>
                                     <td>@resultado.analisis</td>
-                                    <td>@resultado.resultado</td>
-                                    <td>+/- @resultado.incerteza</td>
+                                    <td><textarea id="TextArea2" rows="1" cols="14" maxlength="14" style="border: none;">@resultado.resultado</textarea></td>
+                                    <td><textarea id="TextArea3" rows="1" cols="14" maxlength="14" style="border: none;">+/- @resultado.incerteza</textarea></td>
                                     <td>@resultado.unidades</td>
+                                    <td><textarea id="TextArea3" rows="1" cols="14" maxlength="14" style="border: none;">@resultado.limiteDeteccion</textarea></td>
                                     <td>@resultado.metodo</td>
                                 </tr>
                             }
@@ -200,9 +202,8 @@
                     </ul>
 
                     <b>
-                        Registro de Acreditación: LEA-02:16 en los Alcances de la Acreditación: DBO 5 , DQO, pH, Grasas y Aceites, Sólidos Sedimentables,
-                        Sólidos Suspendidos Totales, Cloruros, Oxigeno Disuelto, Turbidez, Coliformes totales y Coliformes fecales, con el Organismo
-                        Salvadoreño de Acreditación
+                        <br><textarea id="TextArea6" rows="3" cols="114" maxlength="350">
+Registro de Acreditación: LEA-02:16 en los Alcances de la Acreditación: DBO 5 , DQO, pH, Grasas y Aceites, Sólidos Sedimentables, Sólidos Suspendidos Totales, Cloruros, Oxigeno Disuelto, Turbidez, Coliformes totales y Coliformes fecales, con el Organismo Salvadoreño de Acreditación</textarea><BR>
                     </b>
                 </p>
 
